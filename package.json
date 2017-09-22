@@ -1,14 +1,9 @@
 {
   "name": "acromyrmex",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "main": "lib/index.js",
   "devDependencies": {
     "babel-preset-env": "^1.6.0"
-  },
-  "peerDependencies": {
-    "react": "15.5.4",
-    "react-bootstrap": "0.31.3",
-    "react-dom": "15.5.4"
   },
   "dependencies": {
     "autoprefixer": "7.1.2",
@@ -42,6 +37,9 @@
     "postcss-loader": "2.0.6",
     "promise": "8.0.1",
     "react-dev-utils": "^4.0.1",
+    "react": "15.5.4",
+    "react-bootstrap": "0.31.3",
+    "react-dom": "15.5.4",
     "react-rte": "^0.14.1",
     "react-select": "1.0.0-rc.5",
     "react-tether": "^0.5.7",
