@@ -56,7 +56,7 @@ class SelectInput extends React.Component {
       val = JSON.stringify(input.value);
     }
 
-    if (multi && val) {
+    if (multi && val && _.isArray(val)) {
       val = val.join(',');
     }
 
