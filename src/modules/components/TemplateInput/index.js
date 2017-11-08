@@ -1,10 +1,10 @@
 // from: https://gist.github.com/insin/bbf116e8ea10ef38447b
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 // import { change }
-import { FormControl, InputGroup, Col, Row, Panel } from 'react-bootstrap';
+import { FormControl, InputGroup, Col, Row, Panel } from "react-bootstrap";
 
-import FormField from '../FormField';
+import FormField from "../FormField";
 
 class TemplateInput extends React.Component {
   constructor(props) {
@@ -47,13 +47,14 @@ class TemplateInput extends React.Component {
       addonCustomAfter,
       input: { ...inputProps },
       meta,
-      disabled
+      disabled,
+      maxCols
     } = this.props;
     let { type } = this.props;
 
     // alias
-    if (type === 'datetime') {
-      type = 'datetime-local';
+    if (type === "datetime") {
+      type = "datetime-local";
     }
 
     let input = (
@@ -102,20 +103,21 @@ class TemplateInput extends React.Component {
         help={help}
         vertical={vertical}
         noLabel={noLabel}
+        maxCols={maxCols}
       >
         {input}
         {/* the false here can be flipped to show it when developing */}
         {(this.state.focused || false) && (
-            <Panel
-              header="Enter a value, or select an option from a previous step:"
-              className="template-input-panel"
-            >
-              <Row className="option-scroller">
-                {options.length < 1 && <Col xs={12}>No options!</Col>}
-                {options.map(this.renderOption)}
-              </Row>
-            </Panel>
-          )}
+          <Panel
+            header="Enter a value, or select an option from a previous step:"
+            className="template-input-panel"
+          >
+            <Row className="option-scroller">
+              {options.length < 1 && <Col xs={12}>No options!</Col>}
+              {options.map(this.renderOption)}
+            </Row>
+          </Panel>
+        )}
       </FormField>
     );
   }
@@ -139,24 +141,26 @@ TemplateInput.propTypes = {
   addonAfter: PropTypes.string,
   addonBefore: PropTypes.string,
   addonCustomAfter: PropTypes.node,
-  addonCustomBefore: PropTypes.node
+  addonCustomBefore: PropTypes.node,
+  maxCols: PropTypes.number
 };
 
 TemplateInput.defaultProps = {
   onTemplateClicked: () => {},
   disabled: false,
-  help: '',
+  help: "",
   autoFocus: false,
   options: [],
-  label: '',
+  label: "",
   vertical: false,
-  type: 'text',
+  type: "text",
   prefix: null,
   noLabel: false,
   addonAfter: null,
   addonBefore: null,
   addonCustomAfter: null,
-  addonCustomBefore: null
+  addonCustomBefore: null,
+  maxCols: 12
 };
 
 export default TemplateInput;
