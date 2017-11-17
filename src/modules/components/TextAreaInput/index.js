@@ -1,9 +1,9 @@
 // from: https://gist.github.com/insin/bbf116e8ea10ef38447b
-import React from 'react';
-import PropTypes from 'prop-types';
-import { FormControl } from 'react-bootstrap';
+import React from "react";
+import PropTypes from "prop-types";
+import { FormControl } from "react-bootstrap";
 
-import FormField from '../FormField';
+import FormField from "../FormField";
 
 const TextAreaInput = props => {
   const {
@@ -11,6 +11,7 @@ const TextAreaInput = props => {
     label,
     prefix,
     noLabel,
+    disabled,
     input: { ...inputProps },
     meta
   } = props;
@@ -23,7 +24,11 @@ const TextAreaInput = props => {
       help={help}
       noLabel={noLabel}
     >
-      <FormControl componentClass="textarea" {...inputProps} />
+      <FormControl
+        componentClass="textarea"
+        disabled={disabled}
+        {...inputProps}
+      />
     </FormField>
   );
 };
@@ -36,12 +41,13 @@ TextAreaInput.propTypes = {
   label: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
   prefix: PropTypes.node,
   input: PropTypes.shape().isRequired,
+  disabled: PropTypes.bool,
   noLabel: PropTypes.bool
 };
 
 TextAreaInput.defaultProps = {
-  help: '',
-  label: '',
+  help: "",
+  label: "",
   prefix: null,
   noLabel: false
 };
