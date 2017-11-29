@@ -1,7 +1,7 @@
 // from: https://gist.github.com/insin/bbf116e8ea10ef38447b
-import classNames from 'classnames';
-import React from 'react';
-import PropTypes from 'prop-types';
+import classNames from "classnames";
+import React from "react";
+import PropTypes from "prop-types";
 
 class Loading extends React.Component {
   constructor(props) {
@@ -34,14 +34,14 @@ class Loading extends React.Component {
   render() {
     const { delay, inline, text } = this.props;
     const { delaying } = this.state;
-    const className = classNames('loading', {
-      'loading--delaying': delaying,
-      'loading--displaying': delay && !delaying,
-      'loading--inline': inline
+    const className = classNames("loading", {
+      "loading--delaying": delaying,
+      "loading--displaying": delay && !delaying,
+      "loading--inline": inline
     });
     return (
       <div className={className}>
-        <i className="fa fa-spin fa-spinner" />
+        <i className="fa fa-spin fa-spinner pull-left" />
         {text && <div className="Loading__text pull-left">{text}&hellip;</div>}
       </div>
     );
@@ -57,7 +57,7 @@ Loading.propTypes = {
 Loading.defaultProps = {
   delay: 500,
   inline: false,
-  text: ''
+  text: ""
 };
 
 export default Loading;
