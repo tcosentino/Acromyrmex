@@ -42,7 +42,7 @@ class Loading extends React.Component {
     return (
       <div className={className}>
         <i className="fa fa-spin fa-spinner" />
-        {text && <div className="Loading__text">{text}&hellip;</div>}
+        {text && <div className="Loading__text pull-left">{text}&hellip;</div>}
       </div>
     );
   }
