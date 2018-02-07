@@ -23,7 +23,7 @@ const HoverHelp = ({ help, position, name }) => {
 // Define property types
 HoverHelp.propTypes = {
   help: PropTypes.string.isRequired,
-  name: PropTypes.string,
+  name: PropTypes.oneOfType(PropTypes.string, PropTypes.node),
   position: PropTypes.string
 };
 
