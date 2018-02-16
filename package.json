@@ -1,6 +1,6 @@
 {
   "name": "acromyrmex",
-  "version": "0.1.10",
+  "version": "0.1.11",
   "main": "lib/index.js",
   "repository": {
     "type": "git",
@@ -8,7 +8,8 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "babel-preset-env": "^1.6.0"
+    "babel-preset-env": "^1.6.0",
+    "webpack-dev-server": "2.7.1"
   },
   "dependencies": {
     "autoprefixer": "7.1.2",
@@ -52,7 +53,6 @@
     "sw-precache-webpack-plugin": "0.11.4",
     "url-loader": "0.5.9",
     "webpack": "3.5.1",
-    "webpack-dev-server": "2.7.1",
     "webpack-manifest-plugin": "1.2.1",
     "whatwg-fetch": "2.0.3"
   },
