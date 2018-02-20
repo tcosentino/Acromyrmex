@@ -22,8 +22,8 @@ const HoverHelp = ({ help, position, name }) => {
 
 // Define property types
 HoverHelp.propTypes = {
-  help: PropTypes.oneOfType(PropTypes.string, PropTypes.node),
-  name: PropTypes.oneOfType(PropTypes.string, PropTypes.node),
+  help: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+  name: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   position: PropTypes.string
 };
 
