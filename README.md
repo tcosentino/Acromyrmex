@@ -1,4 +1,10 @@
-# Acromyrmex
+<h1 align="center">
+  <img src="icon.png" alt="downshift logo" title="downshift logo" width="300">
+  <br>
+  Acromyrmex
+  <br>
+</h1>
+
 Opinionated toolset of Components for react applications
 
  > "Leafcutter ants (Acromyrmex) can carry more than 20 times their body weight" - Wikipedia
