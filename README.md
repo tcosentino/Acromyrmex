@@ -1,5 +1,5 @@
 <h1 align="center">
-  <img src="icon.png" alt="downshift logo" title="downshift logo" width="300">
+  <img src="icon.jpg" alt="acromyrmex logo" title="downshift logo" width="300">
   <br>
   Acromyrmex
   <br>
