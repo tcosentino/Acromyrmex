@@ -109,7 +109,7 @@ FormField.propTypes = {
   meta: PropTypes.shape(),
 
   // Help text to be displayed next to the label
-  help: PropTypes.string,
+  help: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
 
   // Label text
   label: PropTypes.string,
