@@ -130,7 +130,7 @@ TemplateInput.propTypes = {
   onTemplateClicked: PropTypes.func,
   vertical: PropTypes.bool,
   autoFocus: PropTypes.bool,
-  help: PropTypes.string,
+  help: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   label: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
   options: PropTypes.arrayOf(PropTypes.shape()),
   type: PropTypes.string,

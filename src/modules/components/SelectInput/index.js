@@ -1,20 +1,20 @@
 // from: https://gist.github.com/insin/bbf116e8ea10ef38447b
-import _ from 'underscore';
-import React from 'react';
-import PropTypes from 'prop-types';
-import 'react-select/dist/react-select.css';
-import { Loading } from 'acromyrmex';
-import Select from '../TetheredSelectWrapper';
-import ConfirmModal from '../ConfirmModal';
+import _ from "underscore";
+import React from "react";
+import PropTypes from "prop-types";
+import "react-select/dist/react-select.css";
+import { Loading } from "acromyrmex";
+import Select from "../TetheredSelectWrapper";
+import ConfirmModal from "../ConfirmModal";
 
-import FormField from '../FormField';
+import FormField from "../FormField";
 
 class SelectInput extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      value: '',
+      value: "",
       showModal: false,
       pendingVal: null
     };
@@ -42,7 +42,7 @@ class SelectInput extends React.Component {
     }));
 
     if (enableAll) {
-      myOptions.unshift({ value: 'all', label: 'All' });
+      myOptions.unshift({ value: "all", label: "All" });
     }
 
     return myOptions;
@@ -57,7 +57,7 @@ class SelectInput extends React.Component {
     }
 
     if (multi && val && _.isArray(val)) {
-      val = val.join(',');
+      val = val.join(",");
     }
 
     return val;
@@ -69,10 +69,7 @@ class SelectInput extends React.Component {
 
     let valFound = false;
     _.each(myOptions, option => {
-      valFound =
-        valFound ||
-        option.value === value ||
-        JSON.stringify(option.value) === value;
+      valFound = valFound || option.value === value || JSON.stringify(option.value) === value;
     });
 
     return valFound;
@@ -149,7 +146,7 @@ class SelectInput extends React.Component {
       <Select
         {...inputProps}
         name={input.name}
-        title={myOptions.length === 0 ? 'no available options' : ''}
+        title={myOptions.length === 0 ? "no available options" : ""}
         disabled={myOptions.length === 0 || disabled}
         value={value}
         onBlur={() => input.onBlur(input.value)}
@@ -190,9 +187,7 @@ class SelectInput extends React.Component {
         <ConfirmModal
           show={this.state.showModal}
           title="Confirm change"
-          message={
-            confirmMessage || 'Are you sure you want to delete this process?'
-          }
+          message={confirmMessage || "Are you sure you want to delete this process?"}
           onConfirm={() => {
             this.handleChange(this.state.pendingVal);
             this.setState({ showModal: false, pendingVal: null });
@@ -208,7 +203,7 @@ class SelectInput extends React.Component {
 
 SelectInput.propTypes = {
   meta: PropTypes.shape().isRequired,
-  help: PropTypes.string,
+  help: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   label: PropTypes.string,
   multi: PropTypes.bool,
   loading: PropTypes.bool,
@@ -232,11 +227,11 @@ SelectInput.propTypes = {
 };
 
 SelectInput.defaultProps = {
-  name: '',
-  help: '',
-  label: '',
-  value: '',
-  confirmMessage: 'Are you sure you want to make this change?',
+  name: "",
+  help: "",
+  label: "",
+  value: "",
+  confirmMessage: "Are you sure you want to make this change?",
   confirm: false,
   noLabel: false,
   multi: false,

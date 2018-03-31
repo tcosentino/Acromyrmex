@@ -1,9 +1,9 @@
 // from: https://gist.github.com/insin/bbf116e8ea10ef38447b
-import React from 'react';
-import PropTypes from 'prop-types';
-import { FormControl, InputGroup } from 'react-bootstrap';
+import React from "react";
+import PropTypes from "prop-types";
+import { FormControl, InputGroup } from "react-bootstrap";
 
-import FormField from '../FormField';
+import FormField from "../FormField";
 
 const TextInput = props => {
   const {
@@ -26,8 +26,8 @@ const TextInput = props => {
   let { type } = props;
 
   // alias
-  if (type === 'datetime') {
-    type = 'datetime-local';
+  if (type === "datetime") {
+    type = "datetime-local";
   }
 
   let input = (
@@ -48,7 +48,7 @@ const TextInput = props => {
 
   if (addonBefore || addonAfter) {
     input = (
-      <InputGroup style={{ width: '100%' }}>
+      <InputGroup style={{ width: "100%" }}>
         {addonBefore && <InputGroup.Addon>{addonBefore}</InputGroup.Addon>}
         {input}
         {addonAfter && <InputGroup.Addon>{addonAfter}</InputGroup.Addon>}
@@ -58,7 +58,7 @@ const TextInput = props => {
 
   if (addonCustomBefore || addonCustomAfter) {
     input = (
-      <InputGroup style={{ width: '100%' }}>
+      <InputGroup style={{ width: "100%" }}>
         {addonCustomBefore}
         {input}
         {addonCustomAfter}
@@ -87,7 +87,7 @@ TextInput.propTypes = {
   meta: PropTypes.shape().isRequired,
   vertical: PropTypes.bool,
   autoFocus: PropTypes.bool,
-  help: PropTypes.string,
+  help: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   label: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
   type: PropTypes.string,
   prefix: PropTypes.node,
@@ -105,10 +105,10 @@ TextInput.propTypes = {
 TextInput.defaultProps = {
   disabled: false,
   autoFocus: false,
-  help: '',
-  label: '',
+  help: "",
+  label: "",
   vertical: false,
-  type: 'text',
+  type: "text",
   onPaste: () => {},
   prefix: null,
   noLabel: false,
