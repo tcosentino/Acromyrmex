@@ -1,84 +1,20 @@
 // from: https://gist.github.com/insin/bbf116e8ea10ef38447b
 import React from "react";
 import PropTypes from "prop-types";
-import RichTextEditor from "react-rte";
+// import { change }
+import { InputGroup } from "react-bootstrap";
+import Editor from "./Editor";
+import "draft-js/dist/Draft.css";
 
-import FormField from "../FormField";
+import { FormField } from "acromyrmex";
 
-// const TextAreaInput = (props) => {
-class MarkdownInput extends React.Component {
-  static createValueFromMd(value) {
-    return value && value.length
-      ? RichTextEditor.createValueFromString(value, "markdown")
-      : RichTextEditor.createEmptyValue();
-  }
-
-  static getToolbarConfig() {
-    return {
-      // Optionally specify the groups to display (displayed in the order listed).
-      display: [
-        "INLINE_STYLE_BUTTONS",
-        "BLOCK_TYPE_BUTTONS",
-        "LINK_BUTTONS",
-        "BLOCK_TYPE_DROPDOWN",
-        "HISTORY_BUTTONS"
-      ],
-      INLINE_STYLE_BUTTONS: [
-        { label: "Bold", style: "BOLD", className: "custom-css-class" },
-        { label: "Italic", style: "ITALIC" },
-        { label: "Monospace", style: "CODE" }
-      ],
-      BLOCK_TYPE_DROPDOWN: [
-        { label: "Normal", style: "unstyled" },
-        { label: "Heading Large", style: "header-one" },
-        { label: "Heading Medium", style: "header-two" },
-        { label: "Heading Small", style: "header-three" },
-        { label: "Code Block", style: "code-block" }
-      ],
-      BLOCK_TYPE_BUTTONS: [
-        { label: "UL", style: "unordered-list-item" },
-        { label: "OL", style: "ordered-list-item" },
-        { label: "Blockquote", style: "blockquote" }
-      ]
-    };
-  }
-
+class TemplateInput extends React.Component {
   constructor(props) {
     super(props);
-    const { value } = this.props.input;
 
     this.state = {
-      value: MarkdownInput.createValueFromMd(value),
-      mdValue: value
+      focused: false
     };
-
-    this.handleChange = this.handleChange.bind(this);
-  }
-
-  componentWillReceiveProps(nextProps) {
-    const { value } = nextProps.input;
-    if (value !== this.state.mdValue) {
-      this.setState({
-        value: MarkdownInput.createValueFromMd(value),
-        mdValue: value
-      });
-    }
-  }
-
-  handleChange(value) {
-    let markdown = value.toString("markdown");
-    this.setState({ value, mdValue: markdown }, () => {
-      // check for empty
-      if (
-        markdown.length === 2 &&
-        markdown.charCodeAt(0) === 8203 &&
-        markdown.charCodeAt(1) === 10
-      ) {
-        markdown = "";
-      }
-
-      this.props.input.onChange(markdown);
-    });
   }
 
   render() {
@@ -88,11 +24,43 @@ class MarkdownInput extends React.Component {
       prefix,
       noLabel,
       vertical,
-      input: { onChange, ...inputProps },
-      meta
+      options,
+      addonAfter,
+      addonBefore,
+      addonCustomBefore,
+      addonCustomAfter,
+      input: { ...inputProps },
+      meta,
+      maxCols
     } = this.props;
+    let { type } = this.props;
 
-    const { value } = this.state;
+    // alias
+    if (type === "datetime") {
+      type = "datetime-local";
+    }
+
+    let input = <Editor input={inputProps} />;
+
+    if (addonBefore || addonAfter) {
+      input = (
+        <InputGroup>
+          {addonBefore && <InputGroup.Addon>{addonBefore}</InputGroup.Addon>}
+          {input}
+          {addonAfter && <InputGroup.Addon>{addonAfter}</InputGroup.Addon>}
+        </InputGroup>
+      );
+    }
+
+    if (addonCustomBefore || addonCustomAfter) {
+      input = (
+        <InputGroup>
+          {addonCustomBefore}
+          {input}
+          {addonCustomAfter}
+        </InputGroup>
+      );
+    }
 
     return (
       <FormField
@@ -100,42 +68,54 @@ class MarkdownInput extends React.Component {
         prefix={prefix}
         meta={meta}
         help={help}
-        noLabel={noLabel}
         vertical={vertical}
-        className="md-editor"
+        noLabel={noLabel}
+        maxCols={maxCols}
       >
-        <RichTextEditor
-          onChange={this.handleChange}
-          {...inputProps}
-          value={value}
-          toolbarConfig={MarkdownInput.getToolbarConfig()}
-        />
+        {input}
       </FormField>
     );
   }
 }
 
-MarkdownInput.shouldComponentUpdate = FormField.shouldFormFieldUpdate;
+TemplateInput.shouldComponentUpdate = FormField.shouldFormFieldUpdate;
 
-MarkdownInput.propTypes = {
+TemplateInput.propTypes = {
   meta: PropTypes.shape().isRequired,
-  help: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+  onTemplateClicked: PropTypes.func,
   vertical: PropTypes.bool,
+  autoFocus: PropTypes.bool,
+  help: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   label: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
+  options: PropTypes.arrayOf(PropTypes.shape()),
+  type: PropTypes.string,
   prefix: PropTypes.node,
-  input: PropTypes.shape({
-    value: PropTypes.string.isRequired,
-    onChange: PropTypes.func.isRequired
-  }).isRequired,
-  noLabel: PropTypes.bool
+  input: PropTypes.shape().isRequired,
+  noLabel: PropTypes.bool,
+  disabled: PropTypes.bool,
+  addonAfter: PropTypes.string,
+  addonBefore: PropTypes.string,
+  addonCustomAfter: PropTypes.node,
+  addonCustomBefore: PropTypes.node,
+  maxCols: PropTypes.number
 };
 
-MarkdownInput.defaultProps = {
+TemplateInput.defaultProps = {
+  onTemplateClicked: () => {},
+  disabled: false,
   help: "",
+  autoFocus: false,
+  options: [],
   label: "",
+  vertical: false,
+  type: "text",
   prefix: null,
   noLabel: false,
-  vertical: false
+  addonAfter: null,
+  addonBefore: null,
+  addonCustomAfter: null,
+  addonCustomBefore: null,
+  maxCols: 12
 };
 
-export default MarkdownInput;
+export default TemplateInput;
