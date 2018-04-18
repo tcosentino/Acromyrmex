@@ -1,5 +1,5 @@
 function getEntityAtOffset(block, offset) {
-  let entityKey = block.getEntityAt(offset);
+  const entityKey = block.getEntityAt(offset);
   if (entityKey == null) {
     return null;
   }
@@ -8,7 +8,7 @@ function getEntityAtOffset(block, offset) {
     startOffset -= 1;
   }
   let endOffset = startOffset;
-  let blockLength = block.getLength();
+  const blockLength = block.getLength();
   while (endOffset < blockLength && block.getEntityAt(endOffset + 1) === entityKey) {
     endOffset += 1;
   }
@@ -16,15 +16,15 @@ function getEntityAtOffset(block, offset) {
     entityKey,
     blockKey: block.getKey(),
     startOffset,
-    endOffset: endOffset + 1
+    endOffset: endOffset + 1,
   };
 }
 
 export default function getEntityAtCursor(editorState) {
-  let selection = editorState.getSelection();
-  let startKey = selection.getStartKey();
-  let startBlock = editorState.getCurrentContent().getBlockForKey(startKey);
-  let startOffset = selection.getStartOffset();
+  const selection = editorState.getSelection();
+  const startKey = selection.getStartKey();
+  const startBlock = editorState.getCurrentContent().getBlockForKey(startKey);
+  const startOffset = selection.getStartOffset();
   if (selection.isCollapsed()) {
     // Get the entity before the cursor (unless the cursor is at the start).
     return getEntityAtOffset(startBlock, startOffset === 0 ? startOffset : startOffset - 1);
@@ -32,10 +32,10 @@ export default function getEntityAtCursor(editorState) {
   if (startKey !== selection.getEndKey()) {
     return null;
   }
-  let endOffset = selection.getEndOffset();
-  let startEntityKey = startBlock.getEntityAt(startOffset);
+  const endOffset = selection.getEndOffset();
+  const startEntityKey = startBlock.getEntityAt(startOffset);
   for (let i = startOffset; i < endOffset; i++) {
-    let entityKey = startBlock.getEntityAt(i);
+    const entityKey = startBlock.getEntityAt(i);
     if (entityKey == null || entityKey !== startEntityKey) {
       return null;
     }
@@ -43,7 +43,7 @@ export default function getEntityAtCursor(editorState) {
   return {
     entityKey: startEntityKey,
     blockKey: startBlock.getKey(),
-    startOffset: startOffset,
-    endOffset: endOffset
+    startOffset,
+    endOffset,
   };
 }

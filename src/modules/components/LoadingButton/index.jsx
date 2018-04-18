@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Button from 'react-bootstrap/lib/Button';
 import Loading from '../Loading';
 
-const LoadingButton = props => {
+const LoadingButton = (props) => {
   const { icon, label, loading, disabled, loadingLabel, ...btnProps } = props;
 
   return (
@@ -30,13 +30,13 @@ LoadingButton.propTypes = {
   disabled: PropTypes.bool,
   icon: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   // Defaults to label + 'ing' if not provided
-  loadingLabel: PropTypes.string
+  loadingLabel: PropTypes.string,
 };
 
 LoadingButton.defaultProps = {
   icon: false,
   disabled: false,
-  loadingLabel: ''
+  loadingLabel: '',
 };
 
 export default LoadingButton;

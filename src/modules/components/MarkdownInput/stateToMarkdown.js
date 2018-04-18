@@ -1,10 +1,35 @@
 // From https://github.com/sstur/draft-js-utils/blob/master/packages/draft-js-export-markdown/src/stateToMarkdown.js
 // adapted to support mentions as well
-import { getEntityRanges, BLOCK_TYPE, ENTITY_TYPE, INLINE_STYLE } from "draft-js-utils";
+import { getEntityRanges, BLOCK_TYPE, ENTITY_TYPE, INLINE_STYLE } from 'draft-js-utils';
 
 const { BOLD, CODE, ITALIC, STRIKETHROUGH, UNDERLINE } = INLINE_STYLE;
 
-const CODE_INDENT = "    ";
+const CODE_INDENT = '    ';
+
+function canHaveDepth(blockType) {
+  switch (blockType) {
+    case BLOCK_TYPE.UNORDERED_LIST_ITEM:
+    case BLOCK_TYPE.ORDERED_LIST_ITEM:
+      return true;
+    default:
+      return false;
+  }
+}
+
+function encodeContent(text) {
+  return text.replace(/[*_`]/g, '\\$&');
+}
+
+// Encode chars that would normally be allowed in a URL but would conflict with
+// our markdown syntax: `[foo](http://foo/)`
+function encodeURL(url) {
+  return url.replace(/\)/g, '%29');
+}
+
+// Escape quotes using backslash.
+function escapeTitle(text) {
+  return text.replace(/"/g, '\\"');
+}
 
 class MarkupGenerator {
   // blocks: Array<ContentBlock>;
@@ -27,48 +52,49 @@ class MarkupGenerator {
     while (this.currentBlock < this.totalBlocks) {
       this.processBlock();
     }
-    return this.output.join("");
+    return this.output.join('');
   }
 
   processBlock() {
-    let block = this.blocks[this.currentBlock];
-    let blockType = block.getType();
+    const block = this.blocks[this.currentBlock];
+    const blockType = block.getType();
     switch (blockType) {
       case BLOCK_TYPE.HEADER_ONE: {
         this.insertLineBreaks(1);
-        this.output.push("# " + this.renderBlockContent(block) + "\n");
+        this.output.push(`# ${this.renderBlockContent(block)}\n`);
         break;
       }
       case BLOCK_TYPE.HEADER_TWO: {
         this.insertLineBreaks(1);
-        this.output.push("## " + this.renderBlockContent(block) + "\n");
+        this.output.push(`## ${this.renderBlockContent(block)}\n`);
         break;
       }
       case BLOCK_TYPE.HEADER_THREE: {
         this.insertLineBreaks(1);
-        this.output.push("### " + this.renderBlockContent(block) + "\n");
+        this.output.push(`### ${this.renderBlockContent(block)}\n`);
         break;
       }
       case BLOCK_TYPE.HEADER_FOUR: {
         this.insertLineBreaks(1);
-        this.output.push("#### " + this.renderBlockContent(block) + "\n");
+        this.output.push(`#### ${this.renderBlockContent(block)}\n`);
         break;
       }
       case BLOCK_TYPE.HEADER_FIVE: {
         this.insertLineBreaks(1);
-        this.output.push("##### " + this.renderBlockContent(block) + "\n");
+        this.output.push(`##### ${this.renderBlockContent(block)}\n`);
         break;
       }
       case BLOCK_TYPE.HEADER_SIX: {
         this.insertLineBreaks(1);
-        this.output.push("###### " + this.renderBlockContent(block) + "\n");
+        this.output.push(`###### ${this.renderBlockContent(block)}\n`);
         break;
       }
       case BLOCK_TYPE.UNORDERED_LIST_ITEM: {
-        let blockDepth = block.getDepth();
-        let lastBlock = this.getLastBlock();
-        let lastBlockType = lastBlock ? lastBlock.getType() : null;
-        let lastBlockDepth = lastBlock && canHaveDepth(lastBlockType) ? lastBlock.getDepth() : null;
+        const blockDepth = block.getDepth();
+        const lastBlock = this.getLastBlock();
+        const lastBlockType = lastBlock ? lastBlock.getType() : null;
+        const lastBlockDepth =
+          lastBlock && canHaveDepth(lastBlockType) ? lastBlock.getDepth() : null;
         if (lastBlockType !== blockType && lastBlockDepth !== blockDepth - 1) {
           this.insertLineBreaks(1);
           // Insert an additional line break if following opposite list type.
@@ -76,15 +102,16 @@ class MarkupGenerator {
             this.insertLineBreaks(1);
           }
         }
-        let indent = " ".repeat(block.depth * 4);
-        this.output.push(indent + "- " + this.renderBlockContent(block) + "\n");
+        const indent = ' '.repeat(block.depth * 4);
+        this.output.push(`${indent}- ${this.renderBlockContent(block)}\n`);
         break;
       }
       case BLOCK_TYPE.ORDERED_LIST_ITEM: {
-        let blockDepth = block.getDepth();
-        let lastBlock = this.getLastBlock();
-        let lastBlockType = lastBlock ? lastBlock.getType() : null;
-        let lastBlockDepth = lastBlock && canHaveDepth(lastBlockType) ? lastBlock.getDepth() : null;
+        const blockDepth = block.getDepth();
+        const lastBlock = this.getLastBlock();
+        const lastBlockType = lastBlock ? lastBlock.getType() : null;
+        const lastBlockDepth =
+          lastBlock && canHaveDepth(lastBlockType) ? lastBlock.getDepth() : null;
         if (lastBlockType !== blockType && lastBlockDepth !== blockDepth - 1) {
           this.insertLineBreaks(1);
           // Insert an additional line break if following opposite list type.
@@ -92,25 +119,25 @@ class MarkupGenerator {
             this.insertLineBreaks(1);
           }
         }
-        let indent = " ".repeat(blockDepth * 4);
+        const indent = ' '.repeat(blockDepth * 4);
         // TODO: figure out what to do with two-digit numbers
-        let count = this.getListItemCount(block) % 10;
-        this.output.push(indent + `${count}. ` + this.renderBlockContent(block) + "\n");
+        const count = this.getListItemCount(block) % 10;
+        this.output.push(`${indent}${count}. ${this.renderBlockContent(block)}\n`);
         break;
       }
       case BLOCK_TYPE.BLOCKQUOTE: {
         this.insertLineBreaks(1);
-        this.output.push(" > " + this.renderBlockContent(block) + "\n");
+        this.output.push(` > ${this.renderBlockContent(block)}\n`);
         break;
       }
       case BLOCK_TYPE.CODE: {
         this.insertLineBreaks(1);
-        this.output.push(CODE_INDENT + this.renderBlockContent(block) + "\n");
+        this.output.push(`${CODE_INDENT + this.renderBlockContent(block)}\n`);
         break;
       }
       default: {
         this.insertLineBreaks(1);
-        this.output.push(this.renderBlockContent(block) + "\n");
+        this.output.push(`${this.renderBlockContent(block)}\n`);
         break;
       }
     }
@@ -126,8 +153,8 @@ class MarkupGenerator {
   }
 
   getListItemCount(block) {
-    let blockType = block.getType();
-    let blockDepth = block.getDepth();
+    const blockType = block.getType();
+    const blockDepth = block.getDepth();
     // To decide if we need to start over we need to backtrack (skipping list
     // items that are of greater depth)
     let index = this.currentBlock - 1;
@@ -139,34 +166,35 @@ class MarkupGenerator {
     if (!prevBlock || prevBlock.getType() !== blockType || prevBlock.getDepth() !== blockDepth) {
       this.listItemCounts[blockDepth] = 0;
     }
+    // eslint-disable-next-line
     return (this.listItemCounts[blockDepth] = this.listItemCounts[blockDepth] + 1);
   }
 
   insertLineBreaks() {
     if (this.currentBlock > 0) {
-      this.output.push("\n");
+      this.output.push('\n');
     }
   }
 
   renderBlockContent(block) {
-    let { contentState } = this;
-    let blockType = block.getType();
-    let text = block.getText();
-    if (text === "") {
+    const { contentState } = this;
+    const blockType = block.getType();
+    const blockText = block.getText();
+    if (blockText === '') {
       // Prevent element collapse if completely empty.
       // TODO: Replace with constant.
-      return "\u200B";
+      return '\u200B';
     }
-    let charMetaList = block.getCharacterList();
-    let entityPieces = getEntityRanges(text, charMetaList);
+    const charMetaList = block.getCharacterList();
+    const entityPieces = getEntityRanges(blockText, charMetaList);
 
     return entityPieces
       .map(([entityKey, stylePieces]) => {
-        let content = stylePieces
+        const finalContent = stylePieces
           .map(([text, style]) => {
             // Don't allow empty inline elements.
             if (!text) {
-              return "";
+              return '';
             }
             let content = encodeContent(text);
             if (style.has(BOLD)) {
@@ -184,58 +212,32 @@ class MarkupGenerator {
               content = `~~${content}~~`;
             }
             if (style.has(CODE)) {
-              content = blockType === BLOCK_TYPE.CODE ? content : "`" + content + "`";
+              content = blockType === BLOCK_TYPE.CODE ? content : `\`${content}\``;
             }
             return content;
           })
-          .join("");
-        let entity = entityKey ? contentState.getEntity(entityKey) : null;
+          .join('');
+        const entity = entityKey ? contentState.getEntity(entityKey) : null;
 
         if (entity != null && entity.getType() === ENTITY_TYPE.LINK) {
-          let data = entity.getData();
-          let url = data.url || "";
-          let title = data.title ? ` "${escapeTitle(data.title)}"` : "";
-          return `[${content}](${encodeURL(url)}${title})`;
+          const data = entity.getData();
+          const url = data.url || '';
+          const title = data.title ? ` "${escapeTitle(data.title)}"` : '';
+          return `[${finalContent}](${encodeURL(url)}${title})`;
         } else if (entity != null && entity.getType() === ENTITY_TYPE.IMAGE) {
-          let data = entity.getData();
-          let src = data.src || "";
-          let alt = data.alt ? `${escapeTitle(data.alt)}` : "";
+          const data = entity.getData();
+          const src = data.src || '';
+          const alt = data.alt ? `${escapeTitle(data.alt)}` : '';
           return `![${alt}](${encodeURL(src)})`;
         } else if (entity != null) {
           // mentions
-          let data = entity.getData();
-          return data.mention.get("textValue");
-        } else {
-          return content;
+          const data = entity.getData();
+          return data.mention.get('textValue');
         }
+        return finalContent;
       })
-      .join("");
+      .join('');
   }
-}
-
-function canHaveDepth(blockType) {
-  switch (blockType) {
-    case BLOCK_TYPE.UNORDERED_LIST_ITEM:
-    case BLOCK_TYPE.ORDERED_LIST_ITEM:
-      return true;
-    default:
-      return false;
-  }
-}
-
-function encodeContent(text) {
-  return text.replace(/[*_`]/g, "\\$&");
-}
-
-// Encode chars that would normally be allowed in a URL but would conflict with
-// our markdown syntax: `[foo](http://foo/)`
-function encodeURL(url) {
-  return url.replace(/\)/g, "%29");
-}
-
-// Escape quotes using backslash.
-function escapeTitle(text) {
-  return text.replace(/"/g, '\\"');
 }
 
 export default function stateToMarkdown(content) {

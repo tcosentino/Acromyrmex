@@ -1,8 +1,8 @@
 // from: https://gist.github.com/insin/bbf116e8ea10ef38447b
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
 
-import FormField from "../FormField";
+import FormField from '../FormField';
 
 class StaticField extends React.Component {
   shouldComponentUpdate(nextProps) {
@@ -10,7 +10,14 @@ class StaticField extends React.Component {
   }
 
   render() {
-    const { label, input: { value }, meta, help, vertical, noLabel } = this.props;
+    const {
+      label,
+      input: { value },
+      meta,
+      help,
+      vertical,
+      noLabel,
+    } = this.props;
 
     return (
       <FormField
@@ -33,16 +40,16 @@ StaticField.propTypes = {
   noLabel: PropTypes.bool,
   help: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   input: PropTypes.shape({
-    value: PropTypes.string
+    value: PropTypes.string,
   }).isRequired,
-  label: PropTypes.string
+  label: PropTypes.string,
 };
 
 StaticField.defaultProps = {
-  label: "",
+  label: '',
   vertical: false,
   noLabel: false,
-  help: ""
+  help: '',
 };
 
 module.exports = StaticField;

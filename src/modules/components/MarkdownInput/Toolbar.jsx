@@ -1,4 +1,5 @@
-import React from "react";
+import React from 'react';
+import PropTypes from 'prop-types';
 import {
   Button,
   ButtonGroup,
@@ -8,10 +9,10 @@ import {
   Popover,
   FormControl,
   Col,
-  FormGroup
-} from "react-bootstrap";
+  FormGroup,
+} from 'react-bootstrap';
 
-const ToolbarButton = props => {
+const ToolbarButton = (props) => {
   const { onClick, children, ...otherProps } = props;
 
   return (
@@ -19,7 +20,7 @@ const ToolbarButton = props => {
       bsStyle="primary"
       bsSize="xsmall"
       {...otherProps}
-      onMouseDown={e => {
+      onMouseDown={(e) => {
         e.preventDefault();
         onClick(e);
       }}
@@ -29,6 +30,11 @@ const ToolbarButton = props => {
   );
 };
 
+ToolbarButton.propTypes = {
+  onClick: PropTypes.func.isRequired,
+  children: PropTypes.node.isRequired,
+};
+
 class Toolbar extends React.Component {
   constructor() {
     super();
@@ -36,7 +42,7 @@ class Toolbar extends React.Component {
     this.state = {
       popoverTarget: null,
       showLinkOverlay: false,
-      linkText: ""
+      linkText: '',
     };
   }
 
@@ -52,7 +58,7 @@ class Toolbar extends React.Component {
       redoSize,
       blockType,
       selection,
-      getEntityAtCursor
+      getEntityAtCursor,
     } = this.props;
 
     const { linkText } = this.state;
@@ -63,47 +69,47 @@ class Toolbar extends React.Component {
         <ButtonGroup>
           <ToolbarButton
             onClick={() => {
-              onInlineClicked("BOLD");
+              onInlineClicked('BOLD');
             }}
           >
             <i className="fa fa-bold" />
           </ToolbarButton>
           <ToolbarButton
             onClick={() => {
-              onInlineClicked("ITALIC");
+              onInlineClicked('ITALIC');
             }}
           >
             <i className="fa fa-italic" />
           </ToolbarButton>
           <ToolbarButton
             onClick={() => {
-              onInlineClicked("CODE");
+              onInlineClicked('CODE');
             }}
           >
             <i className="fa fa-code" />
           </ToolbarButton>
-        </ButtonGroup>{" "}
+        </ButtonGroup>{' '}
         <ButtonGroup>
           <ToolbarButton
-            active={blockType === "unordered-list-item"}
+            active={blockType === 'unordered-list-item'}
             onClick={() => {
-              onBlockClicked("unordered-list-item");
+              onBlockClicked('unordered-list-item');
             }}
           >
             <i className="fa fa-list-ul" />
           </ToolbarButton>
           <ToolbarButton
-            active={blockType === "ordered-list-item"}
+            active={blockType === 'ordered-list-item'}
             onClick={() => {
-              onBlockClicked("ordered-list-item");
+              onBlockClicked('ordered-list-item');
             }}
           >
             <i className="fa fa-list-ol" />
           </ToolbarButton>
           <ToolbarButton
-            active={blockType === "blockquote"}
+            active={blockType === 'blockquote'}
             onClick={() => {
-              onBlockClicked("blockquote");
+              onBlockClicked('blockquote');
             }}
           >
             <i className="fa fa-quote-right" />
@@ -113,51 +119,51 @@ class Toolbar extends React.Component {
             bsSize="xsmall"
             bsStyle="primary"
             id="formatting-split"
-            active={blockType === "unstyled"}
+            active={blockType === 'unstyled'}
             onClick={() => {
-              onBlockClicked("normal");
+              onBlockClicked('normal');
             }}
           >
             <MenuItem
-              active={blockType === "header-one"}
+              active={blockType === 'header-one'}
               onClick={() => {
-                onBlockClicked("header-one");
+                onBlockClicked('header-one');
               }}
             >
               Heading Large
             </MenuItem>
             <MenuItem
-              active={blockType === "header-two"}
+              active={blockType === 'header-two'}
               onClick={() => {
-                onBlockClicked("header-two");
+                onBlockClicked('header-two');
               }}
             >
               Heading Medium
             </MenuItem>
             <MenuItem
-              active={blockType === "header-three"}
+              active={blockType === 'header-three'}
               onClick={() => {
-                onBlockClicked("header-three");
+                onBlockClicked('header-three');
               }}
             >
               Heading Small
             </MenuItem>
             <MenuItem
-              active={blockType === "code-block"}
+              active={blockType === 'code-block'}
               onClick={() => {
-                onBlockClicked("code-block");
+                onBlockClicked('code-block');
               }}
             >
               Code Block
             </MenuItem>
           </SplitButton>
-        </ButtonGroup>{" "}
+        </ButtonGroup>{' '}
         <ButtonGroup>
           <ToolbarButton
-            onClick={e => {
+            onClick={(e) => {
               this.setState({
                 showLinkOverlay: !this.state.showLinkOverlay,
-                popoverTarget: e.currentTarget
+                popoverTarget: e.currentTarget,
               });
               // onLinkClicked();
             }}
@@ -178,7 +184,7 @@ class Toolbar extends React.Component {
                     type="text"
                     placeholder="http://"
                     value={linkText}
-                    onChange={e => {
+                    onChange={(e) => {
                       this.setState({ linkText: e.target.value });
                     }}
                   />
@@ -213,11 +219,11 @@ class Toolbar extends React.Component {
           </Overlay>
           <ToolbarButton
             onClick={onUnlinkClicked}
-            disabled={entity == null || entity.type !== "LINK"}
+            disabled={entity == null || entity.type !== 'LINK'}
           >
             <i className="fa fa-unlink" />
           </ToolbarButton>
-        </ButtonGroup>{" "}
+        </ButtonGroup>{' '}
         <ButtonGroup>
           <ToolbarButton onClick={onUndoClicked} disabled={undoSize === 0}>
             <i className="fa fa-undo" />
@@ -230,5 +236,19 @@ class Toolbar extends React.Component {
     );
   }
 }
+
+Toolbar.propTypes = {
+  onInlineClicked: PropTypes.func.isRequired,
+  onBlockClicked: PropTypes.func.isRequired,
+  onUndoClicked: PropTypes.func.isRequired,
+  onRedoClicked: PropTypes.func.isRequired,
+  onLinkClicked: PropTypes.func.isRequired,
+  onUnlinkClicked: PropTypes.func.isRequired,
+  undoSize: PropTypes.number.isRequired,
+  redoSize: PropTypes.number.isRequired,
+  blockType: PropTypes.string.isRequired,
+  selection: PropTypes.shape().isRequired,
+  getEntityAtCursor: PropTypes.func.isRequired,
+};
 
 export default Toolbar;

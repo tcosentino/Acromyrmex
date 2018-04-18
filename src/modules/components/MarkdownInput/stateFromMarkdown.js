@@ -1,6 +1,7 @@
-import { Map } from "immutable";
-import { convertToRaw, convertFromRaw } from "draft-js";
-import { stateFromMarkdown as rootStateFromMarkdown } from "draft-js-import-markdown";
+import { Map } from 'immutable';
+import { convertToRaw, convertFromRaw } from 'draft-js';
+import { stateFromMarkdown as rootStateFromMarkdown } from 'draft-js-import-markdown';
+
 const TEMPLATE_REGEX = /{(\S*-*)([0-9a-zA-Z-]+)}/g;
 
 export default function stateFromMarkdown(markdown, mentions) {
@@ -9,7 +10,7 @@ export default function stateFromMarkdown(markdown, mentions) {
 
   let entityCount = Object.keys(raw.entityMap).length;
 
-  raw.blocks.forEach(block => {
+  raw.blocks.forEach((block) => {
     const text = block.text;
     // Loop over the matches
     block.text = text.replace(TEMPLATE_REGEX, (match, p1, p2, offset) => {
@@ -21,16 +22,16 @@ export default function stateFromMarkdown(markdown, mentions) {
       const entityRange = {
         offset,
         length: matchingOption.name.length,
-        key: entityCount
+        key: entityCount,
       };
 
       block.entityRanges.push(entityRange);
       raw.entityMap[`${entityCount}`] = {
-        type: "{mention",
-        mutability: "IMMUTABLE",
+        type: '{mention',
+        mutability: 'IMMUTABLE',
         data: {
-          mention: Map(matchingOption)
-        }
+          mention: Map(matchingOption),
+        },
       };
 
       entityCount += 1;
