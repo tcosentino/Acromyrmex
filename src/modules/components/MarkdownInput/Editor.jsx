@@ -20,7 +20,6 @@ const mentionPlugin = createMentionPlugin({
   entityMutability: 'IMMUTABLE',
   mentionTrigger: '{',
 });
-const { MentionSuggestions } = mentionPlugin;
 
 class OurEditor extends React.Component {
   constructor(props) {
@@ -49,6 +48,25 @@ class OurEditor extends React.Component {
     this._onUnlinkClicked = this._onUnlinkClicked.bind(this);
     this.handleKeyCommand = this.handleKeyCommand.bind(this);
     this.getEntityAtCursor = this.getEntityAtCursor.bind(this);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { input } = nextProps;
+    const hasValue = input && input.value && input.value.length;
+    if (this.props.options.length !== nextProps.options.length) {
+      this.setState({ suggestions: nextProps.options });
+      if (hasValue) {
+        this.onChange(
+          EditorState.push(
+            this.state.editorState,
+            EditorState.createWithContent(
+              stateFromMarkdown(input.value, nextProps.options),
+              new MultiDecorator([new CompositeDecorator([LinkDecorator])]),
+            ).getCurrentContent(),
+          ),
+        );
+      }
+    }
   }
 
   /**
@@ -125,6 +143,7 @@ class OurEditor extends React.Component {
   }
 
   render() {
+    const { MentionSuggestions } = mentionPlugin;
     const { editorState } = this.state;
     const selection = editorState.getSelection();
     const blockType = editorState
@@ -163,7 +182,6 @@ class OurEditor extends React.Component {
         <MentionSuggestions
           onSearchChange={this.onSearchChange}
           suggestions={this.state.suggestions}
-          onAddMention={this.onAddMention}
           entryComponent={Mention}
         />
       </div>

@@ -4,25 +4,46 @@ import { Field, reduxForm } from 'redux-form';
 import MarkdownInput from '../../modules/components/MarkdownInput';
 import options from './options';
 
-const SimpleForm = (props) => {
-  const { handleSubmit, pristine, reset, submitting } = props;
+class SimpleForm extends React.Component {
+  constructor(props) {
+    super(props);
 
-  return (
-    <form onSubmit={handleSubmit}>
-      <div>
-        <Field name="markdown" label="Markdown" component={MarkdownInput} options={options} />
-      </div>
-      <div>
-        <button type="submit" disabled={pristine || submitting}>
-          Submit
-        </button>
-        <button type="button" disabled={pristine || submitting} onClick={reset}>
-          Clear Values
-        </button>
-      </div>
-    </form>
-  );
-};
+    this.state = {
+      options: [],
+      // options,
+    };
+
+    // simulate the options coming in delayed
+    setTimeout(() => {
+      this.setState({ options });
+    }, 300);
+  }
+
+  render() {
+    const { handleSubmit, pristine, reset, submitting } = this.props;
+
+    return (
+      <form onSubmit={handleSubmit}>
+        <div>
+          <Field
+            name="markdown"
+            label="Markdown"
+            component={MarkdownInput}
+            options={this.state.options}
+          />
+        </div>
+        <div>
+          <button type="submit" disabled={pristine || submitting}>
+            Submit
+          </button>
+          <button type="button" disabled={pristine || submitting} onClick={reset}>
+            Clear Values
+          </button>
+        </div>
+      </form>
+    );
+  }
+}
 
 SimpleForm.propTypes = {
   handleSubmit: PropTypes.func.isRequired,

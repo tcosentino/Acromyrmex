@@ -14,7 +14,7 @@ export default function stateFromMarkdown(markdown, mentions) {
     const text = block.text;
     // Loop over the matches
     block.text = text.replace(TEMPLATE_REGEX, (match, p1, p2, offset) => {
-      const matchingOption = mentions.find(m => m.value === match);
+      const matchingOption = mentions.find(m => m.textValue === match);
       if (!matchingOption) {
         return match;
       }
@@ -41,5 +41,6 @@ export default function stateFromMarkdown(markdown, mentions) {
     });
   });
 
+  console.log(JSON.stringify(raw, null, 2));
   return convertFromRaw(raw);
 }

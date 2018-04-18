@@ -4,8 +4,14 @@ import PropTypes from 'prop-types';
 const Mention = (props) => {
   const { mention, ...parentProps } = props;
 
+  // we don't want to pass some of these, but are not currently using them
+  const transferProps = { ...parentProps };
+  delete transferProps.theme;
+  delete transferProps.isFocused;
+  delete transferProps.searchValue;
+
   return (
-    <div {...parentProps}>
+    <div {...transferProps}>
       <div className="mention">
         <div className="mention-thumb">{mention.get('stepNumber')}</div>
 
