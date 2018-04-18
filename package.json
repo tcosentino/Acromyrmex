@@ -46,7 +46,6 @@
     "react": "15.5.4",
     "react-bootstrap": "0.31.3",
     "react-dom": "15.5.4",
-    "react-rte": "^0.14.1",
     "react-select": "1.0.0-rc.5",
     "react-tether": "^0.5.7",
     "style-loader": "0.18.2",
