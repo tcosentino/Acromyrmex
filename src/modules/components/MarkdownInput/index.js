@@ -40,7 +40,7 @@ class TemplateInput extends React.Component {
       type = "datetime-local";
     }
 
-    let input = <Editor input={inputProps} />;
+    let input = <Editor input={inputProps} options={options} />;
 
     if (addonBefore || addonAfter) {
       input = (

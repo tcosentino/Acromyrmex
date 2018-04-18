@@ -3,7 +3,6 @@ import Editor from "draft-js-plugins-editor";
 import { EditorState, Entity, RichUtils, CompositeDecorator } from "draft-js";
 import createMentionPlugin, { defaultSuggestionsFilter } from "draft-js-mention-plugin";
 import { ENTITY_TYPE } from "draft-js-utils";
-import mentions from "../options";
 import Mention from "./Mention";
 import Toolbar from "./Toolbar";
 import getEntityAtCursor from "./getEntityAtCursor";
@@ -35,7 +34,7 @@ class OurEditor extends React.Component {
               new MultiDecorator([new CompositeDecorator([LinkDecorator])])
             )
           : EditorState.createEmpty(),
-      suggestions: mentions
+      suggestions: props.options
     };
 
     this.mentionRef = null;
@@ -119,7 +118,7 @@ class OurEditor extends React.Component {
 
   onSearchChange({ value }) {
     this.setState({
-      suggestions: defaultSuggestionsFilter(value, mentions)
+      suggestions: defaultSuggestionsFilter(value, this.props.options)
     });
   }
 

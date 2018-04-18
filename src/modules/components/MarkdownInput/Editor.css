@@ -63,3 +63,49 @@
 .popover-content {
   padding: 3px;
 }
+
+.mention {
+  display: table;
+  width: 100%;
+}
+
+.mention-thumb {
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+  color: black;
+  font-weight: bold;
+}
+
+.mention-thumb div {
+  width: 30px;
+  height: 30px;
+  font-size: 12px;
+  line-height: 30px;
+  background-color: #999999;
+  border-radius: 50%;
+  margin-top: -2px;
+}
+
+.mention-info {
+  display: table-cell;
+  vertical-align: middle;
+  width: 100%;
+  padding-left: 10px;
+  margin-top: -2px;
+}
+
+.mention-header {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mention-detail {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 80%;
+  color: #a7a7a7;
+}
+
