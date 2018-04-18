@@ -1,10 +1,9 @@
 import { Map } from "immutable";
 import { convertToRaw, convertFromRaw } from "draft-js";
 import { stateFromMarkdown as rootStateFromMarkdown } from "draft-js-import-markdown";
-import mentions from "../options";
 const TEMPLATE_REGEX = /{(\S*-*)([0-9a-zA-Z-]+)}/g;
 
-export default function stateFromMarkdown(markdown) {
+export default function stateFromMarkdown(markdown, mentions) {
   const content = rootStateFromMarkdown(markdown);
   const raw = convertToRaw(content);
   console.log(raw);

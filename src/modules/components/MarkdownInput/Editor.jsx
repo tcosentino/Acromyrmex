@@ -32,7 +32,7 @@ class OurEditor extends React.Component {
       editorState:
         props && props.input && props.input.value && props.input.value.length
           ? EditorState.createWithContent(
-              stateFromMarkdown(props.input.value),
+              stateFromMarkdown(props.input.value, props.options),
               new MultiDecorator([new CompositeDecorator([LinkDecorator])])
             )
           : EditorState.createEmpty(),
