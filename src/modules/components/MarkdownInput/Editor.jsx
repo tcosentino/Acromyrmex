@@ -25,6 +25,8 @@ class OurEditor extends React.Component {
   constructor(props) {
     super(props);
 
+    console.log(props);
+
     this.state = {
       // Editor state is
       editorState:
