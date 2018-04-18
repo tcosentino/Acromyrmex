@@ -10,13 +10,7 @@ const SimpleForm = (props) => {
   return (
     <form onSubmit={handleSubmit}>
       <div>
-        <Field
-          name="description"
-          label="Description"
-          component={MarkdownInput}
-          placeholder="First Name"
-          options={options}
-        />
+        <Field name="markdown" label="Markdown" component={MarkdownInput} options={options} />
       </div>
       <div>
         <button type="submit" disabled={pristine || submitting}>
@@ -40,6 +34,6 @@ SimpleForm.propTypes = {
 export default reduxForm({
   form: 'simple', // a unique identifier for this form
   initialValues: {
-    description: 'sdfadf [asdfasdf](fasdfasf) adsfasdf {dfasdfsdg3q34t.ip-address} \n',
+    markdown: 'sdfadf [asdfasdf](fasdfasf) adsfasdf {dfasdfsdg3q34t.ip-address} \n',
   },
 })(SimpleForm);
