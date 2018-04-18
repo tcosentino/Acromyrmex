@@ -105,7 +105,6 @@ class SelectInput extends React.Component {
   sendChange(value) {
     const { onChangeAction, input } = this.props;
 
-    console.log(value);
     input.onChange(value);
     this.setState({ value });
     onChangeAction(value, input.name);

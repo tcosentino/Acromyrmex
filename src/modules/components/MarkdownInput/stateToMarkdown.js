@@ -204,7 +204,7 @@ class MarkupGenerator {
         } else if (entity != null) {
           // mentions
           let data = entity.getData();
-          return data.mention.get("value");
+          return data.mention.get("textValue");
         } else {
           return content;
         }

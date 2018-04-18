@@ -6,7 +6,7 @@ const TEMPLATE_REGEX = /{(\S*-*)([0-9a-zA-Z-]+)}/g;
 export default function stateFromMarkdown(markdown, mentions) {
   const content = rootStateFromMarkdown(markdown);
   const raw = convertToRaw(content);
-  console.log(raw);
+
   let entityCount = Object.keys(raw.entityMap).length;
 
   raw.blocks.forEach(block => {
