@@ -6,7 +6,7 @@ import 'draft-js/dist/Draft.css';
 import Editor from './Editor';
 import FormField from '../FormField';
 
-class TemplateInput extends React.Component {
+class MarkdownInput extends React.Component {
   constructor(props) {
     super(props);
 
@@ -76,9 +76,9 @@ class TemplateInput extends React.Component {
   }
 }
 
-TemplateInput.shouldComponentUpdate = FormField.shouldFormFieldUpdate;
+MarkdownInput.shouldComponentUpdate = FormField.shouldFormFieldUpdate;
 
-TemplateInput.propTypes = {
+MarkdownInput.propTypes = {
   meta: PropTypes.shape().isRequired,
   vertical: PropTypes.bool,
   help: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
@@ -95,7 +95,7 @@ TemplateInput.propTypes = {
   maxCols: PropTypes.number,
 };
 
-TemplateInput.defaultProps = {
+MarkdownInput.defaultProps = {
   onTemplateClicked: () => {},
   help: '',
   options: [],
@@ -111,4 +111,4 @@ TemplateInput.defaultProps = {
   maxCols: 12,
 };
 
-export default TemplateInput;
+export default MarkdownInput;

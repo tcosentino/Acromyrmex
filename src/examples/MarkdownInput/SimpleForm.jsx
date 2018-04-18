@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Field, reduxForm } from 'redux-form';
 import MarkdownInput from '../../modules/components/MarkdownInput';
 import options from './options';
+import TemplateInput from '../../modules/components/TemplateInput';
 
 class SimpleForm extends React.Component {
   constructor(props) {
@@ -24,6 +25,14 @@ class SimpleForm extends React.Component {
 
     return (
       <form onSubmit={handleSubmit}>
+        <div>
+          <Field
+            name="template"
+            label="Template"
+            component={TemplateInput}
+            options={this.state.options}
+          />
+        </div>
         <div>
           <Field
             name="markdown"

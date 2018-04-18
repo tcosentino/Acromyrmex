@@ -41,6 +41,5 @@ export default function stateFromMarkdown(markdown, mentions) {
     });
   });
 
-  console.log(JSON.stringify(raw, null, 2));
   return convertFromRaw(raw);
 }

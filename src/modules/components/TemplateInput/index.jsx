@@ -1,10 +1,10 @@
 // from: https://gist.github.com/insin/bbf116e8ea10ef38447b
 import React from 'react';
 import PropTypes from 'prop-types';
-// import { change }
-import { FormControl, InputGroup, Col, Row, Panel } from 'react-bootstrap';
+import { InputGroup, Col, Row, Panel } from 'react-bootstrap';
 
 import FormField from '../FormField';
+import Editor from '../MarkdownInput/Editor';
 
 class TemplateInput extends React.Component {
   constructor(props) {
@@ -40,14 +40,14 @@ class TemplateInput extends React.Component {
       noLabel,
       vertical,
       options,
-      autoFocus,
+      // autoFocus,
       addonAfter,
       addonBefore,
       addonCustomBefore,
       addonCustomAfter,
       input: { ...inputProps },
       meta,
-      disabled,
+      // disabled,
       maxCols,
     } = this.props;
     let { type } = this.props;
@@ -57,23 +57,7 @@ class TemplateInput extends React.Component {
       type = 'datetime-local';
     }
 
-    let input = (
-      <FormControl
-        type={type}
-        disabled={disabled}
-        autoFocus={autoFocus}
-        {...inputProps}
-        onFocus={() => {
-          this.setState({ focused: true });
-        }}
-        onBlur={() => {
-          // this delay lets clicking the box work
-          setTimeout(() => {
-            this.setState({ focused: false });
-          }, 250);
-        }}
-      />
-    );
+    let input = <Editor options={options} disableToolbar input={inputProps} />;
 
     if (addonBefore || addonAfter) {
       input = (
@@ -129,7 +113,7 @@ TemplateInput.propTypes = {
   meta: PropTypes.shape().isRequired,
   onTemplateClicked: PropTypes.func,
   vertical: PropTypes.bool,
-  autoFocus: PropTypes.bool,
+  // autoFocus: PropTypes.bool,
   help: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   label: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
   options: PropTypes.arrayOf(PropTypes.shape()),
@@ -137,7 +121,7 @@ TemplateInput.propTypes = {
   prefix: PropTypes.node,
   input: PropTypes.shape().isRequired,
   noLabel: PropTypes.bool,
-  disabled: PropTypes.bool,
+  // disabled: PropTypes.bool,
   addonAfter: PropTypes.string,
   addonBefore: PropTypes.string,
   addonCustomAfter: PropTypes.node,

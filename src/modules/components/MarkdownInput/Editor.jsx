@@ -16,14 +16,14 @@ import stateFromMarkdown from './stateFromMarkdown';
 import clearEntityForRange from './clearEntityForRange';
 import './Editor.css';
 
-const mentionPlugin = createMentionPlugin({
-  entityMutability: 'IMMUTABLE',
-  mentionTrigger: '{',
-});
-
 class OurEditor extends React.Component {
   constructor(props) {
     super(props);
+
+    this.mentionPlugin = createMentionPlugin({
+      entityMutability: 'IMMUTABLE',
+      mentionTrigger: '{',
+    });
 
     this.state = {
       // Editor state is
@@ -143,7 +143,8 @@ class OurEditor extends React.Component {
   }
 
   render() {
-    const { MentionSuggestions } = mentionPlugin;
+    const { disableToolbar } = this.props;
+    const { MentionSuggestions } = this.mentionPlugin;
     const { editorState } = this.state;
     const selection = editorState.getSelection();
     const blockType = editorState
@@ -151,34 +152,38 @@ class OurEditor extends React.Component {
       .getBlockForKey(selection.getStartKey())
       .getType();
 
+    const editor = (
+      <Editor
+        editorState={this.state.editorState}
+        onChange={this.onChange}
+        plugins={[this.mentionPlugin]}
+        handleKeyCommand={this.handleKeyCommand}
+        placeholder="Enter a value..."
+        decorators={[LinkDecorator]}
+        ref={(e) => {
+          this.editor = e;
+        }}
+      />
+    );
+
     return (
       <div className="template-input">
-        <Toolbar
-          getEntityAtCursor={this.getEntityAtCursor}
-          selection={selection}
-          blockType={blockType}
-          undoSize={editorState.getUndoStack().size}
-          redoSize={editorState.getRedoStack().size}
-          onInlineClicked={this._onInlineClicked}
-          onBlockClicked={this._onBlockClicked}
-          onLinkClicked={this._onLinkClicked}
-          onUnlinkClicked={this._onUnlinkClicked}
-          onUndoClicked={() => this.onChange(EditorState.undo(editorState))}
-          onRedoClicked={() => this.onChange(EditorState.redo(editorState))}
-        />
-        <div className="template-editor">
-          <Editor
-            editorState={this.state.editorState}
-            onChange={this.onChange}
-            plugins={[mentionPlugin]}
-            handleKeyCommand={this.handleKeyCommand}
-            placeholder="Enter a value..."
-            decorators={[LinkDecorator]}
-            ref={(e) => {
-              this.editor = e;
-            }}
+        {!disableToolbar && (
+          <Toolbar
+            getEntityAtCursor={this.getEntityAtCursor}
+            selection={selection}
+            blockType={blockType}
+            undoSize={editorState.getUndoStack().size}
+            redoSize={editorState.getRedoStack().size}
+            onInlineClicked={this._onInlineClicked}
+            onBlockClicked={this._onBlockClicked}
+            onLinkClicked={this._onLinkClicked}
+            onUnlinkClicked={this._onUnlinkClicked}
+            onUndoClicked={() => this.onChange(EditorState.undo(editorState))}
+            onRedoClicked={() => this.onChange(EditorState.redo(editorState))}
           />
-        </div>
+        )}
+        {!disableToolbar ? <div className="template-editor">{editor}</div> : editor}
         <MentionSuggestions
           onSearchChange={this.onSearchChange}
           suggestions={this.state.suggestions}
@@ -193,11 +198,13 @@ OurEditor.propTypes = {
   input: PropTypes.shape().isRequired,
   options: PropTypes.arrayOf(PropTypes.shape()),
   onChange: PropTypes.func,
+  disableToolbar: PropTypes.bool,
 };
 
 OurEditor.defaultProps = {
   options: [],
   onChange: () => {},
+  disableToolbar: false,
 };
 
 export default OurEditor;
