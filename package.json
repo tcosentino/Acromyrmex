@@ -1,7 +1,7 @@
 {
   "name": "acromyrmex",
   "version": "0.1.23",
-  "main": "lib/index.jsx",
+  "main": "lib/index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/tcosentino/Acromyrmex.git"
