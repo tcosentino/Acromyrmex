@@ -75,6 +75,7 @@ class OurEditor extends React.Component {
   onChange(editorState) {
     const md = stateToMarkdown(editorState.getCurrentContent());
 
+    console.log(md.substr(0, md.length - 1));
     this.props.input.onChange(md.substr(0, md.length - 1));
     this.setState({ editorState });
   }
