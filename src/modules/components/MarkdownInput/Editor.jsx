@@ -143,7 +143,7 @@ class OurEditor extends React.Component {
   }
 
   render() {
-    const { disableToolbar } = this.props;
+    const { disableToolbar, className, onFocus, onBlur } = this.props;
     const { MentionSuggestions } = this.mentionPlugin;
     const { editorState } = this.state;
     const selection = editorState.getSelection();
@@ -160,6 +160,8 @@ class OurEditor extends React.Component {
         handleKeyCommand={this.handleKeyCommand}
         placeholder="Enter a value..."
         decorators={[LinkDecorator]}
+        onFocus={onFocus}
+        onBlur={onBlur}
         ref={(e) => {
           this.editor = e;
         }}
@@ -167,7 +169,7 @@ class OurEditor extends React.Component {
     );
 
     return (
-      <div className="template-input">
+      <div className={`editor-input ${className}`}>
         {!disableToolbar && (
           <Toolbar
             getEntityAtCursor={this.getEntityAtCursor}
@@ -199,12 +201,18 @@ OurEditor.propTypes = {
   options: PropTypes.arrayOf(PropTypes.shape()),
   onChange: PropTypes.func,
   disableToolbar: PropTypes.bool,
+  className: PropTypes.string,
+  onFocus: PropTypes.func,
+  onBlur: PropTypes.func,
 };
 
 OurEditor.defaultProps = {
   options: [],
   onChange: () => {},
   disableToolbar: false,
+  className: '',
+  onFocus: () => {},
+  onBlur: () => {},
 };
 
 export default OurEditor;

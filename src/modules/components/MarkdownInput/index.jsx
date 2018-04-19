@@ -1,7 +1,7 @@
 // from: https://gist.github.com/insin/bbf116e8ea10ef38447b
 import React from 'react';
 import PropTypes from 'prop-types';
-import { InputGroup } from 'react-bootstrap';
+import { InputGroup, HelpBlock } from 'react-bootstrap';
 import 'draft-js/dist/Draft.css';
 import Editor from './Editor';
 import FormField from '../FormField';
@@ -38,7 +38,19 @@ class MarkdownInput extends React.Component {
       type = 'datetime-local';
     }
 
-    let input = <Editor input={inputProps} options={options} />;
+    let input = (
+      <Editor
+        input={inputProps}
+        options={options}
+        className="markdown-input"
+        onFocus={() => {
+          this.setState({ focused: true });
+        }}
+        onBlur={() => {
+          this.setState({ focused: false });
+        }}
+      />
+    );
 
     if (addonBefore || addonAfter) {
       input = (
@@ -65,12 +77,16 @@ class MarkdownInput extends React.Component {
         label={label}
         prefix={prefix}
         meta={meta}
-        help={help}
+        help={help || "Press '{' to add data from previous steps."}
         vertical={vertical}
         noLabel={noLabel}
         maxCols={maxCols}
       >
         {input}
+        {/* the false here can be flipped to show it when developing */}
+        {(this.state.focused || false) && (
+          <HelpBlock>{"Press '{' to add data from previous steps."}</HelpBlock>
+        )}
       </FormField>
     );
   }

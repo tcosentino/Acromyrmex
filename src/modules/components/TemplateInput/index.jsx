@@ -1,7 +1,7 @@
 // from: https://gist.github.com/insin/bbf116e8ea10ef38447b
 import React from 'react';
 import PropTypes from 'prop-types';
-import { InputGroup, Col, Row, Panel } from 'react-bootstrap';
+import { InputGroup, Col, HelpBlock } from 'react-bootstrap';
 
 import FormField from '../FormField';
 import Editor from '../MarkdownInput/Editor';
@@ -57,7 +57,20 @@ class TemplateInput extends React.Component {
       type = 'datetime-local';
     }
 
-    let input = <Editor options={options} disableToolbar input={inputProps} />;
+    let input = (
+      <Editor
+        options={options}
+        disableToolbar
+        input={inputProps}
+        className="template-input"
+        onFocus={() => {
+          this.setState({ focused: true });
+        }}
+        onBlur={() => {
+          this.setState({ focused: false });
+        }}
+      />
+    );
 
     if (addonBefore || addonAfter) {
       input = (
@@ -92,15 +105,7 @@ class TemplateInput extends React.Component {
         {input}
         {/* the false here can be flipped to show it when developing */}
         {(this.state.focused || false) && (
-          <Panel
-            header="Enter a value, or select an option from a previous step:"
-            className="template-input-panel"
-          >
-            <Row className="option-scroller">
-              {options.length < 1 && <Col xs={12}>No options!</Col>}
-              {options.map(this.renderOption)}
-            </Row>
-          </Panel>
+          <HelpBlock>{"Press '{' to add data from previous steps."}</HelpBlock>
         )}
       </FormField>
     );
