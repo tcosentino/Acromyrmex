@@ -50,6 +50,23 @@ class OurEditor extends React.Component {
     this.getEntityAtCursor = this.getEntityAtCursor.bind(this);
   }
 
+  componentWillMount() {
+    const { input, options } = this.props;
+    const hasValue = input && input.value && input.value.length;
+    this.setState({ suggestions: options });
+    if (hasValue) {
+      this.onChange(
+        EditorState.push(
+          this.state.editorState,
+          EditorState.createWithContent(
+            stateFromMarkdown(input.value, options),
+            new MultiDecorator([new CompositeDecorator([LinkDecorator])]),
+          ).getCurrentContent(),
+        ),
+      );
+    }
+  }
+
   componentWillReceiveProps(nextProps) {
     const { input } = nextProps;
     const hasValue = input && input.value && input.value.length;
