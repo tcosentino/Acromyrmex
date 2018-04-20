@@ -1,0 +1,118 @@
+.editor-input {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-family: "Georgia", serif;
+  font-size: 14px;
+  padding: 5px;
+}
+
+.template-input {
+  min-height: 36px;
+  line-height: 20px;
+  padding: 6px 12px;
+}
+
+.template-editor {
+  border-top: 1px solid #ddd;
+  cursor: text;
+  margin-top: 5px;
+}
+
+.template-editor .public-DraftEditorPlaceholder-root,
+.template-editor .public-DraftEditor-content {
+  margin: 0 -5px -5px;
+  padding: 5px;
+}
+
+.template-editor .public-DraftEditor-content {
+  min-height: 60px;
+}
+
+.RichEditor-hidePlaceholder .public-DraftEditorPlaceholder-root {
+  display: none;
+}
+
+.template-editor .RichEditor-blockquote {
+  border-left: 5px solid #eee;
+  color: #666;
+  font-family: "Hoefler Text", "Georgia", serif;
+  font-style: italic;
+  margin: 16px 0;
+  padding: 10px 20px;
+}
+
+.template-editor .public-DraftStyleDefault-pre {
+  background-color: rgba(0, 0, 0, 0.05);
+  font-family: "Inconsolata", "Menlo", "Consolas", monospace;
+  font-size: 16px;
+  padding: 20px;
+}
+
+.RichEditor-controls {
+  font-family: "Helvetica", sans-serif;
+  font-size: 14px;
+  margin-bottom: 5px;
+  user-select: none;
+}
+
+.RichEditor-styleButton {
+  color: #999;
+  cursor: pointer;
+  margin-right: 16px;
+  padding: 2px 0;
+  display: inline-block;
+}
+
+.RichEditor-activeButton {
+  color: #5890ff;
+}
+
+.popover-content {
+  padding: 3px;
+}
+
+.mention {
+  display: table;
+  width: 100%;
+}
+
+.mention-thumb {
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+  color: black;
+  font-weight: bold;
+}
+
+.mention-thumb div {
+  width: 30px;
+  height: 30px;
+  font-size: 12px;
+  line-height: 30px;
+  background-color: #999999;
+  border-radius: 50%;
+  margin-top: -2px;
+}
+
+.mention-info {
+  display: table-cell;
+  vertical-align: middle;
+  width: 100%;
+  padding-left: 10px;
+  margin-top: -2px;
+}
+
+.mention-header {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mention-detail {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 80%;
+  color: #a7a7a7;
+}
+

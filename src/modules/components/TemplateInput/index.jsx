@@ -1,17 +1,17 @@
 // from: https://gist.github.com/insin/bbf116e8ea10ef38447b
-import React from "react";
-import PropTypes from "prop-types";
-// import { change }
-import { FormControl, InputGroup, Col, Row, Panel } from "react-bootstrap";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { InputGroup, Col, HelpBlock } from 'react-bootstrap';
 
-import FormField from "../FormField";
+import FormField from '../FormField';
+import Editor from '../MarkdownInput/Editor';
 
 class TemplateInput extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      focused: false
+      focused: false,
     };
 
     this.renderOption = this.renderOption.bind(this);
@@ -40,37 +40,34 @@ class TemplateInput extends React.Component {
       noLabel,
       vertical,
       options,
-      autoFocus,
+      // autoFocus,
       addonAfter,
       addonBefore,
       addonCustomBefore,
       addonCustomAfter,
       input: { ...inputProps },
       meta,
-      disabled,
-      maxCols
+      // disabled,
+      maxCols,
     } = this.props;
     let { type } = this.props;
 
     // alias
-    if (type === "datetime") {
-      type = "datetime-local";
+    if (type === 'datetime') {
+      type = 'datetime-local';
     }
 
     let input = (
-      <FormControl
-        type={type}
-        disabled={disabled}
-        autoFocus={autoFocus}
-        {...inputProps}
+      <Editor
+        options={options}
+        disableToolbar
+        input={inputProps}
+        className="template-input"
         onFocus={() => {
           this.setState({ focused: true });
         }}
         onBlur={() => {
-          // this delay lets clicking the box work
-          setTimeout(() => {
-            this.setState({ focused: false });
-          }, 250);
+          this.setState({ focused: false });
         }}
       />
     );
@@ -108,15 +105,7 @@ class TemplateInput extends React.Component {
         {input}
         {/* the false here can be flipped to show it when developing */}
         {(this.state.focused || false) && (
-          <Panel
-            header="Enter a value, or select an option from a previous step:"
-            className="template-input-panel"
-          >
-            <Row className="option-scroller">
-              {options.length < 1 && <Col xs={12}>No options!</Col>}
-              {options.map(this.renderOption)}
-            </Row>
-          </Panel>
+          <HelpBlock>{"Press '{' to add data from previous steps."}</HelpBlock>
         )}
       </FormField>
     );
@@ -129,7 +118,7 @@ TemplateInput.propTypes = {
   meta: PropTypes.shape().isRequired,
   onTemplateClicked: PropTypes.func,
   vertical: PropTypes.bool,
-  autoFocus: PropTypes.bool,
+  // autoFocus: PropTypes.bool,
   help: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   label: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
   options: PropTypes.arrayOf(PropTypes.shape()),
@@ -137,30 +126,30 @@ TemplateInput.propTypes = {
   prefix: PropTypes.node,
   input: PropTypes.shape().isRequired,
   noLabel: PropTypes.bool,
-  disabled: PropTypes.bool,
+  // disabled: PropTypes.bool,
   addonAfter: PropTypes.string,
   addonBefore: PropTypes.string,
   addonCustomAfter: PropTypes.node,
   addonCustomBefore: PropTypes.node,
-  maxCols: PropTypes.number
+  maxCols: PropTypes.number,
 };
 
 TemplateInput.defaultProps = {
   onTemplateClicked: () => {},
   disabled: false,
-  help: "",
+  help: '',
   autoFocus: false,
   options: [],
-  label: "",
+  label: '',
   vertical: false,
-  type: "text",
+  type: 'text',
   prefix: null,
   noLabel: false,
   addonAfter: null,
   addonBefore: null,
   addonCustomAfter: null,
   addonCustomBefore: null,
-  maxCols: 12
+  maxCols: 12,
 };
 
 export default TemplateInput;

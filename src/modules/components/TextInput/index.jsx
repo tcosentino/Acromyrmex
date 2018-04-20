@@ -1,11 +1,11 @@
 // from: https://gist.github.com/insin/bbf116e8ea10ef38447b
-import React from "react";
-import PropTypes from "prop-types";
-import { FormControl, InputGroup } from "react-bootstrap";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { FormControl, InputGroup } from 'react-bootstrap';
 
-import FormField from "../FormField";
+import FormField from '../FormField';
 
-const TextInput = props => {
+const TextInput = (props) => {
   const {
     help,
     label,
@@ -21,13 +21,13 @@ const TextInput = props => {
     input: { ...inputProps },
     meta,
     disabled,
-    maxCols
+    maxCols,
   } = props;
   let { type } = props;
 
   // alias
-  if (type === "datetime") {
-    type = "datetime-local";
+  if (type === 'datetime') {
+    type = 'datetime-local';
   }
 
   let input = (
@@ -38,7 +38,7 @@ const TextInput = props => {
       // bsSize="small"
       {...inputProps}
       onPaste={onPaste}
-      onDrop={e => {
+      onDrop={(e) => {
         if (e.dataTransfer.files.length) {
           inputProps.onDrop(e);
         }
@@ -48,7 +48,7 @@ const TextInput = props => {
 
   if (addonBefore || addonAfter) {
     input = (
-      <InputGroup style={{ width: "100%" }}>
+      <InputGroup style={{ width: '100%' }}>
         {addonBefore && <InputGroup.Addon>{addonBefore}</InputGroup.Addon>}
         {input}
         {addonAfter && <InputGroup.Addon>{addonAfter}</InputGroup.Addon>}
@@ -58,7 +58,7 @@ const TextInput = props => {
 
   if (addonCustomBefore || addonCustomAfter) {
     input = (
-      <InputGroup style={{ width: "100%" }}>
+      <InputGroup style={{ width: '100%' }}>
         {addonCustomBefore}
         {input}
         {addonCustomAfter}
@@ -99,16 +99,16 @@ TextInput.propTypes = {
   addonCustomAfter: PropTypes.node,
   addonCustomBefore: PropTypes.node,
   onPaste: PropTypes.func,
-  maxCols: PropTypes.number
+  maxCols: PropTypes.number,
 };
 
 TextInput.defaultProps = {
   disabled: false,
   autoFocus: false,
-  help: "",
-  label: "",
+  help: '',
+  label: '',
   vertical: false,
-  type: "text",
+  type: 'text',
   onPaste: () => {},
   prefix: null,
   noLabel: false,
@@ -116,7 +116,7 @@ TextInput.defaultProps = {
   addonBefore: null,
   addonCustomAfter: null,
   addonCustomBefore: null,
-  maxCols: 12
+  maxCols: 12,
 };
 
 export default TextInput;

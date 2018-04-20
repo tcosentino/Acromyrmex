@@ -2,7 +2,7 @@
 import { FormGroup, ControlLabel, HelpBlock, Col } from 'react-bootstrap';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Loading } from 'acromyrmex';
+import Loading from '../Loading';
 import HoverHelp from '../HoverHelp';
 
 const FIELD_EVENT_HANDLER = /^(?:on|handle)[A-Z]/;
@@ -12,7 +12,7 @@ const FIELD_EVENT_HANDLER = /^(?:on|handle)[A-Z]/;
  * determine if the field has changed.
  */
 function fieldShallowEquals(field, nextField) {
-  field.foreach(prop => {
+  field.foreach((prop) => {
     // Ignore event handlers, as they continually get recreated by redux-form
     if (!FIELD_EVENT_HANDLER.test(prop) && field[prop] !== nextField[prop]) {
       return false;
@@ -67,7 +67,7 @@ class FormField extends React.Component {
       meta: { error },
       loading,
       noLabel,
-      maxCols
+      maxCols,
     } = this.props;
 
     if (loading) {
@@ -123,7 +123,7 @@ FormField.propTypes = {
 
   // Loading state
   loading: PropTypes.bool,
-  children: PropTypes.node.isRequired
+  children: PropTypes.node.isRequired,
 };
 
 FormField.defaultProps = {
@@ -141,7 +141,7 @@ FormField.defaultProps = {
 
   inputClass: '',
   field: {},
-  inputProps: {}
+  inputProps: {},
 };
 
 module.exports = FormField;
