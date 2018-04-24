@@ -44,6 +44,14 @@ class SimpleForm extends React.Component {
         </div>
         <div>
           <Field
+            name="empty-template"
+            label="Empty Template"
+            component={TemplateInput}
+            options={[]}
+          />
+        </div>
+        <div>
+          <Field
             name="markdown"
             label="Markdown"
             component={MarkdownInput}

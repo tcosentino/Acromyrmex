@@ -203,11 +203,13 @@ class OurEditor extends React.Component {
           />
         )}
         {!disableToolbar ? <div className="template-editor">{editor}</div> : editor}
-        <MentionSuggestions
-          onSearchChange={this.onSearchChange}
-          suggestions={this.state.suggestions}
-          entryComponent={Mention}
-        />
+        <div className="mention-suggestions">
+          <MentionSuggestions
+            onSearchChange={this.onSearchChange}
+            suggestions={this.state.suggestions}
+            entryComponent={Mention}
+          />
+        </div>
       </div>
     );
   }

@@ -71,6 +71,11 @@
   padding: 3px;
 }
 
+.mention-suggestions {
+  z-index: 10000;  
+  position: relative;
+}
+
 .mention {
   display: table;
   width: 100%;

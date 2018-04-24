@@ -104,9 +104,10 @@ class TemplateInput extends React.Component {
       >
         {input}
         {/* the false here can be flipped to show it when developing */}
-        {(this.state.focused || false) && (
-          <HelpBlock>{"Press '{' to add data from previous steps."}</HelpBlock>
-        )}
+        {(this.state.focused || false) &&
+          options.length > 0 && (
+            <HelpBlock>{"Press '{' to add data from previous steps."}</HelpBlock>
+          )}
       </FormField>
     );
   }
