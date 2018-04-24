@@ -4,6 +4,7 @@ import { Field, reduxForm } from 'redux-form';
 import MarkdownInput from '../../modules/components/MarkdownInput';
 import options from './options';
 import TemplateInput from '../../modules/components/TemplateInput';
+import SelectInput from '../../modules/components/SelectInput';
 
 class SimpleForm extends React.Component {
   constructor(props) {
@@ -25,6 +26,14 @@ class SimpleForm extends React.Component {
 
     return (
       <form onSubmit={handleSubmit}>
+        <div>
+          <Field
+            name="select"
+            label="Select"
+            component={SelectInput}
+            options={[{ id: '1', name: 'option 1' }, { id: '2', name: 'option 2' }]}
+          />
+        </div>
         <div>
           <Field
             name="template"

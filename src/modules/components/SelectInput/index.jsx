@@ -3,6 +3,7 @@ import _ from 'underscore';
 import React from 'react';
 import PropTypes from 'prop-types';
 import 'react-select/dist/react-select.css';
+import './style.css';
 import Loading from '../Loading';
 import Select from '../TetheredSelectWrapper';
 import ConfirmModal from '../ConfirmModal';
