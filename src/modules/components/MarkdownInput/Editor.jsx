@@ -2,11 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Editor from 'draft-js-plugins-editor';
 import { EditorState, RichUtils, CompositeDecorator } from 'draft-js';
-import createMentionPlugin, { defaultSuggestionsFilter } from 'draft-js-mention-plugin';
+import createMentionPlugin from 'draft-js-mention-plugin';
 import { ENTITY_TYPE } from 'draft-js-utils';
 import MultiDecorator from 'draft-js-plugins-editor/lib/Editor/MultiDecorator';
 import 'draft-js/dist/Draft.css';
 import 'draft-js-mention-plugin/lib/plugin.css';
+import suggestionFilter from './suggestionsFilter';
 import Mention from './Mention';
 import Toolbar from './Toolbar';
 import getEntityAtCursor from './getEntityAtCursor';
@@ -102,7 +103,7 @@ class OurEditor extends React.Component {
 
   onSearchChange({ value }) {
     this.setState({
-      suggestions: defaultSuggestionsFilter(value, this.props.options),
+      suggestions: suggestionFilter(value, this.props.options),
     });
   }
 
@@ -203,7 +204,7 @@ class OurEditor extends React.Component {
           />
         )}
         {!disableToolbar ? <div className="template-editor">{editor}</div> : editor}
-        <div className="mention-suggestions">
+        <div className="mention-suggestions clearFix">
           <MentionSuggestions
             onSearchChange={this.onSearchChange}
             suggestions={this.state.suggestions}

@@ -76,6 +76,11 @@
   position: relative;
 }
 
+.mention-suggestions > div {
+  max-height: 300px;
+  overflow: scroll;
+}
+
 .mention {
   display: table;
   width: 100%;
