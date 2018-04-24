@@ -77,7 +77,7 @@
 }
 
 .mention-suggestions > div {
-  max-height: 300px;
+  max-height: 250px;
   overflow: scroll;
 }
 
