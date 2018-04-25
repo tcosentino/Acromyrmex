@@ -140,8 +140,6 @@ class SelectInput extends React.Component {
       value = enableEmpty || !myOptions[0] ? null : myOptions[0].value;
     }
 
-    console.log(inputProps);
-
     const selectInput = loading ? (
       <Loading />
     ) : (
