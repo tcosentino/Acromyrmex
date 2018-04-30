@@ -136,7 +136,7 @@ class SelectInput extends React.Component {
     let value = this.getValue();
     const valFound = this.valueInOptions();
 
-    if (!multi && !valFound) {
+    if (!multi && !valFound && !loading) {
       value = enableEmpty || !myOptions[0] ? null : myOptions[0].value;
     }
 
