@@ -2,9 +2,12 @@
 import React from 'react';
 import moment from 'moment';
 import PropTypes from 'prop-types';
-import DatePicker from 'react-datepicker';
+import Calendar from 'rc-calendar';
+import DatePicker from 'rc-calendar/lib/Picker';
+import 'rc-calendar/assets/index.css';
 import { InputGroup } from 'react-bootstrap';
-import 'react-datepicker/dist/react-datepicker.css';
+import 'rc-time-picker/assets/index.css';
+import TimePickerPanel from 'rc-time-picker/lib/Panel';
 
 import './style.css';
 import FormField from '../FormField';
@@ -17,46 +20,55 @@ const DateInput = (props) => {
     noLabel,
     vertical,
     autoFocus,
-    onPaste,
     addonAfter,
     addonBefore,
     addonCustomBefore,
     addonCustomAfter,
-    input: { value, ...inputProps },
+    input: { ...inputProps },
     meta,
     disabled,
     dateFormat,
     maxCols,
+    showTimeSelect,
   } = props;
 
-  console.log(value);
+  const timePickerElement = <TimePickerPanel defaultValue={moment('00:00:00', 'HH:mm:ss')} />;
+
+  const calendar = (
+    <Calendar
+      autoFocus={autoFocus}
+      // bsSize="small"
+      format={dateFormat}
+      timePicker={showTimeSelect ? timePickerElement : null}
+      style={{ zIndex: 10000 }}
+    />
+  );
+
+  console.log(disabled);
 
   let input = (
-    <div style={{ width: '100%' }}>
-      <DatePicker
-        disabled={disabled}
-        autoFocus={autoFocus}
-        // bsSize="small"
-        {...inputProps}
-        selected={value ? moment(value) : null}
-        dateFormat={dateFormat}
-        onChange={(date) => {
-          inputProps.onChange(date ? moment(date).toDate() : '');
-        }}
-        onBlur={(date) => {
-          inputProps.onChange(
-            date.target.value ? moment(date.target.value, dateFormat).toDate() : '',
-          );
-        }}
-        onPaste={onPaste}
-        onDrop={(e) => {
-          if (e.dataTransfer.files.length) {
-            inputProps.onDrop(e);
-          }
-        }}
-        className="form-control"
-      />
-    </div>
+    <DatePicker
+      animation="slide-up"
+      disabled={disabled}
+      calendar={calendar}
+      value={inputProps.value ? moment(inputProps.value) : null}
+      onChange={(date) => {
+        inputProps.onChange(date ? moment(date).toDate() : '');
+      }}
+    >
+      {({ value }) => (
+        <span>
+          <input
+            placeholder="please select"
+            disabled={disabled}
+            readOnly
+            tabIndex="-1"
+            className="form-control form-control-no-readonly"
+            value={(value && value.format(dateFormat)) || ''}
+          />
+        </span>
+      )}
+    </DatePicker>
   );
 
   if (addonBefore || addonAfter) {
@@ -110,11 +122,11 @@ DateInput.propTypes = {
   addonBefore: PropTypes.string,
   addonCustomAfter: PropTypes.node,
   addonCustomBefore: PropTypes.node,
-  onPaste: PropTypes.func,
   maxCols: PropTypes.number,
 
   // specific to the date picker
   dateFormat: PropTypes.string,
+  showTimeSelect: PropTypes.bool,
 };
 
 DateInput.defaultProps = {
@@ -132,6 +144,7 @@ DateInput.defaultProps = {
   addonCustomBefore: null,
   maxCols: 12,
   dateFormat: 'LLL',
+  showTimeSelect: true,
 };
 
 export default DateInput;

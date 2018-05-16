@@ -1,7 +1,3 @@
-.react-datepicker-popper {
-  z-index: 10000;
-}
-
-.react-datepicker-wrapper, .react-datepicker__input-container {
-  width: 100%;
+.form-control-no-readonly:read-only {
+  background-color: inherit;
 }
