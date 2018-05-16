@@ -6,6 +6,7 @@ import options from './options';
 import TemplateInput from '../../modules/components/TemplateInput';
 import SelectInput from '../../modules/components/SelectInput';
 import DateInput from '../../modules/components/DateInput';
+import TextInput from '../../modules/components/TextInput';
 
 class SimpleForm extends React.Component {
   constructor(props) {
@@ -27,6 +28,9 @@ class SimpleForm extends React.Component {
 
     return (
       <form onSubmit={handleSubmit}>
+        <div>
+          <Field name="text" label="Text" component={TextInput} />
+        </div>
         <div>
           <Field
             name="select"

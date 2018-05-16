@@ -6,6 +6,7 @@ import DatePicker from 'react-datepicker';
 import { InputGroup } from 'react-bootstrap';
 import 'react-datepicker/dist/react-datepicker.css';
 
+import './style.css';
 import FormField from '../FormField';
 
 const DateInput = (props) => {
@@ -31,27 +32,31 @@ const DateInput = (props) => {
   console.log(value);
 
   let input = (
-    <DatePicker
-      disabled={disabled}
-      autoFocus={autoFocus}
-      // bsSize="small"
-      className="form-control"
-      {...inputProps}
-      selected={value ? moment(value) : null}
-      dateFormat={dateFormat}
-      onChange={(date) => {
-        inputProps.onChange(moment(date).toDate());
-      }}
-      onBlur={(date) => {
-        inputProps.onChange(moment(date.target.value, dateFormat).toDate());
-      }}
-      onPaste={onPaste}
-      onDrop={(e) => {
-        if (e.dataTransfer.files.length) {
-          inputProps.onDrop(e);
-        }
-      }}
-    />
+    <div style={{ width: '100%' }}>
+      <DatePicker
+        disabled={disabled}
+        autoFocus={autoFocus}
+        // bsSize="small"
+        {...inputProps}
+        selected={value ? moment(value) : null}
+        dateFormat={dateFormat}
+        onChange={(date) => {
+          inputProps.onChange(date ? moment(date).toDate() : '');
+        }}
+        onBlur={(date) => {
+          inputProps.onChange(
+            date.target.value ? moment(date.target.value, dateFormat).toDate() : '',
+          );
+        }}
+        onPaste={onPaste}
+        onDrop={(e) => {
+          if (e.dataTransfer.files.length) {
+            inputProps.onDrop(e);
+          }
+        }}
+        className="form-control"
+      />
+    </div>
   );
 
   if (addonBefore || addonAfter) {
