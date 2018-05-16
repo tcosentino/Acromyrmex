@@ -1,7 +1,10 @@
 // from: https://gist.github.com/insin/bbf116e8ea10ef38447b
 import React from 'react';
+import moment from 'moment';
 import PropTypes from 'prop-types';
-import { FormControl, InputGroup } from 'react-bootstrap';
+import DatePicker from 'react-datepicker';
+import { InputGroup } from 'react-bootstrap';
+import 'react-datepicker/dist/react-datepicker.css';
 
 import FormField from '../FormField';
 
@@ -18,25 +21,30 @@ const DateInput = (props) => {
     addonBefore,
     addonCustomBefore,
     addonCustomAfter,
-    input: { ...inputProps },
+    input: { value, ...inputProps },
     meta,
     disabled,
+    dateFormat,
     maxCols,
   } = props;
-  let { type } = props;
 
-  // alias
-  if (type === 'datetime') {
-    type = 'datetime-local';
-  }
+  console.log(value);
 
   let input = (
-    <FormControl
+    <DatePicker
       disabled={disabled}
       autoFocus={autoFocus}
       // bsSize="small"
+      className="form-control"
       {...inputProps}
-      type={'datetime-local'}
+      selected={value ? moment(value) : null}
+      dateFormat={dateFormat}
+      onChange={(date) => {
+        inputProps.onChange(moment(date).toDate());
+      }}
+      onBlur={(date) => {
+        inputProps.onChange(moment(date.target.value, dateFormat).toDate());
+      }}
       onPaste={onPaste}
       onDrop={(e) => {
         if (e.dataTransfer.files.length) {
@@ -89,7 +97,6 @@ DateInput.propTypes = {
   autoFocus: PropTypes.bool,
   help: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   label: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
-  type: PropTypes.string,
   prefix: PropTypes.node,
   input: PropTypes.shape().isRequired,
   noLabel: PropTypes.bool,
@@ -100,6 +107,9 @@ DateInput.propTypes = {
   addonCustomBefore: PropTypes.node,
   onPaste: PropTypes.func,
   maxCols: PropTypes.number,
+
+  // specific to the date picker
+  dateFormat: PropTypes.string,
 };
 
 DateInput.defaultProps = {
@@ -108,7 +118,6 @@ DateInput.defaultProps = {
   help: '',
   label: '',
   vertical: false,
-  type: 'text',
   onPaste: () => {},
   prefix: null,
   noLabel: false,
@@ -117,6 +126,7 @@ DateInput.defaultProps = {
   addonCustomAfter: null,
   addonCustomBefore: null,
   maxCols: 12,
+  dateFormat: 'LLL',
 };
 
 export default DateInput;
