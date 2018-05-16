@@ -5,6 +5,7 @@ import MarkdownInput from '../../modules/components/MarkdownInput';
 import options from './options';
 import TemplateInput from '../../modules/components/TemplateInput';
 import SelectInput from '../../modules/components/SelectInput';
+import DateInput from '../../modules/components/DateInput';
 
 class SimpleForm extends React.Component {
   constructor(props) {
@@ -49,6 +50,9 @@ class SimpleForm extends React.Component {
             component={TemplateInput}
             options={[]}
           />
+        </div>
+        <div>
+          <Field name="date" label="Date Input" component={DateInput} />
         </div>
         <div>
           <Field
