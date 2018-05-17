@@ -10,6 +10,12 @@ const Mention = (props) => {
   delete transferProps.isFocused;
   delete transferProps.searchValue;
 
+  if (!mention.get) {
+    mention.get = function get(key) {
+      return this[key];
+    };
+  }
+
   return (
     <div {...transferProps}>
       <div className="mention">

@@ -1,3 +1,40 @@
 .form-control-no-readonly:read-only {
   background-color: inherit;
 }
+
+.datetime-options {
+  text-align: left;
+  padding-left: 10px;
+  padding-right: 10px;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+}
+
+.datetime-options-list {
+  padding-top: 5px;
+  max-height: 250px;
+  overflow: auto;
+}
+
+.datetime-options .mention {
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.datetime-options .mention:hover {
+  cursor: pointer;
+  color: #677584;
+  background: #edf5fd;
+}
+
+.form-control-template-value {
+    color: #575f67;
+    cursor: pointer;
+    display: inline-block;
+    background: #e6f3ff;
+    padding-left: 2px;
+    padding-right: 2px;
+    border-radius: 2px;
+    text-decoration: none;
+}
