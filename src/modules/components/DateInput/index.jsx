@@ -69,6 +69,7 @@ class DateInput extends React.Component {
         autoFocus={autoFocus}
         // bsSize="small"
         format={format}
+        showDateInput={false}
         timePicker={showTimeSelect ? timePickerElement : null}
         style={{ zIndex: 10000 }}
         {...modeProp}
