@@ -38,3 +38,11 @@
     border-radius: 2px;
     text-decoration: none;
 }
+
+.time-picker .rc-calendar-time-picker-btn {
+  display: none;
+}
+
+.rc-time-picker-panel-select {
+  max-height: none;
+}

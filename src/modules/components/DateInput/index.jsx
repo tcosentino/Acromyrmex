@@ -40,15 +40,30 @@ class DateInput extends React.Component {
       meta,
       disabled,
       dateFormat,
-      options,
+      timeFormat,
       dateTimeFormat,
+      options,
       maxCols,
       showTimeSelect,
+      showDateSelect,
     } = this.props;
+
+    if (!showTimeSelect && !showDateSelect) {
+      return (
+        <span className="text-danger">
+          Must enable <code>showTimeSelect</code> or <code>showDateSelect</code>
+        </span>
+      );
+    }
 
     const timePickerElement = <TimePickerPanel defaultValue={moment('00:00:00', 'HH:mm:ss')} />;
 
-    const format = showTimeSelect ? dateTimeFormat : dateFormat;
+    const modeProp = {};
+    let format = showTimeSelect ? dateTimeFormat : dateFormat;
+    if (!showDateSelect) {
+      modeProp.mode = 'time';
+      format = timeFormat;
+    }
     const calendar = (
       <Calendar
         autoFocus={autoFocus}
@@ -56,6 +71,8 @@ class DateInput extends React.Component {
         format={format}
         timePicker={showTimeSelect ? timePickerElement : null}
         style={{ zIndex: 10000 }}
+        {...modeProp}
+        className={!showDateSelect ? 'time-picker' : ''}
         renderFooter={() => {
           if (!options) {
             return null;
@@ -189,8 +206,10 @@ DateInput.propTypes = {
 
   // specific to the date picker
   dateFormat: PropTypes.string,
+  timeFormat: PropTypes.string,
   dateTimeFormat: PropTypes.string,
   showTimeSelect: PropTypes.bool,
+  showDateSelect: PropTypes.bool,
 };
 
 DateInput.defaultProps = {
@@ -208,9 +227,11 @@ DateInput.defaultProps = {
   addonCustomBefore: null,
   options: null,
   maxCols: 12,
+  timeFormat: 'LT',
   dateFormat: 'LL',
   dateTimeFormat: 'LLL',
   showTimeSelect: true,
+  showDateSelect: true,
 };
 
 export default DateInput;

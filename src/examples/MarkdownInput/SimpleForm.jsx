@@ -63,6 +63,15 @@ class SimpleForm extends React.Component {
         </div>
         <div>
           <Field
+            name="time"
+            label="Time Input"
+            component={DateInput}
+            showTimeSelect
+            showDateSelect={false}
+          />
+        </div>
+        <div>
+          <Field
             name="datetime-options"
             label="Date Input w/ options"
             component={DateInput}
