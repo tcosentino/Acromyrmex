@@ -103,7 +103,7 @@ class DateInput extends React.Component {
     let valueToUse = null;
 
     let m = null;
-    if (_.isObject(inputProps.value)) {
+    if (_.isObject(inputProps.value) || _.isString(inputProps.value)) {
       m = moment(inputProps.value);
     }
 
