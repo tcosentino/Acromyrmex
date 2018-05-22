@@ -164,6 +164,10 @@ class SelectInput extends React.Component {
       confirm,
       confirmMessage,
       maxCols,
+      addonAfter,
+      addonBefore,
+      addonCustomBefore,
+      addonCustomAfter,
     } = this.props;
 
     const myOptions = this.getOptions();
@@ -216,6 +220,10 @@ class SelectInput extends React.Component {
         noLabel={noLabel}
         loading={loading}
         maxCols={maxCols}
+        addonAfter={addonAfter}
+        addonBefore={addonBefore}
+        addonCustomAfter={addonCustomAfter}
+        addonCustomBefore={addonCustomBefore}
       >
         {selectInput}
         <ConfirmModal
@@ -259,6 +267,10 @@ SelectInput.propTypes = {
   optionRenderer: PropTypes.func,
   valueRenderer: PropTypes.func,
   maxCols: PropTypes.number,
+  addonAfter: PropTypes.string,
+  addonBefore: PropTypes.string,
+  addonCustomAfter: PropTypes.node,
+  addonCustomBefore: PropTypes.node,
 };
 
 SelectInput.defaultProps = {
@@ -283,6 +295,10 @@ SelectInput.defaultProps = {
   templateOptions: [],
   maxCols: 12,
   onChangeAction: () => {},
+  addonAfter: null,
+  addonBefore: null,
+  addonCustomAfter: null,
+  addonCustomBefore: null,
 };
 
 module.exports = SelectInput;

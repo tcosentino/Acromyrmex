@@ -1,7 +1,7 @@
 // from: https://gist.github.com/insin/bbf116e8ea10ef38447b
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormControl, InputGroup } from 'react-bootstrap';
+import { FormControl } from 'react-bootstrap';
 
 import FormField from '../FormField';
 
@@ -30,42 +30,6 @@ const TextInput = (props) => {
     type = 'datetime-local';
   }
 
-  let input = (
-    <FormControl
-      type={type}
-      disabled={disabled}
-      autoFocus={autoFocus}
-      // bsSize="small"
-      {...inputProps}
-      onPaste={onPaste}
-      onDrop={(e) => {
-        if (e.dataTransfer.files.length) {
-          inputProps.onDrop(e);
-        }
-      }}
-    />
-  );
-
-  if (addonBefore || addonAfter) {
-    input = (
-      <InputGroup style={{ width: '100%' }}>
-        {addonBefore && <InputGroup.Addon>{addonBefore}</InputGroup.Addon>}
-        {input}
-        {addonAfter && <InputGroup.Addon>{addonAfter}</InputGroup.Addon>}
-      </InputGroup>
-    );
-  }
-
-  if (addonCustomBefore || addonCustomAfter) {
-    input = (
-      <InputGroup style={{ width: '100%' }}>
-        {addonCustomBefore}
-        {input}
-        {addonCustomAfter}
-      </InputGroup>
-    );
-  }
-
   return (
     <FormField
       label={label}
@@ -75,8 +39,24 @@ const TextInput = (props) => {
       vertical={vertical}
       noLabel={noLabel}
       maxCols={maxCols}
+      addonAfter={addonAfter}
+      addonBefore={addonBefore}
+      addonCustomAfter={addonCustomAfter}
+      addonCustomBefore={addonCustomBefore}
     >
-      {input}
+      <FormControl
+        type={type}
+        disabled={disabled}
+        autoFocus={autoFocus}
+        // bsSize="small"
+        {...inputProps}
+        onPaste={onPaste}
+        onDrop={(e) => {
+          if (e.dataTransfer.files.length) {
+            inputProps.onDrop(e);
+          }
+        }}
+      />
     </FormField>
   );
 };

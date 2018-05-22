@@ -1,7 +1,7 @@
 // from: https://gist.github.com/insin/bbf116e8ea10ef38447b
 import React from 'react';
 import PropTypes from 'prop-types';
-import { InputGroup, Col, HelpBlock } from 'react-bootstrap';
+import { Col, HelpBlock } from 'react-bootstrap';
 
 import FormField from '../FormField';
 import Editor from '../MarkdownInput/Editor';
@@ -57,41 +57,6 @@ class TemplateInput extends React.Component {
       type = 'datetime-local';
     }
 
-    let input = (
-      <Editor
-        options={options}
-        disableToolbar
-        input={inputProps}
-        className="template-input"
-        onFocus={() => {
-          this.setState({ focused: true });
-        }}
-        onBlur={() => {
-          this.setState({ focused: false });
-        }}
-      />
-    );
-
-    if (addonBefore || addonAfter) {
-      input = (
-        <InputGroup>
-          {addonBefore && <InputGroup.Addon>{addonBefore}</InputGroup.Addon>}
-          {input}
-          {addonAfter && <InputGroup.Addon>{addonAfter}</InputGroup.Addon>}
-        </InputGroup>
-      );
-    }
-
-    if (addonCustomBefore || addonCustomAfter) {
-      input = (
-        <InputGroup>
-          {addonCustomBefore}
-          {input}
-          {addonCustomAfter}
-        </InputGroup>
-      );
-    }
-
     return (
       <FormField
         label={label}
@@ -101,8 +66,23 @@ class TemplateInput extends React.Component {
         vertical={vertical}
         noLabel={noLabel}
         maxCols={maxCols}
+        addonAfter={addonAfter}
+        addonBefore={addonBefore}
+        addonCustomAfter={addonCustomAfter}
+        addonCustomBefore={addonCustomBefore}
       >
-        {input}
+        <Editor
+          options={options}
+          disableToolbar
+          input={inputProps}
+          className="template-input"
+          onFocus={() => {
+            this.setState({ focused: true });
+          }}
+          onBlur={() => {
+            this.setState({ focused: false });
+          }}
+        />
         {/* the false here can be flipped to show it when developing */}
         {(this.state.focused || false) &&
           options.length > 0 && (

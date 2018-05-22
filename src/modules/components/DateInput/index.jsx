@@ -6,7 +6,6 @@ import PropTypes from 'prop-types';
 import Calendar from 'rc-calendar';
 import DatePicker from 'rc-calendar/lib/Picker';
 import 'rc-calendar/assets/index.css';
-import { InputGroup } from 'react-bootstrap';
 import 'rc-time-picker/assets/index.css';
 import TimePickerPanel from 'rc-time-picker/lib/Panel';
 
@@ -116,65 +115,6 @@ class DateInput extends React.Component {
       valueToUse = m;
     }
 
-    let input = (
-      <DatePicker
-        animation="slide-up"
-        disabled={disabled}
-        calendar={calendar}
-        value={valueToUse}
-        onOpenChange={(open) => {
-          this.setState({ open });
-        }}
-        open={this.state.open}
-        onChange={(date) => {
-          inputProps.onChange(date ? moment(date).toDate() : '');
-          this.setState({ optionSelected: false });
-        }}
-      >
-        {({ value }) => {
-          if (!this.state.optionSelected) {
-            return (
-              <input
-                placeholder="please select"
-                disabled={disabled}
-                readOnly
-                tabIndex="-1"
-                className="form-control form-control-no-readonly"
-                value={(value && value.format(format)) || ''}
-              />
-            );
-          }
-
-          const myOption = options.find(o => o.textValue === inputProps.value);
-          return (
-            <span className="form-control">
-              <span className="form-control-template-value">{myOption ? myOption.name : ''}</span>
-            </span>
-          );
-        }}
-      </DatePicker>
-    );
-
-    if (addonBefore || addonAfter) {
-      input = (
-        <InputGroup style={{ width: '100%' }}>
-          {addonBefore && <InputGroup.Addon>{addonBefore}</InputGroup.Addon>}
-          {input}
-          {addonAfter && <InputGroup.Addon>{addonAfter}</InputGroup.Addon>}
-        </InputGroup>
-      );
-    }
-
-    if (addonCustomBefore || addonCustomAfter) {
-      input = (
-        <InputGroup style={{ width: '100%' }}>
-          {addonCustomBefore}
-          {input}
-          {addonCustomAfter}
-        </InputGroup>
-      );
-    }
-
     return (
       <FormField
         label={label}
@@ -184,8 +124,47 @@ class DateInput extends React.Component {
         vertical={vertical}
         noLabel={noLabel}
         maxCols={maxCols}
+        addonAfter={addonAfter}
+        addonBefore={addonBefore}
+        addonCustomAfter={addonCustomAfter}
+        addonCustomBefore={addonCustomBefore}
       >
-        {input}
+        <DatePicker
+          animation="slide-up"
+          disabled={disabled}
+          calendar={calendar}
+          value={valueToUse}
+          onOpenChange={(open) => {
+            this.setState({ open });
+          }}
+          open={this.state.open}
+          onChange={(date) => {
+            inputProps.onChange(date ? moment(date).toDate() : '');
+            this.setState({ optionSelected: false });
+          }}
+        >
+          {({ value }) => {
+            if (!this.state.optionSelected) {
+              return (
+                <input
+                  placeholder="please select"
+                  disabled={disabled}
+                  readOnly
+                  tabIndex="-1"
+                  className="form-control form-control-no-readonly"
+                  value={(value && value.format(format)) || ''}
+                />
+              );
+            }
+
+            const myOption = options.find(o => o.textValue === inputProps.value);
+            return (
+              <span className="form-control">
+                <span className="form-control-template-value">{myOption ? myOption.name : ''}</span>
+              </span>
+            );
+          }}
+        </DatePicker>
       </FormField>
     );
   }

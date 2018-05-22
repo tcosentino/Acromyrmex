@@ -105,6 +105,16 @@ class SimpleForm extends React.Component {
             component={SelectInput}
             options={[{ id: '1', name: 'true' }, { id: '2', name: 'false' }]}
             templateOptions={this.state.options}
+            addonCustomBefore={
+              <Field
+                name={'date-options.queryType'}
+                component={SelectInput}
+                disabled
+                label={'Type of filter'}
+                options={[{ id: '0', name: '=' }]}
+                addon
+              />
+            }
           />
         </div>
         <div>

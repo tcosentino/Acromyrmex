@@ -1,5 +1,5 @@
 // from: https://gist.github.com/insin/bbf116e8ea10ef38447b
-import { FormGroup, ControlLabel, HelpBlock, Col } from 'react-bootstrap';
+import { FormGroup, ControlLabel, HelpBlock, Col, InputGroup } from 'react-bootstrap';
 import React from 'react';
 import PropTypes from 'prop-types';
 import Loading from '../Loading';
@@ -68,6 +68,10 @@ class FormField extends React.Component {
       loading,
       noLabel,
       maxCols,
+      addonBefore,
+      addonAfter,
+      addonCustomBefore,
+      addonCustomAfter,
     } = this.props;
 
     if (loading) {
@@ -83,6 +87,27 @@ class FormField extends React.Component {
     const width = this.calculateWidth();
     const offset = maxCols - width;
 
+    let input = this.props.children;
+    if (addonBefore || addonAfter) {
+      input = (
+        <InputGroup style={{ width: '100%' }}>
+          {addonBefore && <InputGroup.Addon>{addonBefore}</InputGroup.Addon>}
+          {input}
+          {addonAfter && <InputGroup.Addon>{addonAfter}</InputGroup.Addon>}
+        </InputGroup>
+      );
+    }
+
+    if (addonCustomBefore || addonCustomAfter) {
+      input = (
+        <InputGroup style={{ width: '100%' }}>
+          {addonCustomBefore}
+          {input}
+          {addonCustomAfter}
+        </InputGroup>
+      );
+    }
+
     return (
       <FormGroup className="clearfix" validationState={validation}>
         {!noLabel && (
@@ -95,7 +120,7 @@ class FormField extends React.Component {
           </Col>
         )}
         <Col xs={maxCols} md={width}>
-          {this.props.children}
+          {input}
         </Col>
         <Col xs={maxCols} md={width} mdOffset={offset}>
           {error && <HelpBlock>{error}</HelpBlock>}
@@ -124,6 +149,12 @@ FormField.propTypes = {
   // Loading state
   loading: PropTypes.bool,
   children: PropTypes.node.isRequired,
+
+  // addons for inputs
+  addonAfter: PropTypes.string,
+  addonBefore: PropTypes.string,
+  addonCustomAfter: PropTypes.node,
+  addonCustomBefore: PropTypes.node,
 };
 
 FormField.defaultProps = {
@@ -142,6 +173,12 @@ FormField.defaultProps = {
   inputClass: '',
   field: {},
   inputProps: {},
+
+  // addons for inputs
+  addonAfter: null,
+  addonBefore: null,
+  addonCustomAfter: null,
+  addonCustomBefore: null,
 };
 
 module.exports = FormField;
