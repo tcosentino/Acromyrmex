@@ -13,3 +13,4 @@ export { default as MarkdownInput } from './components/MarkdownInput';
 export { default as StaticField } from './components/StaticField';
 
 export { default as TemplateInput } from './components/TemplateInput';
+export { default as DateInput } from './components/DateInput';
