@@ -81,11 +81,21 @@ class SimpleForm extends React.Component {
         </div>
         <div>
           <Field
-            name="date-options"
+            name="date-options.value"
             label="Date Input w/ options"
             component={DateInput}
             showTimeSelect={false}
             options={this.state.options}
+            addonCustomBefore={
+              <Field
+                name={'date-options.queryType'}
+                component={SelectInput}
+                disabled
+                label={'Type of filter'}
+                options={[{ id: '0', name: '=' }]}
+                addon
+              />
+            }
           />
         </div>
         <div>

@@ -75,7 +75,7 @@ class DateInput extends React.Component {
         {...modeProp}
         className={!showDateSelect ? 'time-picker' : ''}
         renderFooter={() => {
-          if (!options) {
+          if (!options || !options.length) {
             return null;
           }
 
@@ -126,9 +126,9 @@ class DateInput extends React.Component {
           this.setState({ optionSelected: false });
         }}
       >
-        {({ value }) => (
-          <span>
-            {!this.state.optionSelected && (
+        {({ value }) => {
+          if (!this.state.optionSelected) {
+            return (
               <input
                 placeholder="please select"
                 disabled={disabled}
@@ -137,16 +137,16 @@ class DateInput extends React.Component {
                 className="form-control form-control-no-readonly"
                 value={(value && value.format(format)) || ''}
               />
-            )}
-            {this.state.optionSelected && (
-              <span className="form-control">
-                <span className="form-control-template-value">
-                  {options.find(o => o.textValue === inputProps.value).name}
-                </span>
+            );
+          }
+          return (
+            <span className="form-control">
+              <span className="form-control-template-value">
+                {options.find(o => o.textValue === inputProps.value).name}
               </span>
-            )}
-          </span>
-        )}
+            </span>
+          );
+        }}
       </DatePicker>
     );
 
