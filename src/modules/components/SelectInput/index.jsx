@@ -9,8 +9,17 @@ import Select from '../TetheredSelectWrapper';
 import ConfirmModal from '../ConfirmModal';
 
 import FormField from '../FormField';
+import Mention from '../MarkdownInput/Mention';
 
 class SelectInput extends React.Component {
+  static templateValueRenderer(option) {
+    if (option.textValue) {
+      return <span className="form-control-template-value">{option.name}</span>;
+    }
+
+    return <span>{option.name}</span>;
+  }
+
   constructor(props) {
     super(props);
 
@@ -19,6 +28,9 @@ class SelectInput extends React.Component {
       showModal: false,
       pendingVal: null,
     };
+
+    this.templateOptionRenderer = this.templateOptionRenderer.bind(this);
+    this.templateValueRenderer = this.templateValueRenderer.bind(this);
   }
 
   componentDidMount() {
@@ -35,7 +47,7 @@ class SelectInput extends React.Component {
   }
 
   getOptions() {
-    const { options, enableAll } = this.props;
+    const { options, enableAll, templateOptions } = this.props;
     const myOptions = options.map(item => ({
       ...item,
       value: item.id,
@@ -44,6 +56,10 @@ class SelectInput extends React.Component {
 
     if (enableAll) {
       myOptions.unshift({ value: 'all', label: 'All' });
+    }
+
+    if (templateOptions.length) {
+      myOptions.push(...templateOptions.map(o => ({ ...o, label: o.name, value: o.textValue })));
     }
 
     return myOptions;
@@ -111,6 +127,25 @@ class SelectInput extends React.Component {
     onChangeAction(value, input.name);
   }
 
+  templateOptionRenderer(option) {
+    const {
+      input: { ...inputProps },
+    } = this.props;
+    if (option.textValue) {
+      return (
+        <Mention
+          key={option.textValue}
+          mention={option}
+          onClick={() => {
+            inputProps.onChange(option.textValue);
+            this.setState({ optionSelected: true, open: false });
+          }}
+        />
+      );
+    }
+    return <span>{option.name}</span>;
+  }
+
   render() {
     const {
       label,
@@ -152,8 +187,8 @@ class SelectInput extends React.Component {
         onBlur={() => input.onBlur(input.value)}
         options={myOptions}
         clearable={!multi && enableEmpty}
-        optionRenderer={optionRenderer}
-        valueRenderer={valueRenderer}
+        optionRenderer={optionRenderer || this.templateOptionRenderer}
+        valueRenderer={valueRenderer || this.templateValueRenderer}
         joinValues
         multi={multi}
         onChange={(val) => {
@@ -209,6 +244,7 @@ SelectInput.propTypes = {
   loading: PropTypes.bool,
   addon: PropTypes.bool,
   options: PropTypes.arrayOf(PropTypes.shape()),
+  templateOptions: PropTypes.arrayOf(PropTypes.shape()),
   enableAll: PropTypes.bool,
   enableEmpty: PropTypes.bool,
   onChangeAction: PropTypes.func,
@@ -245,6 +281,7 @@ SelectInput.defaultProps = {
   options: [],
   optionRenderer: undefined,
   valueRenderer: undefined,
+  templateOptions: [],
   maxCols: 12,
   onChangeAction: () => {},
 };

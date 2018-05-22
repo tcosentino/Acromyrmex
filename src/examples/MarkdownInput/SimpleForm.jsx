@@ -90,6 +90,15 @@ class SimpleForm extends React.Component {
         </div>
         <div>
           <Field
+            name="select-input"
+            label="Select Input"
+            component={SelectInput}
+            options={[{ id: '1', name: 'true' }, { id: '2', name: 'false' }]}
+            templateOptions={this.state.options}
+          />
+        </div>
+        <div>
+          <Field
             name="markdown"
             label="Markdown"
             component={MarkdownInput}
