@@ -18,8 +18,10 @@ class DateInput extends React.Component {
   constructor(props) {
     super(props);
 
+    console.log(props.input.value);
+
     this.state = {
-      optionSelected: false,
+      optionSelected: props.input.value.indexOf('{') > -1 && props.input.value.indexOf('}') > -1,
       open: false,
     };
   }
@@ -142,11 +144,11 @@ class DateInput extends React.Component {
               />
             );
           }
+
+          const myOption = options.find(o => o.textValue === inputProps.value);
           return (
             <span className="form-control">
-              <span className="form-control-template-value">
-                {options.find(o => o.textValue === inputProps.value).name}
-              </span>
+              <span className="form-control-template-value">{myOption ? myOption.name : ''}</span>
             </span>
           );
         }}
