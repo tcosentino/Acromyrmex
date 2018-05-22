@@ -30,7 +30,6 @@ class SelectInput extends React.Component {
     };
 
     this.templateOptionRenderer = this.templateOptionRenderer.bind(this);
-    this.templateValueRenderer = this.templateValueRenderer.bind(this);
   }
 
   componentDidMount() {
@@ -188,7 +187,7 @@ class SelectInput extends React.Component {
         options={myOptions}
         clearable={!multi && enableEmpty}
         optionRenderer={optionRenderer || this.templateOptionRenderer}
-        valueRenderer={valueRenderer || this.templateValueRenderer}
+        valueRenderer={valueRenderer || SelectInput.templateValueRenderer}
         joinValues
         multi={multi}
         onChange={(val) => {
