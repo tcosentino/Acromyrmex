@@ -20,6 +20,7 @@ class SimpleForm extends React.Component {
     // simulate the options coming in delayed
     setTimeout(() => {
       this.setState({ options });
+      this.props.change('markdown', 'new markdown value!');
     }, 300);
   }
 
@@ -143,6 +144,7 @@ SimpleForm.propTypes = {
   pristine: PropTypes.bool.isRequired,
   reset: PropTypes.func.isRequired,
   submitting: PropTypes.bool.isRequired,
+  change: PropTypes.func.isRequired,
 };
 
 export default reduxForm({

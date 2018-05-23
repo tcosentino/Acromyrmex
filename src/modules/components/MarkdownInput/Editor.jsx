@@ -71,6 +71,8 @@ class OurEditor extends React.Component {
   componentWillReceiveProps(nextProps) {
     const { input } = nextProps;
     const hasValue = input && input.value && input.value.length;
+
+    // update our options list
     if (this.props.options.length !== nextProps.options.length) {
       this.setState({ suggestions: nextProps.options });
       if (hasValue) {
@@ -84,6 +86,25 @@ class OurEditor extends React.Component {
           ),
         );
       }
+    }
+
+    // update the value if needed
+    if (
+      input &&
+      this.props.input &&
+      input.value &&
+      this.props.input.value &&
+      this.props.input.value !== input.value
+    ) {
+      this.onChange(
+        EditorState.push(
+          this.state.editorState,
+          EditorState.createWithContent(
+            stateFromMarkdown(input.value, nextProps.options),
+            new MultiDecorator([new CompositeDecorator([LinkDecorator])]),
+          ).getCurrentContent(),
+        ),
+      );
     }
   }
 
