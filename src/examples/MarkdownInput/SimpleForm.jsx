@@ -20,12 +20,14 @@ class SimpleForm extends React.Component {
     // simulate the options coming in delayed
     setTimeout(() => {
       this.setState({ options });
-      this.props.change('markdown', 'new markdown value!');
+      // this.props.change('markdown', 'new markdown value!');
     }, 300);
   }
 
   render() {
     const { handleSubmit, pristine, reset, submitting } = this.props;
+
+    console.log(this.state.options);
 
     return (
       <form onSubmit={handleSubmit}>
@@ -144,7 +146,7 @@ SimpleForm.propTypes = {
   pristine: PropTypes.bool.isRequired,
   reset: PropTypes.func.isRequired,
   submitting: PropTypes.bool.isRequired,
-  change: PropTypes.func.isRequired,
+  // change: PropTypes.func.isRequired,
 };
 
 export default reduxForm({
