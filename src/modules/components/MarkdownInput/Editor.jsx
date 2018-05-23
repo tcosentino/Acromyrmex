@@ -87,20 +87,18 @@ class OurEditor extends React.Component {
         );
       }
     }
+  }
 
+  componentDidUpdate() {
+    const { editorState } = this.state;
+    const md = stateToMarkdown(editorState.getCurrentContent());
     // update the value if needed
-    if (
-      input &&
-      this.props.input &&
-      input.value &&
-      this.props.input.value &&
-      this.props.input.value !== input.value
-    ) {
+    if (md !== this.props.input.value) {
       this.onChange(
         EditorState.push(
           this.state.editorState,
           EditorState.createWithContent(
-            stateFromMarkdown(input.value, nextProps.options),
+            stateFromMarkdown(this.props.input.value, this.props.options),
             new MultiDecorator([new CompositeDecorator([LinkDecorator])]),
           ).getCurrentContent(),
         ),
@@ -114,7 +112,7 @@ class OurEditor extends React.Component {
   onChange(editorState) {
     const md = stateToMarkdown(editorState.getCurrentContent());
 
-    this.props.input.onChange(md.substr(0, md.length - 1));
+    this.props.input.onChange(md);
     this.setState({ editorState });
   }
 
