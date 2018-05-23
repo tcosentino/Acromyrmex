@@ -21,7 +21,7 @@ class SimpleForm extends React.Component {
     setTimeout(() => {
       this.setState({ options });
       // this.props.change('markdown', 'new markdown value!');
-    }, 300);
+    }, 2000);
   }
 
   render() {

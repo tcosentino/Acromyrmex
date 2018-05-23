@@ -75,18 +75,19 @@ class OurEditor extends React.Component {
 
     // update our options list
     if (this.props.options.length !== nextProps.options.length) {
-      this.setState({ suggestions: nextProps.options });
-      if (hasValue) {
-        this.onChange(
-          EditorState.push(
-            this.state.editorState,
-            EditorState.createWithContent(
-              stateFromMarkdown(input.value, nextProps.options),
-              new MultiDecorator([new CompositeDecorator([LinkDecorator])]),
-            ).getCurrentContent(),
-          ),
-        );
-      }
+      this.setState({ suggestions: nextProps.options }, () => {
+        if (hasValue) {
+          this.onChange(
+            EditorState.push(
+              this.state.editorState,
+              EditorState.createWithContent(
+                stateFromMarkdown(input.value, nextProps.options),
+                new MultiDecorator([new CompositeDecorator([LinkDecorator])]),
+              ).getCurrentContent(),
+            ),
+          );
+        }
+      });
     }
   }
 
