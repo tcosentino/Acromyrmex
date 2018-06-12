@@ -52,42 +52,42 @@ class MarkupGenerator {
     while (this.currentBlock < this.totalBlocks) {
       this.processBlock();
     }
-    const joined = this.output.join('');
-    return joined.substring(0, joined.length - 1);
+    return this.output.join('');
   }
 
   processBlock() {
     const block = this.blocks[this.currentBlock];
     const blockType = block.getType();
+    // console.log(JSON.stringify(block, null, 2));
     switch (blockType) {
       case BLOCK_TYPE.HEADER_ONE: {
         this.insertLineBreaks(1);
-        this.output.push(`# ${this.renderBlockContent(block)}\n`);
+        this.output.push(`# ${this.renderBlockContent(block)}`);
         break;
       }
       case BLOCK_TYPE.HEADER_TWO: {
         this.insertLineBreaks(1);
-        this.output.push(`## ${this.renderBlockContent(block)}\n`);
+        this.output.push(`## ${this.renderBlockContent(block)}`);
         break;
       }
       case BLOCK_TYPE.HEADER_THREE: {
         this.insertLineBreaks(1);
-        this.output.push(`### ${this.renderBlockContent(block)}\n`);
+        this.output.push(`### ${this.renderBlockContent(block)}`);
         break;
       }
       case BLOCK_TYPE.HEADER_FOUR: {
         this.insertLineBreaks(1);
-        this.output.push(`#### ${this.renderBlockContent(block)}\n`);
+        this.output.push(`#### ${this.renderBlockContent(block)}`);
         break;
       }
       case BLOCK_TYPE.HEADER_FIVE: {
         this.insertLineBreaks(1);
-        this.output.push(`##### ${this.renderBlockContent(block)}\n`);
+        this.output.push(`##### ${this.renderBlockContent(block)}`);
         break;
       }
       case BLOCK_TYPE.HEADER_SIX: {
         this.insertLineBreaks(1);
-        this.output.push(`###### ${this.renderBlockContent(block)}\n`);
+        this.output.push(`###### ${this.renderBlockContent(block)}`);
         break;
       }
       case BLOCK_TYPE.UNORDERED_LIST_ITEM: {
@@ -104,7 +104,7 @@ class MarkupGenerator {
           }
         }
         const indent = ' '.repeat(block.depth * 4);
-        this.output.push(`${indent}- ${this.renderBlockContent(block)}\n`);
+        this.output.push(`${indent}- ${this.renderBlockContent(block)}`);
         break;
       }
       case BLOCK_TYPE.ORDERED_LIST_ITEM: {
@@ -123,25 +123,26 @@ class MarkupGenerator {
         const indent = ' '.repeat(blockDepth * 4);
         // TODO: figure out what to do with two-digit numbers
         const count = this.getListItemCount(block) % 10;
-        this.output.push(`${indent}${count}. ${this.renderBlockContent(block)}\n`);
+        this.output.push(`${indent}${count}. ${this.renderBlockContent(block)}`);
         break;
       }
       case BLOCK_TYPE.BLOCKQUOTE: {
         this.insertLineBreaks(1);
-        this.output.push(` > ${this.renderBlockContent(block)}\n`);
+        this.output.push(` > ${this.renderBlockContent(block)}`);
         break;
       }
       case BLOCK_TYPE.CODE: {
         this.insertLineBreaks(1);
-        this.output.push(`${CODE_INDENT + this.renderBlockContent(block)}\n`);
+        this.output.push(`${CODE_INDENT + this.renderBlockContent(block)}`);
         break;
       }
       default: {
         this.insertLineBreaks(1);
-        this.output.push(`${this.renderBlockContent(block)}\n`);
+        this.output.push(`${this.renderBlockContent(block)}`);
         break;
       }
     }
+
     this.currentBlock += 1;
   }
 
@@ -181,6 +182,7 @@ class MarkupGenerator {
     const { contentState } = this;
     const blockType = block.getType();
     const blockText = block.getText();
+
     if (blockText === '') {
       // Prevent element collapse if completely empty.
       // TODO: Replace with constant.
