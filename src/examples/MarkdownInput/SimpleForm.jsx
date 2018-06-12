@@ -152,7 +152,8 @@ SimpleForm.propTypes = {
 export default reduxForm({
   form: 'simple', // a unique identifier for this form
   initialValues: {
-    markdown: 'sdfadf [asdfasdf](fasdfasf) adsfasdf {dfasdfsdg3q34t.ip-address} \n',
+    markdown:
+      'sdfadf [asdfasdf](fasdfasf) adsfasdf [fasdf432](1231sadf) {dfasdfsdg3q34t.ip-address} {dfasdfsdg3q34t.mac-address} \n',
     'date-options': {
       value: '2018-05-24T05:12:08.848Z',
     },

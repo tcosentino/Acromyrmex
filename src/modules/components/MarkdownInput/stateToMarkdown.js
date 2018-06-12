@@ -52,7 +52,8 @@ class MarkupGenerator {
     while (this.currentBlock < this.totalBlocks) {
       this.processBlock();
     }
-    return this.output.join('');
+    const joined = this.output.join('');
+    return joined.substring(0, joined.length - 1);
   }
 
   processBlock() {

@@ -114,6 +114,8 @@ class OurEditor extends React.Component {
   onChange(editorState) {
     const md = stateToMarkdown(editorState.getCurrentContent());
 
+    // console.log(JSON.stringify(editorState.getCurrentContent(), null, 2));
+
     this.props.input.onChange(md);
     this.setState({ editorState });
   }

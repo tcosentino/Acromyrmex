@@ -12,19 +12,21 @@ export default function stateFromMarkdown(markdown, mentions) {
 
   raw.blocks.forEach((block) => {
     const text = block.text;
+    let tempText = block.text;
     // Loop over the matches
-    block.text = text.replace(TEMPLATE_REGEX, (match, p1, p2, offset) => {
+    block.text = text.replace(TEMPLATE_REGEX, (match) => {
       const matchingOption = mentions.find(m => m.textValue === match);
       if (!matchingOption) {
         return match;
       }
 
       const entityRange = {
-        offset,
+        offset: tempText.indexOf(match),
         length: matchingOption.name.length,
         key: entityCount,
       };
 
+      console.log(block.entityRanges);
       block.entityRanges.push(entityRange);
       raw.entityMap[`${entityCount}`] = {
         type: '{mention',
@@ -36,10 +38,15 @@ export default function stateFromMarkdown(markdown, mentions) {
 
       entityCount += 1;
 
+      // we want to follow along to calculate offsets
+      tempText = tempText.replace(match, matchingOption.name);
+
       // we actually don't want to change anything, just looping
       return matchingOption.name;
     });
   });
+
+  // console.log(raw.entityMap);
 
   return convertFromRaw(raw);
 }
