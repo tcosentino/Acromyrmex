@@ -26,7 +26,6 @@ export default function stateFromMarkdown(markdown, mentions) {
         key: entityCount,
       };
 
-      console.log(block.entityRanges);
       block.entityRanges.push(entityRange);
       raw.entityMap[`${entityCount}`] = {
         type: '{mention',

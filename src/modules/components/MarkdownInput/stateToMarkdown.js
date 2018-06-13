@@ -143,7 +143,7 @@ class MarkupGenerator {
         break;
       }
     }
-    console.log(this.output);
+
     this.currentBlock += 1;
   }
 
