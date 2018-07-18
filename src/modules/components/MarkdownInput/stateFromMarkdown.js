@@ -22,7 +22,7 @@ export default function stateFromMarkdown(markdown, mentions) {
 
       const entityRange = {
         offset: tempText.indexOf(match),
-        length: matchingOption.name.length,
+        length: matchingOption.name.length + matchingOption.stepName.length + 4, // ' -> ' = 4
         key: entityCount,
       };
 
