@@ -160,7 +160,10 @@ class DateInput extends React.Component {
             const myOption = options.find(o => o.textValue === inputProps.value);
             return (
               <span className="form-control">
-                <span className="form-control-template-value">{myOption ? myOption.name : ''}</span>
+                <span className="form-control-template-value">
+                  {myOption ? myOption.stepName : ''}
+                  {' ->'} {myOption ? myOption.name : ''}
+                </span>
               </span>
             );
           }}

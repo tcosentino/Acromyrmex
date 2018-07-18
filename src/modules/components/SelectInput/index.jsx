@@ -14,7 +14,11 @@ import Mention from '../MarkdownInput/Mention';
 class SelectInput extends React.Component {
   static templateValueRenderer(option) {
     if (option.textValue) {
-      return <span className="form-control-template-value">{option.name}</span>;
+      return (
+        <span className="form-control-template-value">
+          {option.stepName} {'->'} {option.name}
+        </span>
+      );
     }
 
     return <span>{option.name}</span>;
