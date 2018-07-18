@@ -20,9 +20,11 @@ export default function stateFromMarkdown(markdown, mentions) {
         return match;
       }
 
+      console.log(matchingOption);
+
       const entityRange = {
         offset: tempText.indexOf(match),
-        length: matchingOption.name.length + matchingOption.stepName.length + 4, // ' -> ' = 4
+        length: matchingOption.name.length,
         key: entityCount,
       };
 
