@@ -18,11 +18,6 @@ import clearEntityForRange from './clearEntityForRange';
 import './Editor.css';
 
 class OurEditor extends React.Component {
-  // added so we can include the stepname in the display
-  static fixOptions(options) {
-    return options.map(o => ({ ...o, attributeName: o.name, name: `${o.stepName} -> ${o.name}` }));
-  }
-
   constructor(props) {
     super(props);
 
@@ -36,11 +31,11 @@ class OurEditor extends React.Component {
       editorState:
         props && props.input && props.input.value && props.input.value.length
           ? EditorState.createWithContent(
-              stateFromMarkdown(props.input.value, OurEditor.fixOptions(props.options)),
+              stateFromMarkdown(props.input.value, this.fixOptions(props.options)),
               new MultiDecorator([new CompositeDecorator([LinkDecorator])]),
             )
           : EditorState.createEmpty(),
-      suggestions: OurEditor.fixOptions(props.options),
+      suggestions: this.fixOptions(props.options),
     };
 
     this.mentionRef = null;
@@ -59,13 +54,13 @@ class OurEditor extends React.Component {
   componentWillMount() {
     const { input, options } = this.props;
     const hasValue = input && input.value && input.value.length;
-    this.setState({ suggestions: OurEditor.fixOptions(options) }, () => {
+    this.setState({ suggestions: this.fixOptions(options) }, () => {
       if (hasValue) {
         this.onChange(
           EditorState.push(
             this.state.editorState,
             EditorState.createWithContent(
-              stateFromMarkdown(input.value, OurEditor.fixOptions(options)),
+              stateFromMarkdown(input.value, this.fixOptions(options)),
               new MultiDecorator([new CompositeDecorator([LinkDecorator])]),
             ).getCurrentContent(),
           ),
@@ -80,13 +75,13 @@ class OurEditor extends React.Component {
 
     // update our options list
     if (this.props.options.length !== nextProps.options.length) {
-      this.setState({ suggestions: OurEditor.fixOptions(nextProps.options) }, () => {
+      this.setState({ suggestions: this.fixOptions(nextProps.options) }, () => {
         if (hasValue) {
           this.onChange(
             EditorState.push(
               this.state.editorState,
               EditorState.createWithContent(
-                stateFromMarkdown(input.value, OurEditor.fixOptions(nextProps.options)),
+                stateFromMarkdown(input.value, this.fixOptions(nextProps.options)),
                 new MultiDecorator([new CompositeDecorator([LinkDecorator])]),
               ).getCurrentContent(),
             ),
@@ -105,7 +100,7 @@ class OurEditor extends React.Component {
         EditorState.push(
           this.state.editorState,
           EditorState.createWithContent(
-            stateFromMarkdown(this.props.input.value, OurEditor.fixOptions(this.props.options)),
+            stateFromMarkdown(this.props.input.value, this.fixOptions(this.props.options)),
             new MultiDecorator([new CompositeDecorator([LinkDecorator])]),
           ).getCurrentContent(),
         ),
@@ -131,7 +126,7 @@ class OurEditor extends React.Component {
 
   onSearchChange({ value }) {
     this.setState({
-      suggestions: suggestionFilter(value, OurEditor.fixOptions(this.props.options)),
+      suggestions: suggestionFilter(value, this.fixOptions(this.props.options)),
     });
   }
 
@@ -140,6 +135,11 @@ class OurEditor extends React.Component {
     const contentState = editorState.getCurrentContent();
     const entity = getEntityAtCursor(editorState);
     return entity == null ? null : contentState.getEntity(entity.entityKey);
+  }
+
+  // added so we can include the stepname in the display
+  fixOptions(options) {
+    return options.map(this.props.fixOptions);
   }
 
   _onInlineClicked(style = 'BOLD') {
@@ -252,6 +252,7 @@ OurEditor.propTypes = {
   className: PropTypes.string,
   onFocus: PropTypes.func,
   onBlur: PropTypes.func,
+  fixOptions: PropTypes.func,
 };
 
 OurEditor.defaultProps = {
@@ -261,6 +262,7 @@ OurEditor.defaultProps = {
   className: '',
   onFocus: () => {},
   onBlur: () => {},
+  fixOptions: o => ({ ...o, attributeName: o.name, name: `${o.stepName} -> ${o.name}` }),
 };
 
 export default OurEditor;

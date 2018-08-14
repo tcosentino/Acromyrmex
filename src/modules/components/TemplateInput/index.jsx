@@ -76,6 +76,7 @@ class TemplateInput extends React.Component {
           disableToolbar
           input={inputProps}
           className="template-input"
+          fixOptions={this.props.fixOptions}
           onFocus={() => {
             this.setState({ focused: true });
           }}
@@ -113,6 +114,7 @@ TemplateInput.propTypes = {
   addonCustomAfter: PropTypes.node,
   addonCustomBefore: PropTypes.node,
   maxCols: PropTypes.number,
+  fixOptions: PropTypes.func,
 };
 
 TemplateInput.defaultProps = {
@@ -131,6 +133,7 @@ TemplateInput.defaultProps = {
   addonCustomAfter: null,
   addonCustomBefore: null,
   maxCols: 12,
+  fixOptions: undefined,
 };
 
 export default TemplateInput;

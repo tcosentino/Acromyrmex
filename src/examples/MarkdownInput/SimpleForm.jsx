@@ -59,6 +59,15 @@ class SimpleForm extends React.Component {
           />
         </div>
         <div>
+          <Field
+            name="equation"
+            label="Equation"
+            component={TemplateInput}
+            options={[{ id: 'name', name: 'Name' }, { id: 'phone-number', name: 'Phone Number' }]}
+            fixOptions={o => ({ ...o, textValue: `{${o.id}}` })}
+          />
+        </div>
+        <div>
           <Field name="datetime" label="DateTime Input" component={DateInput} />
         </div>
         <div>
