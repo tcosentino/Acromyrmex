@@ -1,0 +1,33 @@
+.mention-formula, .mention-formula:visited {
+  color: #575f67;
+  cursor: pointer;
+  display: inline-block;
+  background: #ffe6e6;
+  padding-left: 2px;
+  padding-right: 2px;
+  border-radius: 2px;
+  text-decoration: none;
+}
+
+.mention-formula:hover, .mention-formula:focus {
+  color: #677584;
+  background: #fdeded;
+  outline: 0; /* reset for :focus */
+}
+
+.mention-attribute, .mention-attribute:visited {
+  color: #575f67;
+  cursor: pointer;
+  display: inline-block;
+  background: #7dd587;
+  padding-left: 2px;
+  padding-right: 2px;
+  border-radius: 2px;
+  text-decoration: none;
+}
+
+.mention-attribute:hover, .mention-attribute:focus {
+  color: #677584;
+  background: #adf9a9;
+  outline: 0; /* reset for :focus */
+}

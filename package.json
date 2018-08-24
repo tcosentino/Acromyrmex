@@ -1,6 +1,6 @@
 {
   "name": "acromyrmex",
-  "version": "1.0.32",
+  "version": "1.0.33",
   "main": "lib/index.js",
   "repository": {
     "type": "git",
@@ -30,7 +30,7 @@
     "dotenv": "4.0.0",
     "draft-js": "^0.10.5",
     "draft-js-import-markdown": "^1.2.1",
-    "draft-js-mention-plugin": "^2.0.1",
+    "draft-js-mention-plugin": "^3.1.0",
     "draft-js-plugins-editor": "^2.0.4",
     "draft-js-utils": "^1.2.0",
     "eslint": "3.19.0",

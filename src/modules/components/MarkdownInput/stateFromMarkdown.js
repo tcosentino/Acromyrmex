@@ -10,11 +10,11 @@ export default function stateFromMarkdown(
   const content = rootStateFromMarkdown(markdown);
   const raw = convertToRaw(content);
 
-  const entityCount = Object.keys(raw.entityMap).length;
+  let entityCount = Object.keys(raw.entityMap).length;
 
   raw.blocks.forEach((block) => {
-    mentionStateFromMarkdownFunctions.forEach((func) => {
-      func(raw, entityCount, block, mentions);
+    mentionStateFromMarkdownFunctions.forEach((func, index) => {
+      entityCount += func(raw, entityCount, block, mentions[index] || []);
     });
   });
 

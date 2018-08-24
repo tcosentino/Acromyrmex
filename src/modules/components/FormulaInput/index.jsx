@@ -45,6 +45,8 @@ class FormulaInput extends React.Component {
       addonBefore,
       addonCustomBefore,
       addonCustomAfter,
+      attributes,
+      formulas,
       input: { ...inputProps },
       meta,
       // disabled,
@@ -73,10 +75,12 @@ class FormulaInput extends React.Component {
       >
         <Editor
           options={options}
+          attributes={attributes}
+          formulas={formulas}
           disableToolbar
           input={inputProps}
           className="template-input"
-          fixOptions={this.props.fixOptions}
+          fixOptions={o => ({ ...o })}
           onFocus={() => {
             this.setState({ focused: true });
           }}
@@ -97,13 +101,16 @@ class FormulaInput extends React.Component {
 FormulaInput.shouldComponentUpdate = FormField.shouldFormFieldUpdate;
 
 FormulaInput.propTypes = {
+  options: PropTypes.arrayOf(PropTypes.shape()), // data
+  formulas: PropTypes.arrayOf(PropTypes.shape()), // formulas (COUNT, SUM)
+  attributes: PropTypes.arrayOf(PropTypes.shape()), // attributes that can be used
+
   meta: PropTypes.shape().isRequired,
   onTemplateClicked: PropTypes.func,
   vertical: PropTypes.bool,
   // autoFocus: PropTypes.bool,
   help: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   label: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
-  options: PropTypes.arrayOf(PropTypes.shape()),
   type: PropTypes.string,
   prefix: PropTypes.node,
   input: PropTypes.shape().isRequired,
@@ -114,7 +121,6 @@ FormulaInput.propTypes = {
   addonCustomAfter: PropTypes.node,
   addonCustomBefore: PropTypes.node,
   maxCols: PropTypes.number,
-  fixOptions: PropTypes.func,
 };
 
 FormulaInput.defaultProps = {
@@ -123,6 +129,8 @@ FormulaInput.defaultProps = {
   help: '',
   autoFocus: false,
   options: [],
+  formulas: [],
+  attributes: [],
   label: '',
   vertical: false,
   type: 'text',
@@ -133,7 +141,6 @@ FormulaInput.defaultProps = {
   addonCustomAfter: null,
   addonCustomBefore: null,
   maxCols: 12,
-  fixOptions: undefined,
 };
 
 export default FormulaInput;
