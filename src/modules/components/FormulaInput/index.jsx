@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { Col, HelpBlock } from 'react-bootstrap';
 
 import FormField from '../FormField';
-import Editor from '../MarkdownInput/Editor';
+import Editor from './FormulaEditor';
 
 class FormulaInput extends React.Component {
   constructor(props) {

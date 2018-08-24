@@ -28,8 +28,6 @@ class SimpleForm extends React.Component {
   render() {
     const { handleSubmit, pristine, reset, submitting } = this.props;
 
-    console.log(this.state.options);
-
     return (
       <form onSubmit={handleSubmit}>
         <div>

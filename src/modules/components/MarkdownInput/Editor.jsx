@@ -34,6 +34,7 @@ class OurEditor extends React.Component {
       suggestions: [this.fixOptions(props.options)],
     };
 
+    this.mentionFunctionInfo = [];
     this.mentionPlugins = [];
     this.searchFunctions = [];
     this.mentionStateFromMarkdownFunctions = [];
@@ -152,6 +153,8 @@ class OurEditor extends React.Component {
   }
 
   addMentionPlugin(functionInfo) {
+    this.mentionFunctionInfo.push(functionInfo);
+
     this.mentionPlugins.push(
       createMentionPlugin({
         entityMutability: 'IMMUTABLE',
@@ -311,18 +314,20 @@ class OurEditor extends React.Component {
           />
         )}
         {!disableToolbar ? <div className="template-editor">{editor}</div> : editor}
-        {this.mentionPlugins.map((mentionPlugin, index) => {
-          const { MentionSuggestions } = mentionPlugin;
-          return (
-            <div className="mention-suggestions clearFix">
+        <div className="mention-suggestions clearFix">
+          {this.mentionPlugins.map((mentionPlugin, index) => {
+            const { MentionSuggestions } = mentionPlugin;
+            return (
               <MentionSuggestions
                 onSearchChange={this.searchFunctions[index]}
-                suggestions={this.state.suggestions[index]}
+                suggestions={this.state.suggestions[index] || []}
                 entryComponent={Mention}
+                // eslint-disable-next-line
+                key={`${this.mentionFunctionInfo[index].trigger}_suggestion`}
               />
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
       </div>
     );
   }
