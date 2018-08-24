@@ -31,3 +31,26 @@
   background: #adf9a9;
   outline: 0; /* reset for :focus */
 }
+
+.mention-data, .mention-data:visited {
+  color: #575f67;
+  cursor: pointer;
+  display: inline-block;
+  background: #e6f3ff;
+  padding-left: 2px;
+  padding-right: 2px;
+  border-radius: 2px;
+  text-decoration: none;
+}
+
+.mention-data:hover, .mention-data:focus {
+  color: #677584;
+  background: #edf5fd;
+  outline: 0; /* reset for :focus */
+}
+
+.display-only.mention-formula:hover,
+.display-only.mention-attribute:hover,
+.display-only.mention-data:hover {
+  cursor: default;
+}

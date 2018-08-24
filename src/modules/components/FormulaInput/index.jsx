@@ -91,7 +91,11 @@ class FormulaInput extends React.Component {
         {/* the false here can be flipped to show it when developing */}
         {(this.state.focused || false) &&
           options.length > 0 && (
-            <HelpBlock>{"Press '{' to add data from previous steps."}</HelpBlock>
+            <HelpBlock>
+              <span className="mention-formula display-only">$ Formula</span> |{' '}
+              <span className="mention-attribute display-only"># Attribute</span> |{' '}
+              <span className="mention-data display-only">{'{'} Data</span>
+            </HelpBlock>
           )}
       </FormField>
     );
