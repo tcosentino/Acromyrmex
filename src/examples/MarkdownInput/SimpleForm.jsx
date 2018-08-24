@@ -142,12 +142,12 @@ class SimpleForm extends React.Component {
             label="Formula"
             component={FormulaInput}
             attributes={[
-              { id: 'employee-count', name: 'Employee Count', textValue: '{{{employee-count}}}' },
-              { id: 'name', name: 'Name', textValue: '{{{name}}}' },
+              { id: 'employee-count', name: 'Employee Count', textValue: '#employee-count#' },
+              { id: 'name', name: 'Name', textValue: '#name#' },
             ]}
             formulas={[
-              { id: 'count', name: 'Count', textValue: '{{COUNT}}' },
-              { id: 'sum', name: 'Sum', textValue: '{{SUM}}' },
+              { id: 'count', name: 'Count', textValue: '$COUNT$' },
+              { id: 'sum', name: 'Sum', textValue: '$SUM$' },
             ]}
             options={this.state.options}
           />
@@ -176,7 +176,7 @@ SimpleForm.propTypes = {
 export default reduxForm({
   form: 'simple', // a unique identifier for this form
   initialValues: {
-    formula: '{{COUNT}} {{{name}}} ',
+    formula: '$COUNT$ #name# ',
     markdown:
       'sdfadf [asdfasdf](fasdfasf) adsfasdf [fasdf432](1231sadf) {dfasdfsdg3q34t.ip-address} {dfasdfsdg3q34t.mac-address} \n',
     'date-options': {

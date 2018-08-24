@@ -4,7 +4,7 @@ import './FormulaEditor.css';
 const FORMULA_REGEX = /\$(\S*-*)([0-9a-zA-Z-]+)\$/g;
 const FORMULA_MENTION_INDEX = 1;
 
-const ATTRIBUTE_REGEX = /\#(\S*-*)([0-9a-zA-Z-]+)\#/g;
+const ATTRIBUTE_REGEX = /#(\S*-*)([0-9a-zA-Z-]+)#/g;
 const ATTRIBUTE_MENTION_INDEX = 2;
 
 class FormulaEditor extends OurEditor {
