@@ -12,5 +12,6 @@ export { default as CheckboxInput } from './components/CheckboxInput';
 export { default as MarkdownInput } from './components/MarkdownInput';
 export { default as StaticField } from './components/StaticField';
 
+export { default as FormulaInput } from './components/FormulaInput';
 export { default as TemplateInput } from './components/TemplateInput';
 export { default as DateInput } from './components/DateInput';
