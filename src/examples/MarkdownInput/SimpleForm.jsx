@@ -7,6 +7,7 @@ import TemplateInput from '../../modules/components/TemplateInput';
 import SelectInput from '../../modules/components/SelectInput';
 import DateInput from '../../modules/components/DateInput';
 import TextInput from '../../modules/components/TextInput';
+import FormulaInput from '../../modules/components/FormulaInput';
 
 class SimpleForm extends React.Component {
   constructor(props) {
@@ -134,6 +135,14 @@ class SimpleForm extends React.Component {
             name="markdown"
             label="Markdown"
             component={MarkdownInput}
+            options={this.state.options}
+          />
+        </div>
+        <div>
+          <Field
+            name="formula"
+            label="Formula"
+            component={FormulaInput}
             options={this.state.options}
           />
         </div>

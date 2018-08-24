@@ -39,8 +39,9 @@ class MarkupGenerator {
   // totalBlocks: number;
   // listItemCounts: Object;
 
-  constructor(contentState) {
+  constructor(contentState, mentionStateToMarkdownFunctions) {
     this.contentState = contentState;
+    this.mentionStateToMarkdownFunctions = mentionStateToMarkdownFunctions;
   }
 
   generate() {
@@ -235,8 +236,18 @@ class MarkupGenerator {
           return `![${alt}](${encodeURL(src)})`;
         } else if (entity != null) {
           // mentions
-          const data = entity.getData();
-          return data.mention.get('textValue');
+          let returnVal = false;
+
+          this.mentionStateToMarkdownFunctions.forEach((func) => {
+            const result = func(entity);
+            if (result) {
+              returnVal = result;
+            }
+          });
+
+          if (returnVal) {
+            return returnVal;
+          }
         }
         return finalContent;
       })
@@ -244,6 +255,6 @@ class MarkupGenerator {
   }
 }
 
-export default function stateToMarkdown(content) {
-  return new MarkupGenerator(content).generate();
+export default function stateToMarkdown(content, mentionStateToMarkdownFunctions) {
+  return new MarkupGenerator(content, mentionStateToMarkdownFunctions).generate();
 }
