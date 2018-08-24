@@ -7,6 +7,7 @@ import TemplateInput from '../../modules/components/TemplateInput';
 import SelectInput from '../../modules/components/SelectInput';
 import DateInput from '../../modules/components/DateInput';
 import TextInput from '../../modules/components/TextInput';
+import FormulaInput from '../../modules/components/FormulaInput';
 
 class SimpleForm extends React.Component {
   constructor(props) {
@@ -26,8 +27,6 @@ class SimpleForm extends React.Component {
 
   render() {
     const { handleSubmit, pristine, reset, submitting } = this.props;
-
-    console.log(this.state.options);
 
     return (
       <form onSubmit={handleSubmit}>
@@ -138,6 +137,22 @@ class SimpleForm extends React.Component {
           />
         </div>
         <div>
+          <Field
+            name="formula"
+            label="Formula"
+            component={FormulaInput}
+            attributes={[
+              { id: 'employee-count', name: 'Employee Count', textValue: '{{{employee-count}}}' },
+              { id: 'name', name: 'Name', textValue: '{{{name}}}' },
+            ]}
+            formulas={[
+              { id: 'count', name: 'Count', textValue: '{{COUNT}}' },
+              { id: 'sum', name: 'Sum', textValue: '{{SUM}}' },
+            ]}
+            options={this.state.options}
+          />
+        </div>
+        <div>
           <button type="submit" disabled={pristine || submitting}>
             Submit
           </button>
@@ -161,6 +176,7 @@ SimpleForm.propTypes = {
 export default reduxForm({
   form: 'simple', // a unique identifier for this form
   initialValues: {
+    formula: '{{COUNT}} {{{name}}} ',
     markdown:
       'sdfadf [asdfasdf](fasdfasf) adsfasdf [fasdf432](1231sadf) {dfasdfsdg3q34t.ip-address} {dfasdfsdg3q34t.mac-address} \n',
     'date-options': {

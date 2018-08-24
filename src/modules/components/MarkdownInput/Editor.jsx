@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Map } from 'immutable';
 import Editor from 'draft-js-plugins-editor';
 import { EditorState, RichUtils, CompositeDecorator } from 'draft-js';
-import createMentionPlugin from 'draft-js-mention-plugin';
+import createMentionPlugin, { defaultTheme } from 'draft-js-mention-plugin';
 import { ENTITY_TYPE } from 'draft-js-utils';
 import MultiDecorator from 'draft-js-plugins-editor/lib/Editor/MultiDecorator';
 import 'draft-js/dist/Draft.css';
@@ -17,32 +18,40 @@ import stateFromMarkdown from './stateFromMarkdown';
 import clearEntityForRange from './clearEntityForRange';
 import './Editor.css';
 
+const TEMPLATE_REGEX = /{(\S*-*)([0-9a-zA-Z-]+)}/g;
+const OPTION_MENTION_INDEX = 0;
+
 class OurEditor extends React.Component {
   constructor(props) {
     super(props);
 
-    this.mentionPlugin = createMentionPlugin({
-      entityMutability: 'IMMUTABLE',
-      mentionTrigger: '{',
-    });
-
     this.state = {
       // Editor state is
-      editorState:
-        props && props.input && props.input.value && props.input.value.length
-          ? EditorState.createWithContent(
-              stateFromMarkdown(props.input.value, this.fixOptions(props.options)),
-              new MultiDecorator([new CompositeDecorator([LinkDecorator])]),
-            )
-          : EditorState.createEmpty(),
-      suggestions: this.fixOptions(props.options),
+      suggestions: [],
     };
+
+    this.state.editorState =
+      props && props.input && props.input.value && props.input.value.length
+        ? this.getStateFromMarkdown(props.input.value, props.options)
+        : EditorState.createEmpty();
+
+    this.mentionFunctionInfo = [];
+    this.mentionPlugins = [];
+    this.searchFunctions = [];
+    this.mentionStateFromMarkdownFunctions = [];
+    this.mentionStateToMarkdownFunctions = [];
+
+    this.addMentionPlugin({
+      regex: TEMPLATE_REGEX,
+      index: OPTION_MENTION_INDEX,
+      trigger: '{',
+      suggestionProp: 'options',
+    });
 
     this.mentionRef = null;
 
     this.onChange = this.onChange.bind(this);
     this.onFocus = this.onFocus.bind(this);
-    this.onSearchChange = this.onSearchChange.bind(this);
     this._onInlineClicked = this._onInlineClicked.bind(this);
     this._onBlockClicked = this._onBlockClicked.bind(this);
     this._onLinkClicked = this._onLinkClicked.bind(this);
@@ -54,15 +63,17 @@ class OurEditor extends React.Component {
   componentWillMount() {
     const { input, options } = this.props;
     const hasValue = input && input.value && input.value.length;
-    this.setState({ suggestions: this.fixOptions(options) }, () => {
+    const newSuggestions = [...this.state.suggestions];
+
+    // set our normal suggestions
+    newSuggestions[OPTION_MENTION_INDEX] = this.fixOptions(options);
+
+    this.setState({ suggestions: newSuggestions }, () => {
       if (hasValue) {
         this.onChange(
           EditorState.push(
             this.state.editorState,
-            EditorState.createWithContent(
-              stateFromMarkdown(input.value, this.fixOptions(options)),
-              new MultiDecorator([new CompositeDecorator([LinkDecorator])]),
-            ).getCurrentContent(),
+            this.getStateFromMarkdown(input.value, options).getCurrentContent(),
           ),
         );
       }
@@ -72,18 +83,19 @@ class OurEditor extends React.Component {
   componentWillReceiveProps(nextProps) {
     const { input } = nextProps;
     const hasValue = input && input.value && input.value.length;
+    const newSuggestions = [...this.state.suggestions];
+
+    // set our normal suggestions
+    newSuggestions[OPTION_MENTION_INDEX] = this.fixOptions(nextProps.options);
 
     // update our options list
     if (this.props.options.length !== nextProps.options.length) {
-      this.setState({ suggestions: this.fixOptions(nextProps.options) }, () => {
+      this.setState({ suggestions: newSuggestions }, () => {
         if (hasValue) {
           this.onChange(
             EditorState.push(
               this.state.editorState,
-              EditorState.createWithContent(
-                stateFromMarkdown(input.value, this.fixOptions(nextProps.options)),
-                new MultiDecorator([new CompositeDecorator([LinkDecorator])]),
-              ).getCurrentContent(),
+              this.getStateFromMarkdown(input.value).getCurrentContent(),
             ),
           );
         }
@@ -93,16 +105,13 @@ class OurEditor extends React.Component {
 
   componentDidUpdate() {
     const { editorState } = this.state;
-    const md = stateToMarkdown(editorState.getCurrentContent());
+    const md = this.getStateToMarkdown(editorState);
     // update the value if needed
     if (md !== this.props.input.value) {
       this.onChange(
         EditorState.push(
           this.state.editorState,
-          EditorState.createWithContent(
-            stateFromMarkdown(this.props.input.value, this.fixOptions(this.props.options)),
-            new MultiDecorator([new CompositeDecorator([LinkDecorator])]),
-          ).getCurrentContent(),
+          this.getStateFromMarkdown(this.props.input.value).getCurrentContent(),
         ),
       );
     }
@@ -112,7 +121,7 @@ class OurEditor extends React.Component {
    * Runs when the editor value is changed by the user (usually typing)
    */
   onChange(editorState) {
-    const md = stateToMarkdown(editorState.getCurrentContent());
+    const md = this.getStateToMarkdown(editorState);
 
     // console.log(JSON.stringify(editorState.getCurrentContent(), null, 2));
 
@@ -124,10 +133,15 @@ class OurEditor extends React.Component {
     this.editor.focus();
   }
 
-  onSearchChange({ value }) {
-    this.setState({
-      suggestions: suggestionFilter(value, this.fixOptions(this.props.options)),
-    });
+  getStateFromMarkdown(value) {
+    return EditorState.createWithContent(
+      stateFromMarkdown(value, this.state.suggestions, this.mentionStateFromMarkdownFunctions),
+      new MultiDecorator([new CompositeDecorator([LinkDecorator])]),
+    );
+  }
+
+  getStateToMarkdown(editorState) {
+    return stateToMarkdown(editorState.getCurrentContent(), this.mentionStateToMarkdownFunctions);
   }
 
   getEntityAtCursor() {
@@ -135,6 +149,84 @@ class OurEditor extends React.Component {
     const contentState = editorState.getCurrentContent();
     const entity = getEntityAtCursor(editorState);
     return entity == null ? null : contentState.getEntity(entity.entityKey);
+  }
+
+  addMentionPlugin(functionInfo) {
+    const nSuggestions = [...this.state.suggestions];
+
+    // set our normal suggestions
+    nSuggestions[functionInfo.index] = this.fixOptions(this.props[functionInfo.suggestionProp]);
+    this.state.suggestions = nSuggestions;
+
+    this.mentionFunctionInfo.push(functionInfo);
+
+    this.mentionPlugins.push(
+      createMentionPlugin({
+        entityMutability: 'IMMUTABLE',
+        mentionTrigger: functionInfo.trigger,
+        theme: { ...defaultTheme, ...functionInfo.theme },
+        // supportWhitespace: true,
+      }),
+    );
+
+    this.searchFunctions.push(({ value }) => {
+      const newSuggestions = [...this.state.suggestions];
+
+      // set our normal suggestions
+      newSuggestions[functionInfo.index] = suggestionFilter(
+        value,
+        this.fixOptions(this.props[functionInfo.suggestionProp]),
+      );
+
+      this.setState({ suggestions: newSuggestions });
+    });
+
+    this.mentionStateFromMarkdownFunctions.push((raw, entityCount, block, mentions) => {
+      const text = block.text;
+      let tempText = block.text;
+      // Loop over the matches
+      block.text = text.replace(functionInfo.regex, (match) => {
+        const matchingOption = mentions.find(m => m.textValue === match);
+        if (!matchingOption) {
+          return match;
+        }
+
+        const entityRange = {
+          offset: tempText.indexOf(match),
+          length: matchingOption.name.length,
+          key: entityCount,
+        };
+
+        block.entityRanges.push(entityRange);
+        raw.entityMap[`${entityCount}`] = {
+          type: `${functionInfo.trigger}mention`,
+          mutability: 'IMMUTABLE',
+          data: {
+            mention: Map(matchingOption),
+          },
+        };
+
+        entityCount += 1;
+
+        // we want to follow along to calculate offsets
+        tempText = tempText.replace(match, matchingOption.name);
+
+        // we actually don't want to change anything, just looping
+        return matchingOption.name;
+      });
+
+      return entityCount;
+    });
+
+    this.mentionStateToMarkdownFunctions.push((entity) => {
+      if (entity.getType() !== `${functionInfo.trigger}mention`) {
+        return false;
+      }
+
+      // mentions
+      const data = entity.getData();
+      return data.mention.get('textValue');
+    });
   }
 
   // added so we can include the stepname in the display
@@ -190,7 +282,6 @@ class OurEditor extends React.Component {
 
   render() {
     const { disableToolbar, className, onFocus, onBlur } = this.props;
-    const { MentionSuggestions } = this.mentionPlugin;
     const { editorState } = this.state;
     const selection = editorState.getSelection();
     const blockType = editorState
@@ -202,7 +293,7 @@ class OurEditor extends React.Component {
       <Editor
         editorState={this.state.editorState}
         onChange={this.onChange}
-        plugins={[this.mentionPlugin]}
+        plugins={[...this.mentionPlugins]}
         handleKeyCommand={this.handleKeyCommand}
         placeholder="Enter a value..."
         decorators={[LinkDecorator]}
@@ -233,11 +324,17 @@ class OurEditor extends React.Component {
         )}
         {!disableToolbar ? <div className="template-editor">{editor}</div> : editor}
         <div className="mention-suggestions clearFix">
-          <MentionSuggestions
-            onSearchChange={this.onSearchChange}
-            suggestions={this.state.suggestions}
-            entryComponent={Mention}
-          />
+          {this.mentionPlugins.map((mentionPlugin, index) => {
+            const { MentionSuggestions } = mentionPlugin;
+            return (
+              <MentionSuggestions
+                onSearchChange={this.searchFunctions[index]}
+                suggestions={this.state.suggestions[index] || []}
+                entryComponent={Mention}
+                key={`${this.mentionFunctionInfo[index].trigger}_suggestion`}
+              />
+            );
+          })}
         </div>
       </div>
     );
