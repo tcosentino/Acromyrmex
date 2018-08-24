@@ -13,8 +13,17 @@ export default function stateFromMarkdown(
   let entityCount = Object.keys(raw.entityMap).length;
 
   raw.blocks.forEach((block) => {
+    let tempText = block.text;
     mentionStateFromMarkdownFunctions.forEach((func, index) => {
-      entityCount += func(raw, entityCount, block, mentions[index] || []);
+      const { entityCount: newEntityCount, tempText: newTempText } = func(
+        raw,
+        entityCount,
+        block,
+        mentions[index] || [],
+        tempText,
+      );
+      entityCount = newEntityCount;
+      tempText = newTempText;
     });
   });
 

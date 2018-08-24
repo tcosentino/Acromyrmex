@@ -181,9 +181,8 @@ class OurEditor extends React.Component {
       this.setState({ suggestions: newSuggestions });
     });
 
-    this.mentionStateFromMarkdownFunctions.push((raw, entityCount, block, mentions) => {
+    this.mentionStateFromMarkdownFunctions.push((raw, entityCount, block, mentions, tempText) => {
       const text = block.text;
-      let tempText = block.text;
       // Loop over the matches
       block.text = text.replace(functionInfo.regex, (match) => {
         const matchingOption = mentions.find(m => m.textValue === match);
@@ -191,11 +190,28 @@ class OurEditor extends React.Component {
           return match;
         }
 
+        console.log(tempText);
         const entityRange = {
           offset: tempText.indexOf(match),
           length: matchingOption.name.length,
           key: entityCount,
         };
+
+        block.entityRanges.forEach((range) => {
+          const thisEnd = entityRange.offset + entityRange.length;
+          const otherOffset = range.offset;
+          const difference = match.length - matchingOption.name.length;
+          console.log({
+            thisOffset: entityRange.offset,
+            thisEnd,
+            otherOffset,
+            difference,
+          });
+
+          if (thisEnd < otherOffset) {
+            range.offset -= difference;
+          }
+        });
 
         block.entityRanges.push(entityRange);
         raw.entityMap[`${entityCount}`] = {
@@ -211,11 +227,10 @@ class OurEditor extends React.Component {
         // we want to follow along to calculate offsets
         tempText = tempText.replace(match, matchingOption.name);
 
-        // we actually don't want to change anything, just looping
         return matchingOption.name;
       });
 
-      return entityCount;
+      return { entityCount, tempText };
     });
 
     this.mentionStateToMarkdownFunctions.push((entity) => {
