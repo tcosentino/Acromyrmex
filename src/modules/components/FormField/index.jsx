@@ -137,7 +137,7 @@ FormField.propTypes = {
   help: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
 
   // Label text
-  label: PropTypes.string,
+  label: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   prefix: PropTypes.node,
 
   noLabel: PropTypes.bool,

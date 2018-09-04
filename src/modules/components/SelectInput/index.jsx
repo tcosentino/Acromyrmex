@@ -250,7 +250,7 @@ class SelectInput extends React.Component {
 SelectInput.propTypes = {
   meta: PropTypes.shape().isRequired,
   help: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
-  label: PropTypes.string,
+  label: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   multi: PropTypes.bool,
   loading: PropTypes.bool,
   addon: PropTypes.bool,

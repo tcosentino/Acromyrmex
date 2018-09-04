@@ -42,7 +42,7 @@ StaticField.propTypes = {
   input: PropTypes.shape({
     value: PropTypes.string,
   }).isRequired,
-  label: PropTypes.string,
+  label: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
 };
 
 StaticField.defaultProps = {

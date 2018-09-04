@@ -14,13 +14,13 @@ class SimpleForm extends React.Component {
     super(props);
 
     this.state = {
-      options: [],
-      // options,
+      // options: [],
+      options,
     };
 
     // simulate the options coming in delayed
     setTimeout(() => {
-      this.setState({ options });
+      // this.setState({ options });
       // this.props.change('markdown', 'new markdown value!');
     }, 2000);
   }
@@ -176,7 +176,7 @@ SimpleForm.propTypes = {
 export default reduxForm({
   form: 'simple', // a unique identifier for this form
   initialValues: {
-    formula: '$COUNT$ #name# {dfasdferwegsf.replacement-workstation}',
+    formula: '$COUNT$(" #employee-count# = {dfasdferwegsf.replacement-workstation}")',
     markdown:
       'sdfadf [asdfasdf](fasdfasf) adsfasdf [fasdf432](1231sadf) {dfasdfsdg3q34t.ip-address} {dfasdfsdg3q34t.mac-address} \n',
     'date-options': {
