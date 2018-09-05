@@ -45,7 +45,10 @@ class SelectInput extends React.Component {
     const { enableEmpty } = this.props;
 
     if (!this.valueInOptions() && !enableEmpty && myOptions[0]) {
-      this.sendChange(myOptions[0].value);
+      const firstOption = myOptions.find(o => !o.disabled) || myOptions[0];
+      if (firstOption) {
+        this.sendChange(firstOption.value);
+      }
     }
   }
 
