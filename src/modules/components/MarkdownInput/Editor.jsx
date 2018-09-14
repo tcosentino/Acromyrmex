@@ -141,6 +141,12 @@ class OurEditor extends React.Component {
   }
 
   getStateToMarkdown(editorState) {
+    const { plainText } = this.props;
+
+    if (plainText) {
+      return editorState.getCurrentContent().getPlainText();
+    }
+
     return stateToMarkdown(editorState.getCurrentContent(), this.mentionStateToMarkdownFunctions);
   }
 
@@ -296,7 +302,7 @@ class OurEditor extends React.Component {
   }
 
   render() {
-    const { disableToolbar, className, onFocus, onBlur } = this.props;
+    const { disableToolbar, className, onFocus, onBlur, plainText } = this.props;
     const { editorState } = this.state;
     const selection = editorState.getSelection();
     const blockType = editorState
@@ -322,22 +328,23 @@ class OurEditor extends React.Component {
 
     return (
       <div className={`editor-input ${className}`}>
-        {!disableToolbar && (
-          <Toolbar
-            getEntityAtCursor={this.getEntityAtCursor}
-            selection={selection}
-            blockType={blockType}
-            undoSize={editorState.getUndoStack().size}
-            redoSize={editorState.getRedoStack().size}
-            onInlineClicked={this._onInlineClicked}
-            onBlockClicked={this._onBlockClicked}
-            onLinkClicked={this._onLinkClicked}
-            onUnlinkClicked={this._onUnlinkClicked}
-            onUndoClicked={() => this.onChange(EditorState.undo(editorState))}
-            onRedoClicked={() => this.onChange(EditorState.redo(editorState))}
-          />
-        )}
-        {!disableToolbar ? <div className="template-editor">{editor}</div> : editor}
+        {!disableToolbar &&
+          !plainText && (
+            <Toolbar
+              getEntityAtCursor={this.getEntityAtCursor}
+              selection={selection}
+              blockType={blockType}
+              undoSize={editorState.getUndoStack().size}
+              redoSize={editorState.getRedoStack().size}
+              onInlineClicked={this._onInlineClicked}
+              onBlockClicked={this._onBlockClicked}
+              onLinkClicked={this._onLinkClicked}
+              onUnlinkClicked={this._onUnlinkClicked}
+              onUndoClicked={() => this.onChange(EditorState.undo(editorState))}
+              onRedoClicked={() => this.onChange(EditorState.redo(editorState))}
+            />
+          )}
+        {!disableToolbar && !plainText ? <div className="template-editor">{editor}</div> : editor}
         <div className="mention-suggestions clearFix">
           {this.mentionPlugins.map((mentionPlugin, index) => {
             const { MentionSuggestions } = mentionPlugin;
@@ -365,6 +372,7 @@ OurEditor.propTypes = {
   onFocus: PropTypes.func,
   onBlur: PropTypes.func,
   fixOptions: PropTypes.func,
+  plainText: PropTypes.bool,
 };
 
 OurEditor.defaultProps = {
@@ -375,6 +383,7 @@ OurEditor.defaultProps = {
   onFocus: () => {},
   onBlur: () => {},
   fixOptions: o => ({ ...o, attributeName: o.name, name: `${o.stepName} -> ${o.name}` }),
+  plainText: false,
 };
 
 export default OurEditor;

@@ -138,6 +138,15 @@ class SimpleForm extends React.Component {
         </div>
         <div>
           <Field
+            name="plainMarkdown"
+            label="Plain Markdown"
+            component={MarkdownInput}
+            options={this.state.options}
+            plainText
+          />
+        </div>
+        <div>
+          <Field
             name="formula"
             label="Formula"
             component={FormulaInput}
@@ -177,6 +186,8 @@ export default reduxForm({
   form: 'simple', // a unique identifier for this form
   initialValues: {
     formula: '$COUNT$(" #employee-count# = {dfasdferwegsf.replacement-workstation}")',
+    plainMarkdown:
+      'https://connect.oitc.ca/v4_6_release/services/system_io/router/openrecord.rails?',
     markdown:
       'sdfadf [asdfasdf](fasdfasf) adsfasdf [fasdf432](1231sadf) {dfasdfsdg3q34t.ip-address} {dfasdfsdg3q34t.mac-address} \n',
     'date-options': {

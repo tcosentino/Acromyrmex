@@ -30,6 +30,7 @@ class MarkdownInput extends React.Component {
       input: { ...inputProps },
       meta,
       maxCols,
+      plainText,
     } = this.props;
     let { type } = this.props;
 
@@ -62,6 +63,7 @@ class MarkdownInput extends React.Component {
           onBlur={() => {
             this.setState({ focused: false });
           }}
+          plainText={plainText}
         />
         {/* the false here can be flipped to show it when developing */}
         {(this.state.focused || false) &&
@@ -90,6 +92,7 @@ MarkdownInput.propTypes = {
   addonCustomAfter: PropTypes.node,
   addonCustomBefore: PropTypes.node,
   maxCols: PropTypes.number,
+  plainText: PropTypes.bool,
 };
 
 MarkdownInput.defaultProps = {
@@ -106,6 +109,7 @@ MarkdownInput.defaultProps = {
   addonCustomAfter: null,
   addonCustomBefore: null,
   maxCols: 12,
+  plainText: false,
 };
 
 export default MarkdownInput;
