@@ -14,6 +14,7 @@ import Toolbar from './Toolbar';
 import getEntityAtCursor from './getEntityAtCursor';
 import LinkDecorator from './LinkDecorator';
 import stateToMarkdown from './stateToMarkdown';
+import stateToPlainText from './stateToPlainText';
 import stateFromMarkdown from './stateFromMarkdown';
 import clearEntityForRange from './clearEntityForRange';
 import './Editor.css';
@@ -144,7 +145,10 @@ class OurEditor extends React.Component {
     const { plainText } = this.props;
 
     if (plainText) {
-      return editorState.getCurrentContent().getPlainText();
+      return stateToPlainText(
+        editorState.getCurrentContent(),
+        this.mentionStateFromMarkdownFunctions,
+      );
     }
 
     return stateToMarkdown(editorState.getCurrentContent(), this.mentionStateToMarkdownFunctions);
