@@ -49,6 +49,7 @@ class TemplateInput extends React.Component {
       meta,
       // disabled,
       maxCols,
+      plainText,
     } = this.props;
     let { type } = this.props;
 
@@ -83,6 +84,7 @@ class TemplateInput extends React.Component {
           onBlur={() => {
             this.setState({ focused: false });
           }}
+          plainText={plainText}
         />
         {/* the false here can be flipped to show it when developing */}
         {(this.state.focused || false) &&
@@ -115,6 +117,7 @@ TemplateInput.propTypes = {
   addonCustomBefore: PropTypes.node,
   maxCols: PropTypes.number,
   fixOptions: PropTypes.func,
+  plainText: PropTypes.bool,
 };
 
 TemplateInput.defaultProps = {
@@ -134,6 +137,7 @@ TemplateInput.defaultProps = {
   addonCustomBefore: null,
   maxCols: 12,
   fixOptions: undefined,
+  plainText: false,
 };
 
 export default TemplateInput;
