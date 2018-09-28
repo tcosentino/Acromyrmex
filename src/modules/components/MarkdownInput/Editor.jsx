@@ -59,6 +59,8 @@ class OurEditor extends React.Component {
     this._onUnlinkClicked = this._onUnlinkClicked.bind(this);
     this.handleKeyCommand = this.handleKeyCommand.bind(this);
     this.getEntityAtCursor = this.getEntityAtCursor.bind(this);
+
+    console.log('through constructor');
   }
 
   componentWillMount() {
@@ -79,6 +81,7 @@ class OurEditor extends React.Component {
         );
       }
     });
+    console.log('through cwm');
   }
 
   componentWillReceiveProps(nextProps) {
@@ -102,12 +105,14 @@ class OurEditor extends React.Component {
         }
       });
     }
+    console.log('through cwrp');
   }
 
   componentDidUpdate() {
     const { editorState } = this.state;
     const md = this.getStateToMarkdown(editorState);
     // update the value if needed
+    console.log({ md, value: this.props.input.value });
     if (md !== this.props.input.value) {
       this.onChange(
         EditorState.push(
@@ -124,7 +129,7 @@ class OurEditor extends React.Component {
   onChange(editorState) {
     const md = this.getStateToMarkdown(editorState);
 
-    // console.log(JSON.stringify(editorState.getCurrentContent(), null, 2));
+    console.log({ md });
 
     this.props.input.onChange(md);
     this.setState({ editorState });
@@ -145,10 +150,17 @@ class OurEditor extends React.Component {
     const { plainText } = this.props;
 
     if (plainText) {
-      return stateToPlainText(
-        editorState.getCurrentContent(),
-        this.mentionStateFromMarkdownFunctions,
-      );
+      console.trace();
+      console.log('last words?');
+      try {
+        return stateToPlainText(
+          editorState.getCurrentContent(),
+          this.mentionStateFromMarkdownFunctions,
+        );
+      } catch (e) {
+        console.log(e);
+        return '';
+      }
     }
 
     return stateToMarkdown(editorState.getCurrentContent(), this.mentionStateToMarkdownFunctions);
@@ -329,6 +341,8 @@ class OurEditor extends React.Component {
         }}
       />
     );
+
+    console.log({ editor });
 
     return (
       <div className={`editor-input ${className}`}>

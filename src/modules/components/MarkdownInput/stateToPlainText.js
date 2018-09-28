@@ -43,15 +43,18 @@ class MarkupGenerator {
   }
 
   generate() {
+    console.log('generating');
     this.output = [];
     this.blocks = this.contentState.getBlockMap().toArray();
     this.totalBlocks = this.blocks.length;
     this.currentBlock = 0;
     this.listItemCounts = {};
+    console.log({ currentBlock: this.currentBlock, totalBlocks: this.totalBlocks });
     while (this.currentBlock < this.totalBlocks) {
       this.processBlock();
     }
     const joined = this.output.join('');
+    console.log('generated');
     return joined.substring(0, joined.length - 1);
   }
 
@@ -65,6 +68,7 @@ class MarkupGenerator {
       // Prevent element collapse if completely empty.
       // TODO: Replace with constant.
       this.output.push('\u200B');
+      this.currentBlock += 1;
       return;
     }
 
@@ -181,5 +185,11 @@ class MarkupGenerator {
 }
 
 export default function stateToMarkdown(content, mentionStateToMarkdownFunctions) {
-  return new MarkupGenerator(content, mentionStateToMarkdownFunctions).generate();
+  let pt = '';
+  try {
+    pt = new MarkupGenerator(content, mentionStateToMarkdownFunctions).generate();
+  } catch (e) {
+    console.log(e);
+  }
+  return pt;
 }
