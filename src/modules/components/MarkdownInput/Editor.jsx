@@ -145,7 +145,7 @@ class OurEditor extends React.Component {
     if (plainText) {
       return stateToPlainText(
         editorState.getCurrentContent(),
-        this.mentionStateFromMarkdownFunctions,
+        this.mentionStateToMarkdownFunctions,
       );
     }
 

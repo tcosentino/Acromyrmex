@@ -1,6 +1,6 @@
 // From https://github.com/sstur/draft-js-utils/blob/master/packages/draft-js-export-markdown/src/stateToMarkdown.js
 // adapted to support mentions as well
-import { getEntityRanges, BLOCK_TYPE, ENTITY_TYPE, INLINE_STYLE } from 'draft-js-utils';
+import { getEntityRanges, BLOCK_TYPE, INLINE_STYLE } from 'draft-js-utils';
 
 const { BOLD, CODE, ITALIC, STRIKETHROUGH, UNDERLINE } = INLINE_STYLE;
 
@@ -14,20 +14,20 @@ function canHaveDepth(blockType) {
   }
 }
 
-function encodeContent(text) {
-  return text.replace(/[*_`]/g, '\\$&');
-}
+// function encodeContent(text) {
+//   return text.replace(/[*_`]/g, '\\$&');
+// }
 
 // Encode chars that would normally be allowed in a URL but would conflict with
 // our markdown syntax: `[foo](http://foo/)`
-function encodeURL(url) {
-  return url.replace(/\)/g, '%29');
-}
+// function encodeURL(url) {
+//   return url.replace(/\)/g, '%29');
+// }
 
-// Escape quotes using backslash.
-function escapeTitle(text) {
-  return text.replace(/"/g, '\\"');
-}
+// // Escape quotes using backslash.
+// function escapeTitle(text) {
+//   return text.replace(/"/g, '\\"');
+// }
 
 class MarkupGenerator {
   // blocks: Array<ContentBlock>;
@@ -49,7 +49,7 @@ class MarkupGenerator {
     this.totalBlocks = this.blocks.length;
     this.currentBlock = 0;
     this.listItemCounts = {};
-    console.log({ currentBlock: this.currentBlock, totalBlocks: this.totalBlocks });
+
     while (this.currentBlock < this.totalBlocks) {
       this.processBlock();
     }
@@ -60,7 +60,10 @@ class MarkupGenerator {
 
   processBlock() {
     const block = this.blocks[this.currentBlock];
-    const blockText = block.getText();
+    console.log(block);
+    const blockText = this.renderBlockContent(block);
+    // const blockText = block.getText();
+    console.log(blockText);
 
     this.insertLineBreaks(1);
 
@@ -121,6 +124,7 @@ class MarkupGenerator {
     }
     const charMetaList = block.getCharacterList();
     const entityPieces = getEntityRanges(blockText, charMetaList);
+    console.log({ entityPieces });
 
     return entityPieces
       .map(([entityKey, stylePieces]) => {
@@ -130,7 +134,7 @@ class MarkupGenerator {
             if (!text) {
               return '';
             }
-            let content = encodeContent(text);
+            let content = text;
             if (style.has(BOLD)) {
               content = `**${content}**`;
             }
@@ -152,18 +156,9 @@ class MarkupGenerator {
           })
           .join('');
         const entity = entityKey ? contentState.getEntity(entityKey) : null;
+        console.log({ entityKey, finalContent, entity });
 
-        if (entity != null && entity.getType() === ENTITY_TYPE.LINK) {
-          const data = entity.getData();
-          const url = data.url || '';
-          const title = data.title ? ` "${escapeTitle(data.title)}"` : '';
-          return `[${finalContent}](${encodeURL(url)}${title})`;
-        } else if (entity != null && entity.getType() === ENTITY_TYPE.IMAGE) {
-          const data = entity.getData();
-          const src = data.src || '';
-          const alt = data.alt ? `${escapeTitle(data.alt)}` : '';
-          return `![${alt}](${encodeURL(src)})`;
-        } else if (entity != null) {
+        if (entity) {
           // mentions
           let returnVal = false;
 
