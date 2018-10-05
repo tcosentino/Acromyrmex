@@ -28,7 +28,7 @@ class StaticField extends React.Component {
         vertical={vertical}
         noLabel={noLabel}
       >
-        {value} (required)
+        {value}
       </FormField>
     );
   }
