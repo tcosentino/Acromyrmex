@@ -1,6 +1,5 @@
 // import { Map } from 'immutable';
-import { convertToRaw, convertFromRaw } from 'draft-js';
-import { stateFromMarkdown as rootStateFromMarkdown } from 'draft-js-import-markdown';
+import { convertToRaw, convertFromRaw, ContentState } from 'draft-js';
 
 export default function stateFromMarkdown(
   markdown,
@@ -8,7 +7,7 @@ export default function stateFromMarkdown(
   mentionStateFromMarkdownFunctions = [],
 ) {
   console.log({ markdown });
-  const content = rootStateFromMarkdown(markdown);
+  const content = ContentState.createFromText(markdown);
   const raw = convertToRaw(content);
 
   let entityCount = Object.keys(raw.entityMap).length;

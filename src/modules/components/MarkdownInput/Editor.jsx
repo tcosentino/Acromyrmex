@@ -16,6 +16,7 @@ import LinkDecorator from './LinkDecorator';
 import stateToMarkdown from './stateToMarkdown';
 import stateToPlainText from './stateToPlainText';
 import stateFromMarkdown from './stateFromMarkdown';
+import stateFromPlainText from './stateFromPlainText';
 import clearEntityForRange from './clearEntityForRange';
 import './Editor.css';
 
@@ -133,8 +134,12 @@ class OurEditor extends React.Component {
   }
 
   getStateFromMarkdown(value) {
+    const { plainText } = this.props;
+
     return EditorState.createWithContent(
-      stateFromMarkdown(value, this.state.suggestions, this.mentionStateFromMarkdownFunctions),
+      plainText
+        ? stateFromPlainText(value, this.state.suggestions, this.mentionStateFromMarkdownFunctions)
+        : stateFromMarkdown(value, this.state.suggestions, this.mentionStateFromMarkdownFunctions),
       new MultiDecorator([new CompositeDecorator([LinkDecorator])]),
     );
   }
