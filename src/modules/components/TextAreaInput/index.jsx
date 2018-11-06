@@ -12,12 +12,20 @@ const TextAreaInput = (props) => {
     prefix,
     noLabel,
     disabled,
+    vertical,
     input: { ...inputProps },
     meta,
   } = props;
 
   return (
-    <FormField label={label} prefix={prefix} meta={meta} help={help} noLabel={noLabel}>
+    <FormField
+      label={label}
+      prefix={prefix}
+      meta={meta}
+      help={help}
+      noLabel={noLabel}
+      vertical={vertical}
+    >
       <FormControl componentClass="textarea" disabled={disabled} {...inputProps} />
     </FormField>
   );
@@ -33,6 +41,7 @@ TextAreaInput.propTypes = {
   input: PropTypes.shape().isRequired,
   disabled: PropTypes.bool,
   noLabel: PropTypes.bool,
+  vertical: PropTypes.bool,
 };
 
 TextAreaInput.defaultProps = {
@@ -41,6 +50,7 @@ TextAreaInput.defaultProps = {
   prefix: null,
   noLabel: false,
   disabled: false,
+  vertical: false,
 };
 
 module.exports = TextAreaInput;
