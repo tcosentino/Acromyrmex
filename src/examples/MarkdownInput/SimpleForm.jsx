@@ -51,6 +51,28 @@ class SimpleForm extends React.Component {
         </div>
         <div>
           <Field
+            name="frequency"
+            component={SelectInput}
+            label="Frequency"
+            multi
+            options={[
+              {
+                id: 'w',
+                name: 'weekly',
+              },
+              {
+                id: 'd',
+                name: 'daily',
+              },
+              {
+                id: 'h',
+                name: 'hourly',
+              },
+            ]}
+          />
+        </div>
+        <div>
+          <Field
             name="empty-template"
             label="Empty Template"
             component={TemplateInput}

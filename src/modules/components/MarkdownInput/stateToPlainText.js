@@ -43,7 +43,6 @@ class MarkupGenerator {
   }
 
   generate() {
-    console.log('generating');
     this.output = [];
     this.blocks = this.contentState.getBlockMap().toArray();
     this.totalBlocks = this.blocks.length;
@@ -54,16 +53,13 @@ class MarkupGenerator {
       this.processBlock();
     }
     const joined = this.output.join('');
-    console.log('generated');
     return joined.substring(0, joined.length - 1);
   }
 
   processBlock() {
     const block = this.blocks[this.currentBlock];
-    console.log(block);
     const blockText = this.renderBlockContent(block);
     // const blockText = block.getText();
-    console.log(blockText);
 
     this.insertLineBreaks(1);
 
@@ -124,7 +120,6 @@ class MarkupGenerator {
     }
     const charMetaList = block.getCharacterList();
     const entityPieces = getEntityRanges(blockText, charMetaList);
-    console.log({ entityPieces });
 
     return entityPieces
       .map(([entityKey, stylePieces]) => {
@@ -156,7 +151,6 @@ class MarkupGenerator {
           })
           .join('');
         const entity = entityKey ? contentState.getEntity(entityKey) : null;
-        console.log({ entityKey, finalContent, entity });
 
         if (entity) {
           // mentions
