@@ -44,6 +44,8 @@ class SelectInput extends React.Component {
     const myOptions = this.getOptions();
     const { enableEmpty, multi } = this.props;
 
+    console.log({ value: this.getValue(), valueInOptions: this.valueInOptions() });
+
     if (!this.valueInOptions() && !enableEmpty && myOptions[0] && !multi) {
       const firstOption = myOptions.find(o => !o.disabled) || myOptions[0];
       if (firstOption) {
@@ -74,8 +76,6 @@ class SelectInput extends React.Component {
   getValue() {
     const { input, jsonParse, multi } = this.props;
     let val = input.value;
-
-    console.log(val);
 
     if (jsonParse) {
       val = JSON.stringify(input.value);
@@ -186,8 +186,6 @@ class SelectInput extends React.Component {
     if (!multi && !valFound && !loading) {
       value = enableEmpty || !myOptions[0] ? null : myOptions[0].value;
     }
-
-    console.log({ value });
 
     const selectInput = loading ? (
       <Loading />
