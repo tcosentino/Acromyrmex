@@ -151,8 +151,8 @@ FormField.propTypes = {
   children: PropTypes.node.isRequired,
 
   // addons for inputs
-  addonAfter: PropTypes.string,
-  addonBefore: PropTypes.string,
+  addonAfter: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+  addonBefore: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   addonCustomAfter: PropTypes.node,
   addonCustomBefore: PropTypes.node,
 };

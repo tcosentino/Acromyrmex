@@ -276,8 +276,8 @@ SelectInput.propTypes = {
   optionRenderer: PropTypes.func,
   valueRenderer: PropTypes.func,
   maxCols: PropTypes.number,
-  addonAfter: PropTypes.string,
-  addonBefore: PropTypes.string,
+  addonAfter: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+  addonBefore: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   addonCustomAfter: PropTypes.node,
   addonCustomBefore: PropTypes.node,
 };
