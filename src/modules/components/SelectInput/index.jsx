@@ -44,8 +44,6 @@ class SelectInput extends React.Component {
     const myOptions = this.getOptions();
     const { enableEmpty, multi } = this.props;
 
-    console.log({ value: this.getValue(), valueInOptions: this.valueInOptions() });
-
     if (!this.valueInOptions() && !enableEmpty && myOptions[0] && !multi) {
       const firstOption = myOptions.find(o => !o.disabled) || myOptions[0];
       if (firstOption) {
