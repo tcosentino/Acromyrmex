@@ -53,7 +53,7 @@ class MarkupGenerator {
       this.processBlock();
     }
     const joined = this.output.join('');
-    return joined.substring(0, joined.length - 1);
+    return joined.substring(0, joined.length);
   }
 
   processBlock() {
@@ -71,7 +71,7 @@ class MarkupGenerator {
       return;
     }
 
-    this.output.push(`${blockText}\n`);
+    this.output.push(`${blockText}`);
 
     this.currentBlock += 1;
   }

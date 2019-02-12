@@ -7,13 +7,10 @@ export default function stateFromMarkdown(
   mentions,
   mentionStateFromMarkdownFunctions = [],
 ) {
-  console.log({ markdown });
   const content = rootStateFromMarkdown(markdown);
   const raw = convertToRaw(content);
 
   let entityCount = Object.keys(raw.entityMap).length;
-
-  console.log({ raw });
 
   raw.blocks.forEach((block) => {
     let tempText = block.text;

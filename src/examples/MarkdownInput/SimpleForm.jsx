@@ -88,7 +88,7 @@ class SimpleForm extends React.Component {
             fixOptions={o => ({ ...o, textValue: `{${o.id}}` })}
           />
         </div>
-        <div>
+        {/* <div>
           <Field name="datetime" label="DateTime Input" component={DateInput} />
         </div>
         <div>
@@ -102,8 +102,11 @@ class SimpleForm extends React.Component {
             showTimeSelect
             showDateSelect={false}
           />
-        </div>
+        </div> */}
         <div>
+          <Field name="datetime-clearable" label="Date Input clearable" component={DateInput} />
+        </div>
+        {/* <div>
           <Field
             name="datetime-options"
             label="Date Input w/ options"
@@ -130,7 +133,7 @@ class SimpleForm extends React.Component {
               />
             }
           />
-        </div>
+        </div> */}
         <div>
           <Field
             name="select-input"
@@ -209,9 +212,9 @@ export default reduxForm({
   initialValues: {
     formula: '$COUNT$(" #employee-count# = {dfasdferwegsf.replacement-workstation}")',
     plainMarkdown:
-      'https://connect.oitc.ca/v4_6_release/services/system_io/router/openrecord.rails?',
+      'sdfadf [asdfasdf](fasdfasf) adsfasdf [fasdf432](1231sadf) {dfasdfsdg3q34t.ip-address} {dfasdfsdg3q34t.mac-address} dsfs\n\ndsdf\n\nsdfs',
     markdown:
-      'sdfadf [asdfasdf](fasdfasf) adsfasdf [fasdf432](1231sadf) {dfasdfsdg3q34t.ip-address} {dfasdfsdg3q34t.mac-address} \n',
+      'sdfadf [asdfasdf](fasdfasf) adsfasdf [fasdf432](1231sadf) {dfasdfsdg3q34t.ip-address} {dfasdfsdg3q34t.mac-address} dsfs\n\ndsdf\n\nsdfs',
     'date-options': {
       value: '2018-05-24T05:12:08.848Z',
     },
