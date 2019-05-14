@@ -212,9 +212,9 @@ export default reduxForm({
   initialValues: {
     formula: '$COUNT$(" #employee-count# = {dfasdferwegsf.replacement-workstation}")',
     plainMarkdown:
-      'sdfadf [asdfasdf](fasdfasf) adsfasdf [fasdf432](1231sadf) {dfasdfsdg3q34t.ip-address} {dfasdfsdg3q34t.mac-address} dsfs\n\ndsdf\n\nsdfs',
+      'sdfadf [asdfasdf](fasdfasf) adsfasdf [fasdf432](1231sadf) {dfasdfsdg3q34t.ip-address} {dfasdfsdg3q34t.mac-address} dsfs ',
     markdown:
-      'sdfadf [asdfasdf](fasdfasf) adsfasdf [fasdf432](1231sadf) {dfasdfsdg3q34t.ip-address} {dfasdfsdg3q34t.mac-address} dsfs\n\ndsdf\n\nsdfs',
+      'sdfadf [asdfasdf](fasdfasf) adsfasdf [fasdf432](1231sadf) {dfasdfsdg3q34t.ip-address} {dfasdfsdg3q34t.mac-address} dsfs ',
     'date-options': {
       value: '2018-05-24T05:12:08.848Z',
     },

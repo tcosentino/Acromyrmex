@@ -111,7 +111,7 @@ class FormField extends React.Component {
     return (
       <FormGroup className="clearfix" validationState={validation}>
         {!noLabel && (
-          <Col xs={maxCols} md={offset}>
+          <Col xs={maxCols} sm={offset}>
             <ControlLabel>
               {prefix} {label}
               {'  '}
@@ -119,10 +119,10 @@ class FormField extends React.Component {
             </ControlLabel>
           </Col>
         )}
-        <Col xs={maxCols} md={width}>
+        <Col xs={maxCols} sm={width}>
           {input}
         </Col>
-        <Col xs={maxCols} md={width} mdOffset={offset}>
+        <Col xs={maxCols} sm={width} smOffset={offset}>
           {error && <HelpBlock>{error}</HelpBlock>}
         </Col>
       </FormGroup>
