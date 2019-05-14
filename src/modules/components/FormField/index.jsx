@@ -67,6 +67,7 @@ class FormField extends React.Component {
       meta: { error },
       loading,
       noLabel,
+      stripped,
       maxCols,
       addonBefore,
       addonAfter,
@@ -108,15 +109,28 @@ class FormField extends React.Component {
       );
     }
 
+    const controlLabel = (
+      <ControlLabel>
+        {prefix} {label}
+        {'  '}
+        {help && <HoverHelp help={help} />}
+      </ControlLabel>
+    );
+
+    if (stripped) {
+      return (
+        <FormGroup className="clearfix" validationState={validation}>
+          {!noLabel && controlLabel} {input}
+          {error && <HelpBlock>{error}</HelpBlock>}
+        </FormGroup>
+      );
+    }
+
     return (
       <FormGroup className="clearfix" validationState={validation}>
         {!noLabel && (
           <Col xs={maxCols} sm={offset}>
-            <ControlLabel>
-              {prefix} {label}
-              {'  '}
-              {help && <HoverHelp help={help} />}
-            </ControlLabel>
+            {controlLabel}
           </Col>
         )}
         <Col xs={maxCols} sm={width}>
@@ -146,6 +160,9 @@ FormField.propTypes = {
 
   maxCols: PropTypes.number,
 
+  // removes Row/Col layout.. just the raw input and label
+  stripped: PropTypes.bool,
+
   // Loading state
   loading: PropTypes.bool,
   children: PropTypes.node.isRequired,
@@ -173,6 +190,8 @@ FormField.defaultProps = {
   inputClass: '',
   field: {},
   inputProps: {},
+
+  stripped: false,
 
   // addons for inputs
   addonAfter: null,

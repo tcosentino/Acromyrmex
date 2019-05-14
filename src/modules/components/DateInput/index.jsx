@@ -46,6 +46,7 @@ class DateInput extends React.Component {
       maxCols,
       showTimeSelect,
       showDateSelect,
+      ...extraProps
     } = this.props;
 
     if (!showTimeSelect && !showDateSelect) {
@@ -83,7 +84,7 @@ class DateInput extends React.Component {
             <div className="datetime-options">
               <span>Or, select an option:</span>
               <div className="datetime-options-list">
-                {options.map(o => (
+                {options.map((o) => (
                   <Mention
                     key={o.textValue}
                     mention={o}
@@ -127,6 +128,7 @@ class DateInput extends React.Component {
         addonBefore={addonBefore}
         addonCustomAfter={addonCustomAfter}
         addonCustomBefore={addonCustomBefore}
+        {...extraProps}
       >
         <DatePicker
           animation="slide-up"
@@ -156,7 +158,7 @@ class DateInput extends React.Component {
               );
             }
 
-            const myOption = options.find(o => o.textValue === inputProps.value);
+            const myOption = options.find((o) => o.textValue === inputProps.value);
             return (
               <span className="form-control">
                 <span className="form-control-template-value">
