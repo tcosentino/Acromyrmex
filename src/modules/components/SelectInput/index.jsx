@@ -45,7 +45,7 @@ class SelectInput extends React.Component {
     const { enableEmpty, multi } = this.props;
 
     if (!this.valueInOptions() && !enableEmpty && myOptions[0] && !multi) {
-      const firstOption = myOptions.find(o => !o.disabled) || myOptions[0];
+      const firstOption = myOptions.find((o) => !o.disabled) || myOptions[0];
       if (firstOption) {
         this.sendChange(firstOption.value);
       }
@@ -54,7 +54,7 @@ class SelectInput extends React.Component {
 
   getOptions() {
     const { options, enableAll, templateOptions } = this.props;
-    const myOptions = options.map(item => ({
+    const myOptions = options.map((item) => ({
       ...item,
       value: item.id,
       label: item.name,
@@ -65,7 +65,7 @@ class SelectInput extends React.Component {
     }
 
     if (templateOptions.length) {
-      myOptions.push(...templateOptions.map(o => ({ ...o, label: o.name, value: o.textValue })));
+      myOptions.push(...templateOptions.map((o) => ({ ...o, label: o.name, value: o.textValue })));
     }
 
     return myOptions;
@@ -92,6 +92,7 @@ class SelectInput extends React.Component {
 
     let valFound = false;
     _.each(myOptions, (option) => {
+      console.log({ option: option.value, value });
       valFound = valFound || option.value === value || JSON.stringify(option.value) === value;
     });
 
@@ -111,7 +112,7 @@ class SelectInput extends React.Component {
 
     // for multi select, comes back as list of val.value
     if (multi) {
-      update = update.map(value => value.value);
+      update = update.map((value) => value.value);
     }
 
     if (jsonParse) {
