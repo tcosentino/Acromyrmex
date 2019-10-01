@@ -20,7 +20,7 @@ import stateFromPlainText from './stateFromPlainText';
 import clearEntityForRange from './clearEntityForRange';
 import './Editor.css';
 
-const TEMPLATE_REGEX = /{(\S*-*)([0-9a-zA-Z-]+)}/g;
+const TEMPLATE_REGEX = /{(\S*-*)([0-9a-zA-Z-.]+)}/g;
 const OPTION_MENTION_INDEX = 0;
 
 class OurEditor extends React.Component {
@@ -31,11 +31,6 @@ class OurEditor extends React.Component {
       // Editor state is
       suggestions: [],
     };
-
-    this.state.editorState =
-      props && props.input && props.input.value && props.input.value.length
-        ? this.getStateFromMarkdown(props.input.value, props.options)
-        : EditorState.createEmpty();
 
     this.mentionFunctionInfo = [];
     this.mentionPlugins = [];
@@ -49,6 +44,11 @@ class OurEditor extends React.Component {
       trigger: '{',
       suggestionProp: 'options',
     });
+
+    this.state.editorState =
+      props && props.input && props.input.value && props.input.value.length
+        ? this.getStateFromMarkdown(props.input.value, props.options)
+        : EditorState.createEmpty();
 
     this.mentionRef = null;
 
@@ -198,7 +198,7 @@ class OurEditor extends React.Component {
       const text = block.text;
       // Loop over the matches
       block.text = text.replace(functionInfo.regex, (match) => {
-        const matchingOption = mentions.find(m => m.textValue === match);
+        const matchingOption = mentions.find((m) => m.textValue === match);
         if (!matchingOption) {
           return match;
         }
@@ -328,22 +328,21 @@ class OurEditor extends React.Component {
 
     return (
       <div className={`editor-input ${className}`}>
-        {!disableToolbar &&
-          !plainText && (
-            <Toolbar
-              getEntityAtCursor={this.getEntityAtCursor}
-              selection={selection}
-              blockType={blockType}
-              undoSize={editorState.getUndoStack().size}
-              redoSize={editorState.getRedoStack().size}
-              onInlineClicked={this._onInlineClicked}
-              onBlockClicked={this._onBlockClicked}
-              onLinkClicked={this._onLinkClicked}
-              onUnlinkClicked={this._onUnlinkClicked}
-              onUndoClicked={() => this.onChange(EditorState.undo(editorState))}
-              onRedoClicked={() => this.onChange(EditorState.redo(editorState))}
-            />
-          )}
+        {!disableToolbar && !plainText && (
+          <Toolbar
+            getEntityAtCursor={this.getEntityAtCursor}
+            selection={selection}
+            blockType={blockType}
+            undoSize={editorState.getUndoStack().size}
+            redoSize={editorState.getRedoStack().size}
+            onInlineClicked={this._onInlineClicked}
+            onBlockClicked={this._onBlockClicked}
+            onLinkClicked={this._onLinkClicked}
+            onUnlinkClicked={this._onUnlinkClicked}
+            onUndoClicked={() => this.onChange(EditorState.undo(editorState))}
+            onRedoClicked={() => this.onChange(EditorState.redo(editorState))}
+          />
+        )}
         {!disableToolbar && !plainText ? <div className="template-editor">{editor}</div> : editor}
         <div className="mention-suggestions clearFix">
           {this.mentionPlugins.map((mentionPlugin, index) => {
@@ -382,7 +381,7 @@ OurEditor.defaultProps = {
   className: '',
   onFocus: () => {},
   onBlur: () => {},
-  fixOptions: o => ({ ...o, attributeName: o.name, name: `${o.stepName} -> ${o.name}` }),
+  fixOptions: (o) => ({ ...o, attributeName: o.name, name: `${o.stepName} -> ${o.name}` }),
   plainText: false,
 };
 

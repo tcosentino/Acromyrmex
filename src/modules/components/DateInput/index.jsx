@@ -17,7 +17,7 @@ class DateInput extends React.Component {
   constructor(props) {
     super(props);
 
-    console.log({ value: props.input.value, length: props.input.value.length });
+    // console.log({ value: props.input.value, length: props.input.value.length });
     this.state = {
       optionSelected: props.input.value.indexOf('{') > -1 && props.input.value.indexOf('}') > -1,
       open: false,

@@ -8,6 +8,7 @@ export default function stateFromMarkdown(
 ) {
   const content = ContentState.createFromText(markdown);
   const raw = convertToRaw(content);
+  // console.log({ markdown, content, raw });
 
   let entityCount = Object.keys(raw.entityMap).length;
 
