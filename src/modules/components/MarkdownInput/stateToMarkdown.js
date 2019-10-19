@@ -230,16 +230,20 @@ class MarkupGenerator {
           const url = data.url || '';
           const title = data.title ? ` "${escapeTitle(data.title)}"` : '';
           return `[${finalContent}](${encodeURL(url)}${title})`;
-        } else if (entity != null && entity.getType() === ENTITY_TYPE.IMAGE) {
+        }
+
+        if (entity != null && entity.getType() === ENTITY_TYPE.IMAGE) {
           const data = entity.getData();
           const src = data.src || '';
           const alt = data.alt ? `${escapeTitle(data.alt)}` : '';
           return `![${alt}](${encodeURL(src)})`;
-        } else if (entity != null) {
+        }
+
+        if (entity != null) {
           // mentions
           let returnVal = false;
 
-          this.mentionStateToMarkdownFunctions.forEach((func) => {
+          this.mentionStateToMarkdownFunctions.forEach(func => {
             const result = func(entity);
             if (result) {
               returnVal = result;

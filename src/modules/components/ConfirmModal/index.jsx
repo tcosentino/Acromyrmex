@@ -4,7 +4,7 @@ import { Button, Modal } from 'react-bootstrap';
 
 // class ConfirmModal extends React.Component {
 // render() {
-const ConfirmModal = (props) => {
+const ConfirmModal = props => {
   const { onCancel, onConfirm, title, message, show } = props;
 
   return (
@@ -33,7 +33,7 @@ ConfirmModal.propTypes = {
   message: PropTypes.string,
   show: PropTypes.bool,
   onCancel: PropTypes.func,
-  onConfirm: PropTypes.func,
+  onConfirm: PropTypes.func
 };
 
 ConfirmModal.defaultProps = {
@@ -41,7 +41,7 @@ ConfirmModal.defaultProps = {
   message: null,
   show: false,
   onCancel: () => {},
-  onConfirm: () => {},
+  onConfirm: () => {}
 };
 
 export default ConfirmModal;

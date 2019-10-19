@@ -5,7 +5,7 @@ import { FormControl } from 'react-bootstrap';
 
 import FormField from '../FormField';
 
-const TextInput = (props) => {
+const TextInput = props => {
   const {
     help,
     label,
@@ -21,7 +21,7 @@ const TextInput = (props) => {
     input: { ...inputProps },
     meta,
     disabled,
-    maxCols,
+    maxCols
   } = props;
   let { type } = props;
 
@@ -51,7 +51,7 @@ const TextInput = (props) => {
         // bsSize="small"
         {...inputProps}
         onPaste={onPaste}
-        onDrop={(e) => {
+        onDrop={e => {
           if (e.dataTransfer.files.length) {
             inputProps.onDrop(e);
           }
@@ -79,7 +79,7 @@ TextInput.propTypes = {
   addonCustomAfter: PropTypes.node,
   addonCustomBefore: PropTypes.node,
   onPaste: PropTypes.func,
-  maxCols: PropTypes.number,
+  maxCols: PropTypes.number
 };
 
 TextInput.defaultProps = {
@@ -96,7 +96,7 @@ TextInput.defaultProps = {
   addonBefore: null,
   addonCustomAfter: null,
   addonCustomBefore: null,
-  maxCols: 12,
+  maxCols: 12
 };
 
 export default TextInput;

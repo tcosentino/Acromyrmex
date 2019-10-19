@@ -11,7 +11,7 @@ class MarkdownInput extends React.Component {
     super(props);
 
     this.state = {
-      focused: false,
+      focused: false
     };
   }
 
@@ -30,9 +30,10 @@ class MarkdownInput extends React.Component {
       input: { ...inputProps },
       meta,
       maxCols,
-      plainText,
+      plainText
     } = this.props;
     let { type } = this.props;
+    const { focused } = this.state;
 
     // alias
     if (type === 'datetime') {
@@ -66,10 +67,9 @@ class MarkdownInput extends React.Component {
           plainText={plainText}
         />
         {/* the false here can be flipped to show it when developing */}
-        {(this.state.focused || false) &&
-          options.length > 0 && (
-            <HelpBlock>{"Press '{' to add data from previous steps."}</HelpBlock>
-          )}
+        {(focused || false) && options.length > 0 && (
+          <HelpBlock>{"Press '{' to add data from previous steps."}</HelpBlock>
+        )}
       </FormField>
     );
   }
@@ -92,11 +92,10 @@ MarkdownInput.propTypes = {
   addonCustomAfter: PropTypes.node,
   addonCustomBefore: PropTypes.node,
   maxCols: PropTypes.number,
-  plainText: PropTypes.bool,
+  plainText: PropTypes.bool
 };
 
 MarkdownInput.defaultProps = {
-  onTemplateClicked: () => {},
   help: '',
   options: [],
   label: '',
@@ -109,7 +108,7 @@ MarkdownInput.defaultProps = {
   addonCustomAfter: null,
   addonCustomBefore: null,
   maxCols: 12,
-  plainText: false,
+  plainText: false
 };
 
 export default MarkdownInput;

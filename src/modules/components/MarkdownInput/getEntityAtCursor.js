@@ -16,7 +16,7 @@ function getEntityAtOffset(block, offset) {
     entityKey,
     blockKey: block.getKey(),
     startOffset,
-    endOffset: endOffset + 1,
+    endOffset: endOffset + 1
   };
 }
 
@@ -44,6 +44,6 @@ export default function getEntityAtCursor(editorState) {
     entityKey: startEntityKey,
     blockKey: startBlock.getKey(),
     startOffset,
-    endOffset,
+    endOffset
   };
 }

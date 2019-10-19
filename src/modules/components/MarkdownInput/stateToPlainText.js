@@ -156,7 +156,7 @@ class MarkupGenerator {
           // mentions
           let returnVal = false;
 
-          this.mentionStateToMarkdownFunctions.forEach((func) => {
+          this.mentionStateToMarkdownFunctions.forEach(func => {
             const result = func(entity);
             if (result) {
               returnVal = result;

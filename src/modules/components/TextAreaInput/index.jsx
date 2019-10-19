@@ -5,7 +5,7 @@ import { FormControl } from 'react-bootstrap';
 
 import FormField from '../FormField';
 
-const TextAreaInput = (props) => {
+const TextAreaInput = props => {
   const {
     help,
     label,
@@ -14,7 +14,7 @@ const TextAreaInput = (props) => {
     disabled,
     vertical,
     input: { ...inputProps },
-    meta,
+    meta
   } = props;
 
   return (
@@ -41,7 +41,7 @@ TextAreaInput.propTypes = {
   input: PropTypes.shape().isRequired,
   disabled: PropTypes.bool,
   noLabel: PropTypes.bool,
-  vertical: PropTypes.bool,
+  vertical: PropTypes.bool
 };
 
 TextAreaInput.defaultProps = {
@@ -50,7 +50,7 @@ TextAreaInput.defaultProps = {
   prefix: null,
   noLabel: false,
   disabled: false,
-  vertical: false,
+  vertical: false
 };
 
 module.exports = TextAreaInput;

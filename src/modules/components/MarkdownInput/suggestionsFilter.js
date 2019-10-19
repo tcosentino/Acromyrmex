@@ -10,7 +10,7 @@ const defaultSuggestionsFilter = (searchValue, suggestions) => {
       !value ||
       get(suggestion, 'name')
         .toLowerCase()
-        .indexOf(value) > -1,
+        .indexOf(value) > -1
   );
   const length = size(filteredSuggestions);
   return filteredSuggestions.slice(0, length);

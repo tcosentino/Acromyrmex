@@ -28,9 +28,9 @@ class SelectInput extends React.Component {
     super(props);
 
     this.state = {
-      value: '',
+      // value: '',
       showModal: false,
-      pendingVal: null,
+      pendingVal: null
     };
 
     this.templateOptionRenderer = this.templateOptionRenderer.bind(this);
@@ -57,7 +57,7 @@ class SelectInput extends React.Component {
     const myOptions = options.map(item => ({
       ...item,
       value: item.id,
-      label: item.name,
+      label: item.name
     }));
 
     if (enableAll) {
@@ -91,7 +91,7 @@ class SelectInput extends React.Component {
     const value = this.getValue();
 
     let valFound = false;
-    _.each(myOptions, (option) => {
+    _.each(myOptions, option => {
       valFound = valFound || option.value === value || JSON.stringify(option.value) === value;
     });
 
@@ -129,13 +129,13 @@ class SelectInput extends React.Component {
     const { onChangeAction, input } = this.props;
 
     input.onChange(value);
-    this.setState({ value });
+    // this.setState({ value });
     onChangeAction(value, input.name);
   }
 
   templateOptionRenderer(option) {
     const {
-      input: { ...inputProps },
+      input: { ...inputProps }
     } = this.props;
     if (option.textValue) {
       return (
@@ -144,7 +144,7 @@ class SelectInput extends React.Component {
           mention={option}
           onClick={() => {
             inputProps.onChange(option.textValue);
-            this.setState({ optionSelected: true, open: false });
+            // this.setState({ optionSelected: true, open: false });
           }}
         />
       );
@@ -174,8 +174,9 @@ class SelectInput extends React.Component {
       addonAfter,
       addonBefore,
       addonCustomBefore,
-      addonCustomAfter,
+      addonCustomAfter
     } = this.props;
+    const { showModal, pendingVal } = this.state;
 
     const myOptions = this.getOptions();
     let value = this.getValue();
@@ -201,14 +202,14 @@ class SelectInput extends React.Component {
         valueRenderer={valueRenderer || SelectInput.templateValueRenderer}
         joinValues
         multi={multi}
-        onChange={(val) => {
+        onChange={val => {
           if (confirm) {
             this.setState({ showModal: true, pendingVal: val });
           } else {
             this.handleChange(val);
           }
         }}
-        ref={(select) => {
+        ref={select => {
           this.select = select;
         }}
       />
@@ -234,11 +235,11 @@ class SelectInput extends React.Component {
       >
         {selectInput}
         <ConfirmModal
-          show={this.state.showModal}
+          show={showModal}
           title="Confirm change"
           message={confirmMessage || 'Are you sure you want to delete this process?'}
           onConfirm={() => {
-            this.handleChange(this.state.pendingVal);
+            this.handleChange(pendingVal);
             this.setState({ showModal: false, pendingVal: null });
           }}
           onCancel={() => {
@@ -262,9 +263,7 @@ SelectInput.propTypes = {
   enableAll: PropTypes.bool,
   enableEmpty: PropTypes.bool,
   onChangeAction: PropTypes.func,
-  input: PropTypes.shape({
-    name: PropTypes.string,
-  }).isRequired,
+  input: PropTypes.shape().isRequired,
   confirmMessage: PropTypes.string,
   confirm: PropTypes.bool,
   noLabel: PropTypes.bool,
@@ -277,14 +276,12 @@ SelectInput.propTypes = {
   addonAfter: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   addonBefore: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   addonCustomAfter: PropTypes.node,
-  addonCustomBefore: PropTypes.node,
+  addonCustomBefore: PropTypes.node
 };
 
 SelectInput.defaultProps = {
-  name: '',
   help: '',
   label: '',
-  value: '',
   confirmMessage: 'Are you sure you want to make this change?',
   confirm: false,
   noLabel: false,
@@ -305,7 +302,7 @@ SelectInput.defaultProps = {
   addonAfter: null,
   addonBefore: null,
   addonCustomAfter: null,
-  addonCustomBefore: null,
+  addonCustomBefore: null
 };
 
 module.exports = SelectInput;

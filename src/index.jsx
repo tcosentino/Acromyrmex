@@ -18,5 +18,5 @@ ReactDOM.render(
       <Values form="simple" />
     </div>
   </Provider>,
-  rootEl,
+  rootEl
 );

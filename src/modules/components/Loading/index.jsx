@@ -5,15 +5,17 @@ import PropTypes from 'prop-types';
 
 class Loading extends React.Component {
   constructor(props) {
+    const { delay } = props;
     super(props);
     this.state = {
-      delaying: !!this.props.delay,
+      delaying: !!delay
     };
   }
 
   componentDidMount() {
-    if (this.props.delay) {
-      this.timeout = setTimeout(this.handleDisplay.bind(this), this.props.delay);
+    const { delay } = this.props;
+    if (delay) {
+      this.timeout = setTimeout(this.handleDisplay.bind(this), delay);
     }
   }
 
@@ -34,7 +36,7 @@ class Loading extends React.Component {
     const className = classNames('loading', {
       'loading--delaying': delaying,
       'loading--displaying': delay && !delaying,
-      'loading--inline': inline,
+      'loading--inline': inline
     });
     return (
       <div className={className}>
@@ -48,13 +50,13 @@ class Loading extends React.Component {
 Loading.propTypes = {
   delay: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
   inline: PropTypes.bool,
-  text: PropTypes.string,
+  text: PropTypes.string
 };
 
 Loading.defaultProps = {
   delay: 500,
   inline: false,
-  text: '',
+  text: ''
 };
 
 export default Loading;

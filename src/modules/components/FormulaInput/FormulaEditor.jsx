@@ -17,8 +17,8 @@ class FormulaEditor extends OurEditor {
       trigger: '$',
       suggestionProp: 'formulas',
       theme: {
-        mention: 'mention-formula',
-      },
+        mention: 'mention-formula'
+      }
     });
 
     this.addMentionPlugin({
@@ -27,8 +27,8 @@ class FormulaEditor extends OurEditor {
       trigger: '#',
       suggestionProp: 'attributes',
       theme: {
-        mention: 'mention-attribute',
-      },
+        mention: 'mention-attribute'
+      }
     });
   }
 }

@@ -16,7 +16,7 @@ class StaticField extends React.Component {
       meta,
       help,
       vertical,
-      noLabel,
+      noLabel
     } = this.props;
 
     return (
@@ -40,16 +40,16 @@ StaticField.propTypes = {
   noLabel: PropTypes.bool,
   help: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   input: PropTypes.shape({
-    value: PropTypes.string,
+    value: PropTypes.string
   }).isRequired,
-  label: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+  label: PropTypes.oneOfType([PropTypes.string, PropTypes.node])
 };
 
 StaticField.defaultProps = {
   label: '',
   vertical: false,
   noLabel: false,
-  help: '',
+  help: ''
 };
 
 module.exports = StaticField;

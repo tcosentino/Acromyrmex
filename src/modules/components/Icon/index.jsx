@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Icon = (props) => {
+const Icon = props => {
   const { edit, help, close, filter, info, remove, upload, download, drag, cart } = props;
 
   const className = classNames('fa', {
@@ -15,7 +15,7 @@ const Icon = (props) => {
     'fa-download': download,
     'fa-info-circle': info,
     'fa-bars': drag,
-    'fa-shopping-cart': cart,
+    'fa-shopping-cart': cart
   });
 
   return <i className={className} />;
@@ -31,7 +31,7 @@ Icon.propTypes = {
   upload: PropTypes.bool,
   download: PropTypes.bool,
   drag: PropTypes.bool,
-  cart: PropTypes.bool,
+  cart: PropTypes.bool
 };
 
 Icon.defaultProps = {
@@ -44,7 +44,7 @@ Icon.defaultProps = {
   upload: false,
   download: false,
   drag: false,
-  cart: false,
+  cart: false
 };
 
 export default Icon;

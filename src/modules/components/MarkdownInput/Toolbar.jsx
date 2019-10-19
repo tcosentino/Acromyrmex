@@ -9,10 +9,10 @@ import {
   Popover,
   FormControl,
   Col,
-  FormGroup,
+  FormGroup
 } from 'react-bootstrap';
 
-const ToolbarButton = (props) => {
+const ToolbarButton = props => {
   const { onClick, children, ...otherProps } = props;
 
   return (
@@ -20,7 +20,7 @@ const ToolbarButton = (props) => {
       bsStyle="primary"
       bsSize="xsmall"
       {...otherProps}
-      onMouseDown={(e) => {
+      onMouseDown={e => {
         e.preventDefault();
         onClick(e);
       }}
@@ -32,7 +32,7 @@ const ToolbarButton = (props) => {
 
 ToolbarButton.propTypes = {
   onClick: PropTypes.func.isRequired,
-  children: PropTypes.node.isRequired,
+  children: PropTypes.node.isRequired
 };
 
 class Toolbar extends React.Component {
@@ -42,7 +42,7 @@ class Toolbar extends React.Component {
     this.state = {
       popoverTarget: null,
       showLinkOverlay: false,
-      linkText: '',
+      linkText: ''
     };
   }
 
@@ -58,10 +58,10 @@ class Toolbar extends React.Component {
       redoSize,
       blockType,
       selection,
-      getEntityAtCursor,
+      getEntityAtCursor
     } = this.props;
 
-    const { linkText } = this.state;
+    const { linkText, showLinkOverlay, popoverTarget } = this.state;
     const entity = getEntityAtCursor();
 
     return (
@@ -160,10 +160,10 @@ class Toolbar extends React.Component {
         </ButtonGroup>{' '}
         <ButtonGroup>
           <ToolbarButton
-            onClick={(e) => {
+            onClick={e => {
               this.setState({
-                showLinkOverlay: !this.state.showLinkOverlay,
-                popoverTarget: e.currentTarget,
+                showLinkOverlay: !showLinkOverlay,
+                popoverTarget: e.currentTarget
               });
               // onLinkClicked();
             }}
@@ -173,8 +173,8 @@ class Toolbar extends React.Component {
           </ToolbarButton>
           <Overlay
             placement="bottom"
-            target={this.state.popoverTarget}
-            show={this.state.showLinkOverlay}
+            target={popoverTarget}
+            show={showLinkOverlay}
             container={this}
           >
             <Popover style={{ marginLeft: 22, marginTop: 15 }} id="link-popover">
@@ -184,7 +184,7 @@ class Toolbar extends React.Component {
                     type="text"
                     placeholder="http://"
                     value={linkText}
-                    onChange={(e) => {
+                    onChange={e => {
                       this.setState({ linkText: e.target.value });
                     }}
                   />
@@ -193,7 +193,7 @@ class Toolbar extends React.Component {
                   <ButtonGroup>
                     <ToolbarButton
                       onClick={() => {
-                        onLinkClicked(this.state.linkText);
+                        onLinkClicked(linkText);
                         this.setState({ showLinkOverlay: false });
                       }}
                       disabled={linkText.length < 1}
@@ -248,7 +248,7 @@ Toolbar.propTypes = {
   redoSize: PropTypes.number.isRequired,
   blockType: PropTypes.string.isRequired,
   selection: PropTypes.shape().isRequired,
-  getEntityAtCursor: PropTypes.func.isRequired,
+  getEntityAtCursor: PropTypes.func.isRequired
 };
 
 export default Toolbar;

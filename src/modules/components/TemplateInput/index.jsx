@@ -11,20 +11,21 @@ class TemplateInput extends React.Component {
     super(props);
 
     this.state = {
-      focused: false,
+      focused: false
     };
 
     this.renderOption = this.renderOption.bind(this);
   }
 
   renderOption(option) {
+    const { onTemplateClicked } = this.props;
     return (
       <Col
         xs={12}
         key={option.name}
         className="template-option"
         onClick={() => {
-          this.props.onTemplateClicked(option);
+          onTemplateClicked(option);
         }}
       >
         {option.name}
@@ -48,10 +49,12 @@ class TemplateInput extends React.Component {
       input: { ...inputProps },
       meta,
       // disabled,
+      fixOptions,
       maxCols,
-      plainText,
+      plainText
     } = this.props;
     let { type } = this.props;
+    const { focused } = this.state;
 
     // alias
     if (type === 'datetime') {
@@ -77,7 +80,7 @@ class TemplateInput extends React.Component {
           disableToolbar
           input={inputProps}
           className="template-input"
-          fixOptions={this.props.fixOptions}
+          fixOptions={fixOptions}
           onFocus={() => {
             this.setState({ focused: true });
           }}
@@ -87,10 +90,9 @@ class TemplateInput extends React.Component {
           plainText={plainText}
         />
         {/* the false here can be flipped to show it when developing */}
-        {(this.state.focused || false) &&
-          options.length > 0 && (
-            <HelpBlock>{"Press '{' to add data from previous steps."}</HelpBlock>
-          )}
+        {(focused || false) && options.length > 0 && (
+          <HelpBlock>{"Press '{' to add data from previous steps."}</HelpBlock>
+        )}
       </FormField>
     );
   }
@@ -117,14 +119,12 @@ TemplateInput.propTypes = {
   addonCustomBefore: PropTypes.node,
   maxCols: PropTypes.number,
   fixOptions: PropTypes.func,
-  plainText: PropTypes.bool,
+  plainText: PropTypes.bool
 };
 
 TemplateInput.defaultProps = {
   onTemplateClicked: () => {},
-  disabled: false,
   help: '',
-  autoFocus: false,
   options: [],
   label: '',
   vertical: false,
@@ -137,7 +137,7 @@ TemplateInput.defaultProps = {
   addonCustomBefore: null,
   maxCols: 12,
   fixOptions: undefined,
-  plainText: false,
+  plainText: false
 };
 
 export default TemplateInput;

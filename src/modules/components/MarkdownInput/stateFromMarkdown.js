@@ -5,7 +5,7 @@ import { stateFromMarkdown as rootStateFromMarkdown } from 'draft-js-import-mark
 export default function stateFromMarkdown(
   markdown,
   mentions,
-  mentionStateFromMarkdownFunctions = [],
+  mentionStateFromMarkdownFunctions = []
 ) {
   // console.log({ markdown });
   const content = rootStateFromMarkdown(markdown);
@@ -15,7 +15,7 @@ export default function stateFromMarkdown(
 
   let entityCount = Object.keys(raw.entityMap).length;
 
-  raw.blocks.forEach((block) => {
+  raw.blocks.forEach(block => {
     let tempText = block.text;
     mentionStateFromMarkdownFunctions.forEach((func, index) => {
       const { entityCount: newEntityCount, tempText: newTempText } = func(
@@ -23,7 +23,7 @@ export default function stateFromMarkdown(
         entityCount,
         block,
         mentions[index] || [],
-        tempText,
+        tempText
       );
       entityCount = newEntityCount;
       tempText = newTempText;

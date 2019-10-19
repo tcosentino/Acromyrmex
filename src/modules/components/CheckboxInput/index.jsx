@@ -23,7 +23,7 @@ class CheckboxInput extends React.Component {
       noLabel,
       disabled,
       input: { ...inputProps },
-      meta: { error },
+      meta: { error }
     } = this.props;
 
     const helpPopover = <Popover id={`field-${inputProps.name}-help`}>{help}</Popover>;
@@ -81,7 +81,7 @@ CheckboxInput.propTypes = {
   prefix: PropTypes.node,
   input: PropTypes.shape().isRequired,
   noLabel: PropTypes.bool,
-  disabled: PropTypes.bool,
+  disabled: PropTypes.bool
 };
 
 CheckboxInput.defaultProps = {
@@ -89,7 +89,7 @@ CheckboxInput.defaultProps = {
   label: '',
   prefix: null,
   noLabel: false,
-  disabled: false,
+  disabled: false
 };
 
 export default CheckboxInput;

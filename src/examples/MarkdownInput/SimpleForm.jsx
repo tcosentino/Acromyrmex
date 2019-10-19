@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Field, reduxForm } from 'redux-form';
 import MarkdownInput from '../../modules/components/MarkdownInput';
-import options from './options';
+import startingOptions from './options';
 import TemplateInput from '../../modules/components/TemplateInput';
 import SelectInput from '../../modules/components/SelectInput';
 import DateInput from '../../modules/components/DateInput';
@@ -15,7 +15,7 @@ class SimpleForm extends React.Component {
 
     this.state = {
       // options: [],
-      options,
+      options: startingOptions
     };
 
     // simulate the options coming in delayed
@@ -27,6 +27,7 @@ class SimpleForm extends React.Component {
 
   render() {
     const { handleSubmit, pristine, reset, submitting } = this.props;
+    const { options } = this.state;
 
     return (
       <form onSubmit={handleSubmit}>
@@ -42,12 +43,7 @@ class SimpleForm extends React.Component {
           />
         </div>
         <div>
-          <Field
-            name="template"
-            label="Template"
-            component={TemplateInput}
-            options={this.state.options}
-          />
+          <Field name="template" label="Template" component={TemplateInput} options={options} />
         </div>
         <div>
           <Field
@@ -58,16 +54,16 @@ class SimpleForm extends React.Component {
             options={[
               {
                 id: 'w',
-                name: 'weekly',
+                name: 'weekly'
               },
               {
                 id: 'd',
-                name: 'daily',
+                name: 'daily'
               },
               {
                 id: 'h',
-                name: 'hourly',
-              },
+                name: 'hourly'
+              }
             ]}
           />
         </div>
@@ -112,7 +108,7 @@ class SimpleForm extends React.Component {
             label="Date Input w/ options"
             component={DateInput}
             showTimeSelect
-            options={this.state.options}
+            options={options}
           />
         </div>
         <div>
@@ -121,7 +117,7 @@ class SimpleForm extends React.Component {
             label="Date Input w/ options"
             component={DateInput}
             showTimeSelect={false}
-            options={this.state.options}
+            options={options}
             addonCustomBefore={
               <Field
                 name={'date-options.queryType'}
@@ -140,13 +136,13 @@ class SimpleForm extends React.Component {
             label="Select Input"
             component={SelectInput}
             options={[{ id: '1', name: 'true' }, { id: '2', name: 'false' }]}
-            templateOptions={this.state.options}
+            templateOptions={options}
             addonCustomBefore={
               <Field
-                name={'date-options.queryType'}
+                name="date-options.queryType"
                 component={SelectInput}
                 disabled
-                label={'Type of filter'}
+                label="Type of filter"
                 options={[{ id: '0', name: '=' }]}
                 addon
               />
@@ -154,19 +150,14 @@ class SimpleForm extends React.Component {
           />
         </div>
         <div>
-          <Field
-            name="markdown"
-            label="Markdown"
-            component={MarkdownInput}
-            options={this.state.options}
-          />
+          <Field name="markdown" label="Markdown" component={MarkdownInput} options={options} />
         </div>
         <div>
           <Field
             name="plainMarkdown"
             label="Plain Markdown"
             component={MarkdownInput}
-            options={this.state.options}
+            options={options}
             plainText
           />
         </div>
@@ -177,13 +168,13 @@ class SimpleForm extends React.Component {
             component={FormulaInput}
             attributes={[
               { id: 'employee-count', name: 'Employee Count', textValue: '#employee-count#' },
-              { id: 'name', name: 'Name', textValue: '#name#' },
+              { id: 'name', name: 'Name', textValue: '#name#' }
             ]}
             formulas={[
               { id: 'count', name: 'Count', textValue: '$COUNT$' },
-              { id: 'sum', name: 'Sum', textValue: '$SUM$' },
+              { id: 'sum', name: 'Sum', textValue: '$SUM$' }
             ]}
-            options={this.state.options}
+            options={options}
           />
         </div>
         <div>
@@ -203,7 +194,7 @@ SimpleForm.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   pristine: PropTypes.bool.isRequired,
   reset: PropTypes.func.isRequired,
-  submitting: PropTypes.bool.isRequired,
+  submitting: PropTypes.bool.isRequired
   // change: PropTypes.func.isRequired,
 };
 
@@ -216,7 +207,7 @@ export default reduxForm({
     markdown:
       'sdfadf [asdfasdf](fasdfasf) adsfasdf [fasdf432](1231sadf) {dfasdfsdg3q34t.ip-address} {dfasdfsdg3q34t.mac-address} dsfs ',
     'date-options': {
-      value: '2018-05-24T05:12:08.848Z',
-    },
-  },
+      value: '2018-05-24T05:12:08.848Z'
+    }
+  }
 })(SimpleForm);

@@ -12,7 +12,7 @@ const FIELD_EVENT_HANDLER = /^(?:on|handle)[A-Z]/;
  * determine if the field has changed.
  */
 function fieldShallowEquals(field, nextField) {
-  field.foreach((prop) => {
+  field.foreach(prop => {
     // Ignore event handlers, as they continually get recreated by redux-form
     if (!FIELD_EVENT_HANDLER.test(prop) && field[prop] !== nextField[prop]) {
       return false;
@@ -38,10 +38,11 @@ class FormField extends React.Component {
     const nextHasOwnProperty = Object.prototype.hasOwnProperty.bind(nextProps);
     for (let i = 0; i < keys.length; i++) {
       const key = keys[i];
+      const { [key]: thisProp } = this.props;
       if (
         !nextHasOwnProperty(key) || key === 'field'
-          ? !fieldShallowEquals(this.props[key], nextProps[key])
-          : this.props[key] !== nextProps[key]
+          ? !fieldShallowEquals(thisProp, nextProps[key])
+          : thisProp !== nextProps[key]
       ) {
         return true;
       }
@@ -73,6 +74,7 @@ class FormField extends React.Component {
       addonAfter,
       addonCustomBefore,
       addonCustomAfter,
+      children
     } = this.props;
 
     if (loading) {
@@ -88,7 +90,7 @@ class FormField extends React.Component {
     const width = this.calculateWidth();
     const offset = maxCols - width;
 
-    let input = this.props.children;
+    let input = children;
     if (addonBefore || addonAfter) {
       input = (
         <InputGroup style={{ width: '100%' }}>
@@ -171,13 +173,12 @@ FormField.propTypes = {
   addonAfter: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   addonBefore: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   addonCustomAfter: PropTypes.node,
-  addonCustomBefore: PropTypes.node,
+  addonCustomBefore: PropTypes.node
 };
 
 FormField.defaultProps = {
   help: '',
   label: '',
-  type: 'text',
   prefix: null,
   vertical: false,
   maxCols: 12,
@@ -187,17 +188,13 @@ FormField.defaultProps = {
   loading: false,
   noLabel: false,
 
-  inputClass: '',
-  field: {},
-  inputProps: {},
-
   stripped: false,
 
   // addons for inputs
   addonAfter: null,
   addonBefore: null,
   addonCustomAfter: null,
-  addonCustomBefore: null,
+  addonCustomBefore: null
 };
 
 module.exports = FormField;

@@ -11,20 +11,21 @@ class FormulaInput extends React.Component {
     super(props);
 
     this.state = {
-      focused: false,
+      focused: false
     };
 
     this.renderOption = this.renderOption.bind(this);
   }
 
   renderOption(option) {
+    const { onTemplateClicked } = this.props;
     return (
       <Col
         xs={12}
         key={option.name}
         className="template-option"
         onClick={() => {
-          this.props.onTemplateClicked(option);
+          onTemplateClicked(option);
         }}
       >
         {option.name}
@@ -50,9 +51,10 @@ class FormulaInput extends React.Component {
       input: { ...inputProps },
       meta,
       // disabled,
-      maxCols,
+      maxCols
     } = this.props;
     let { type } = this.props;
+    const { focused } = this.state;
 
     // alias
     if (type === 'datetime') {
@@ -89,14 +91,13 @@ class FormulaInput extends React.Component {
           }}
         />
         {/* the false here can be flipped to show it when developing */}
-        {(this.state.focused || false) &&
-          options.length > 0 && (
-            <HelpBlock>
-              <span className="mention-formula display-only">$ Formula</span> |{' '}
-              <span className="mention-attribute display-only"># Attribute</span> |{' '}
-              <span className="mention-data display-only">{'{'} Data</span>
-            </HelpBlock>
-          )}
+        {(focused || false) && options.length > 0 && (
+          <HelpBlock>
+            <span className="mention-formula display-only">$ Formula</span> |{' '}
+            <span className="mention-attribute display-only"># Attribute</span> |{' '}
+            <span className="mention-data display-only">{'{'} Data</span>
+          </HelpBlock>
+        )}
       </FormField>
     );
   }
@@ -124,14 +125,12 @@ FormulaInput.propTypes = {
   addonBefore: PropTypes.string,
   addonCustomAfter: PropTypes.node,
   addonCustomBefore: PropTypes.node,
-  maxCols: PropTypes.number,
+  maxCols: PropTypes.number
 };
 
 FormulaInput.defaultProps = {
   onTemplateClicked: () => {},
-  disabled: false,
   help: '',
-  autoFocus: false,
   options: [],
   formulas: [],
   attributes: [],
@@ -144,7 +143,7 @@ FormulaInput.defaultProps = {
   addonBefore: null,
   addonCustomAfter: null,
   addonCustomBefore: null,
-  maxCols: 12,
+  maxCols: 12
 };
 
 export default FormulaInput;

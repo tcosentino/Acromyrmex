@@ -30,15 +30,15 @@ export default class TetheredSelectWrap extends Select {
           {
             to: 'window',
             attachment: 'together',
-            pin: ['top'],
-          },
+            pin: ['top']
+          }
         ]}
       >
         {/* Apply position:static to our menu so that it's parent will get the correct
         dimensions and we can tether the parent */}
         <div />
         {React.cloneElement(menu, {
-          style: { position: 'static', width: selectWidth },
+          style: { position: 'static', width: selectWidth }
         })}
       </TetherComponent>
     );

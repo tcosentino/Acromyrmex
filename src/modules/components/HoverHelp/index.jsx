@@ -24,13 +24,13 @@ const HoverHelp = ({ help, position, name }) => {
 HoverHelp.propTypes = {
   help: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   name: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
-  position: PropTypes.string,
+  position: PropTypes.string
 };
 
 HoverHelp.defaultProps = {
   position: 'right',
   name: 'na',
-  help: '',
+  help: ''
 };
 
 export default HoverHelp;
