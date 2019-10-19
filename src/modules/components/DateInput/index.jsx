@@ -1,7 +1,7 @@
 // from: https://gist.github.com/insin/bbf116e8ea10ef38447b
 import _ from 'underscore';
 import React from 'react';
-import parse from 'date-fns/parse';
+import moment from 'moment';
 import PropTypes from 'prop-types';
 import Calendar from 'rc-calendar';
 import DatePicker from 'rc-calendar/lib/Picker';
@@ -58,9 +58,7 @@ class DateInput extends React.Component {
       );
     }
 
-    const timePickerElement = (
-      <TimePickerPanel defaultValue={parse('00:00:00', 'HH:mm:ss', new Date())} />
-    );
+    const timePickerElement = <TimePickerPanel defaultValue={moment('00:00:00', 'HH:mm:ss')} />;
 
     const modeProp = {};
     let format = showTimeSelect ? dateTimeFormat : dateFormat;
@@ -111,8 +109,7 @@ class DateInput extends React.Component {
       _.isObject(inputProps.value) ||
       (_.isString(inputProps.value) && !inputProps.value.includes('{'))
     ) {
-      console.log({ dateValue: inputProps.value });
-      m = parse(inputProps.value, 'MM/DD/YYYY', new Date());
+      m = moment(inputProps.value);
     }
 
     if (m && _.isFunction(m.isValid) && m.isValid()) {
@@ -144,7 +141,7 @@ class DateInput extends React.Component {
           }}
           open={open}
           onChange={date => {
-            inputProps.onChange(date ? parse(date) : '');
+            inputProps.onChange(date ? moment(date).toDate() : '');
             this.setState({ optionSelected: false });
           }}
         >
