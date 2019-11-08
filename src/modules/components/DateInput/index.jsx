@@ -46,6 +46,7 @@ class DateInput extends React.Component {
       maxCols,
       showTimeSelect,
       showDateSelect,
+      getCalendarContainer,
       ...extraProps
     } = this.props;
     const { open, optionSelected } = this.state;
@@ -68,7 +69,7 @@ class DateInput extends React.Component {
     }
     const calendar = (
       <Calendar
-        autoFocus={autoFocus}
+        // autoFocus={autoFocus}
         // bsSize="small"
         format={format}
         showDateInput={false}
@@ -136,6 +137,7 @@ class DateInput extends React.Component {
           disabled={disabled}
           calendar={calendar}
           value={valueToUse}
+          getCalendarContainer={getCalendarContainer}
           onOpenChange={newOpen => {
             this.setState({ open: newOpen });
           }}
@@ -199,7 +201,8 @@ DateInput.propTypes = {
   timeFormat: PropTypes.string,
   dateTimeFormat: PropTypes.string,
   showTimeSelect: PropTypes.bool,
-  showDateSelect: PropTypes.bool
+  showDateSelect: PropTypes.bool,
+  getCalendarContainer: PropTypes.func
 };
 
 DateInput.defaultProps = {
@@ -220,7 +223,8 @@ DateInput.defaultProps = {
   dateFormat: 'LL',
   dateTimeFormat: 'LLL',
   showTimeSelect: true,
-  showDateSelect: true
+  showDateSelect: true,
+  getCalendarContainer: null
 };
 
 export default DateInput;
