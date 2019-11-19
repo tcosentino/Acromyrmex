@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Map } from 'immutable';
 import Editor from 'draft-js-plugins-editor';
-import { EditorState, RichUtils, CompositeDecorator } from 'draft-js';
+import { EditorState, RichUtils, CompositeDecorator, convertToRaw } from 'draft-js';
 import createMentionPlugin, { defaultTheme } from 'draft-js-mention-plugin';
 import { ENTITY_TYPE } from 'draft-js-utils';
 import MultiDecorator from 'draft-js-plugins-editor/lib/Editor/MultiDecorator';
@@ -45,12 +45,16 @@ class OurEditor extends React.Component {
       suggestionProp: 'options'
     });
 
-    this.state.editorState =
-      props && props.input && props.input.value && props.input.value.length
-        ? this.getStateFromMarkdown(props.input.value, props.options)
-        : EditorState.createEmpty();
+    this.state.editorState = EditorState.createEmpty();
 
-    this.mentionRef = null;
+    if (props && props.input && props.input.value && props.input.value.length) {
+      this.setState(prevState => ({
+        editorState: EditorState.push(
+          prevState.editorState,
+          this.getStateFromMarkdown(props.input.value, props.options)
+        )
+      }));
+    }
 
     this.onChange = this.onChange.bind(this);
     this.onFocus = this.onFocus.bind(this);
@@ -178,7 +182,7 @@ class OurEditor extends React.Component {
 
     // set our normal suggestions
     nSuggestions[functionInfo.index] = this.fixOptions(suggestionProps);
-    this.state.suggestions = nSuggestions;
+    this.setState({ suggestions: nSuggestions });
 
     this.mentionFunctionInfo.push(functionInfo);
 
@@ -317,6 +321,7 @@ class OurEditor extends React.Component {
   render() {
     const { disableToolbar, className, onFocus, onBlur, plainText } = this.props;
     const { editorState, suggestions } = this.state;
+    const { searchFunctions, mentionFunctionInfo } = this;
     const selection = editorState.getSelection();
     const blockType = editorState
       .getCurrentContent()
@@ -360,12 +365,13 @@ class OurEditor extends React.Component {
         <div className="mention-suggestions clearFix">
           {this.mentionPlugins.map((mentionPlugin, index) => {
             const { MentionSuggestions } = mentionPlugin;
+
             return (
               <MentionSuggestions
-                onSearchChange={this.searchFunctions[index]}
+                onSearchChange={searchFunctions[index]}
                 suggestions={suggestions[index] || []}
                 entryComponent={Mention}
-                key={`${this.mentionFunctionInfo[index].trigger}_suggestion`}
+                key={`${mentionFunctionInfo[index].trigger}_suggestion`}
               />
             );
           })}
