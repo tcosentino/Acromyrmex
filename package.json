@@ -1,6 +1,6 @@
 {
   "name": "acromyrmex",
-  "version": "1.0.63",
+  "version": "1.0.64",
   "main": "lib/index.js",
   "repository": {
     "type": "git",
