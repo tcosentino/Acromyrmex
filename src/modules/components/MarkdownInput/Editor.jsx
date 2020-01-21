@@ -143,6 +143,19 @@ class OurEditor extends React.Component {
     this.editor.focus();
   }
 
+  onSuggestionSearch(functionInfo, { value }) {
+    const { suggestions: innerSuggestions } = this.state;
+    const newSuggestions = [...innerSuggestions];
+
+    // set our normal suggestions
+    newSuggestions[functionInfo.index] = suggestionFilter(
+      value,
+      newSuggestions[functionInfo.index]
+    );
+
+    this.setState({ suggestions: newSuggestions });
+  }
+
   getStateFromMarkdown(value) {
     const { plainText } = this.props;
     const { suggestions } = this.state;
@@ -195,17 +208,7 @@ class OurEditor extends React.Component {
       })
     );
 
-    this.searchFunctions.push(({ value }) => {
-      const newSuggestions = [...suggestions];
-
-      // set our normal suggestions
-      newSuggestions[functionInfo.index] = suggestionFilter(
-        value,
-        this.fixOptions(suggestionProps)
-      );
-
-      this.setState({ suggestions: newSuggestions });
-    });
+    this.searchFunctions.push(this.onSuggestionSearch.bind(this, functionInfo));
 
     this.mentionStateFromMarkdownFunctions.push((raw, entityCount, block, mentions, tempText) => {
       const { text } = block;
