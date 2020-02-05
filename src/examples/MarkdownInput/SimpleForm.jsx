@@ -36,13 +36,13 @@ class SimpleForm extends React.Component {
           />
         </div>
         <div>
-          <Field
+          {/* <Field
             name="plainMarkdown2"
             label="Plain Markdown 2"
             component={MarkdownInput}
             options={options}
             plainText
-          />
+          /> */}
         </div>
         <div>
           <button type="submit" disabled={pristine || submitting}>
@@ -68,6 +68,6 @@ SimpleForm.propTypes = {
 export default reduxForm({
   form: 'simple', // a unique identifier for this form
   initialValues: {
-    plainMarkdown: '{dfasdfsdg3q34t.ip-address} {dfasdfsdg3q34t.mac-address}'
+    plainMarkdown: '{dfasdfsdg3q34t.ip-address} {dfasdfsdg3q34t.mac-address} '
   }
 })(SimpleForm);

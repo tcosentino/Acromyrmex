@@ -20,7 +20,7 @@ import stateFromPlainText from './stateFromPlainText';
 import clearEntityForRange from './clearEntityForRange';
 import './Editor.css';
 
-const TEMPLATE_REGEX = /{(\S*-*)([0-9a-zA-Z-.]+)}/g;
+const TEMPLATE_REGEX = /{([0-9a-zA-Z-.$_]+)}/g;
 const OPTION_MENTION_INDEX = 0;
 
 class OurEditor extends React.Component {
@@ -38,23 +38,8 @@ class OurEditor extends React.Component {
     this.mentionStateFromMarkdownFunctions = [];
     this.mentionStateToMarkdownFunctions = [];
 
-    this.addMentionPlugin({
-      regex: TEMPLATE_REGEX,
-      index: OPTION_MENTION_INDEX,
-      trigger: '{',
-      suggestionProp: 'options'
-    });
-
-    this.state.editorState = EditorState.createEmpty();
-
-    if (props && props.input && props.input.value && props.input.value.length) {
-      this.setState(prevState => ({
-        editorState: EditorState.push(
-          prevState.editorState,
-          this.getStateFromMarkdown(props.input.value, props.options)
-        )
-      }));
-    }
+    const emptyState = EditorState.createEmpty();
+    this.state.editorState = emptyState;
 
     this.onChange = this.onChange.bind(this);
     this.onFocus = this.onFocus.bind(this);
@@ -74,6 +59,13 @@ class OurEditor extends React.Component {
 
     // set our normal suggestions
     newSuggestions[OPTION_MENTION_INDEX] = this.fixOptions(options);
+
+    this.addMentionPlugin({
+      regex: TEMPLATE_REGEX,
+      index: OPTION_MENTION_INDEX,
+      trigger: '{',
+      suggestionProp: 'options'
+    });
 
     this.setState({ suggestions: newSuggestions }, () => {
       if (hasValue) {
