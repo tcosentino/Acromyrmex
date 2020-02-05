@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Map } from 'immutable';
 import Editor from 'draft-js-plugins-editor';
-import { EditorState, RichUtils, CompositeDecorator, convertToRaw } from 'draft-js';
+import { EditorState, RichUtils, CompositeDecorator } from 'draft-js';
 import createMentionPlugin, { defaultTheme } from 'draft-js-mention-plugin';
 import { ENTITY_TYPE } from 'draft-js-utils';
 import MultiDecorator from 'draft-js-plugins-editor/lib/Editor/MultiDecorator';
@@ -144,14 +144,12 @@ class OurEditor extends React.Component {
   }
 
   onSuggestionSearch(functionInfo, { value }) {
-    const { suggestions: innerSuggestions } = this.state;
-    const newSuggestions = [...innerSuggestions];
+    const { [functionInfo.suggestionProp]: suggestionProps } = this.props;
+    const { suggestions } = this.state;
+    const newSuggestions = [...suggestions];
 
     // set our normal suggestions
-    newSuggestions[functionInfo.index] = suggestionFilter(
-      value,
-      newSuggestions[functionInfo.index]
-    );
+    newSuggestions[functionInfo.index] = suggestionFilter(value, this.fixOptions(suggestionProps));
 
     this.setState({ suggestions: newSuggestions });
   }
