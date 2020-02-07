@@ -53,14 +53,11 @@ class OurEditor extends React.Component {
 
   componentWillMount() {
     const { input, options } = this.props;
-    const { suggestions, editorState } = this.state;
+    const { editorState } = this.state;
     const hasValue = input && input.value && input.value.length;
-    const newSuggestions = [...suggestions];
 
-    // set our normal suggestions
-    newSuggestions[OPTION_MENTION_INDEX] = this.fixOptions(options);
-
-    this.addMentionPlugin({
+    const mentions = [];
+    mentions[OPTION_MENTION_INDEX] = this.addMentionPlugin({
       regex: TEMPLATE_REGEX,
       index: OPTION_MENTION_INDEX,
       trigger: '{',
@@ -68,10 +65,12 @@ class OurEditor extends React.Component {
     });
 
     if (this.extraMentions) {
-      this.extraMentions();
+      this.extraMentions().forEach(extraMention => {
+        mentions[extraMention.index] = this.addMentionPlugin(extraMention);
+      });
     }
 
-    this.setState({ suggestions: newSuggestions }, () => {
+    this.setState({ suggestions: mentions }, () => {
       if (hasValue) {
         this.onChange(
           EditorState.push(
@@ -184,15 +183,6 @@ class OurEditor extends React.Component {
 
   addMentionPlugin(functionInfo) {
     const { [functionInfo.suggestionProp]: suggestionProps } = this.props;
-    const { suggestions } = this.state;
-    const nSuggestions = [...suggestions];
-
-    console.log('Adding');
-    console.log({ functionInfo });
-
-    // set our normal suggestions
-    nSuggestions[functionInfo.index] = this.fixOptions(suggestionProps);
-    this.setState({ suggestions: nSuggestions });
 
     this.mentionFunctionInfo.push(functionInfo);
 
@@ -212,6 +202,7 @@ class OurEditor extends React.Component {
       // Loop over the matches
       block.text = text.replace(functionInfo.regex, match => {
         const matchingOption = mentions.find(m => m.textValue === match);
+
         if (!matchingOption) {
           return match;
         }
@@ -261,6 +252,9 @@ class OurEditor extends React.Component {
       const data = entity.getData();
       return data.mention.get('textValue');
     });
+
+    // set our suggestions
+    return this.fixOptions(suggestionProps);
   }
 
   // added so we can include the stepname in the display

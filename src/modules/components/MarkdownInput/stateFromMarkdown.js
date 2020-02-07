@@ -18,6 +18,7 @@ export default function stateFromMarkdown(
   raw.blocks.forEach(block => {
     let tempText = block.text;
     mentionStateFromMarkdownFunctions.forEach((func, index) => {
+      console.log({ tempText, mentions });
       const { entityCount: newEntityCount, tempText: newTempText } = func(
         raw,
         entityCount,

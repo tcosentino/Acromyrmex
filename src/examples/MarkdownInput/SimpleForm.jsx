@@ -76,6 +76,7 @@ SimpleForm.propTypes = {
 export default reduxForm({
   form: 'simple', // a unique identifier for this form
   initialValues: {
+    formula: '$COUNT$ {dfasdferwegsf.replacement-workstation}',
     plainMarkdown: '{dfasdfsdg3q34t.ip-address} {dfasdfsdg3q34t.mac-address} '
   }
 })(SimpleForm);
