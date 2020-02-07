@@ -67,6 +67,10 @@ class OurEditor extends React.Component {
       suggestionProp: 'options'
     });
 
+    if (this.extraMentions) {
+      this.extraMentions();
+    }
+
     this.setState({ suggestions: newSuggestions }, () => {
       if (hasValue) {
         this.onChange(
@@ -182,6 +186,9 @@ class OurEditor extends React.Component {
     const { [functionInfo.suggestionProp]: suggestionProps } = this.props;
     const { suggestions } = this.state;
     const nSuggestions = [...suggestions];
+
+    console.log('Adding');
+    console.log({ functionInfo });
 
     // set our normal suggestions
     nSuggestions[functionInfo.index] = this.fixOptions(suggestionProps);

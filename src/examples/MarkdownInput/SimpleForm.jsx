@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Field, reduxForm } from 'redux-form';
-import MarkdownInput from '../../modules/components/MarkdownInput';
+import FormulaInput from '../../modules/components/FormulaInput';
 import startingOptions from './options';
 
 class SimpleForm extends React.Component {
@@ -26,7 +26,7 @@ class SimpleForm extends React.Component {
 
     return (
       <form onSubmit={handleSubmit}>
-        <div>
+        {/* <div>
           <Field
             name="plainMarkdown"
             label="Plain Markdown"
@@ -34,15 +34,23 @@ class SimpleForm extends React.Component {
             options={options}
             plainText
           />
-        </div>
+        </div> */}
         <div>
-          {/* <Field
-            name="plainMarkdown2"
-            label="Plain Markdown 2"
-            component={MarkdownInput}
+          <Field
+            name="formula"
+            label="Formula"
+            component={FormulaInput}
+            enableEmpty
+            attributes={[
+              { id: 'employee-count', name: 'Employee Count', textValue: '#employee-count#' },
+              { id: 'name', name: 'Name', textValue: '#name#' }
+            ]}
+            formulas={[
+              { id: 'count', name: 'Count', textValue: '$COUNT$' },
+              { id: 'sum', name: 'Sum', textValue: '$SUM$' }
+            ]}
             options={options}
-            plainText
-          /> */}
+          />
         </div>
         <div>
           <button type="submit" disabled={pristine || submitting}>
