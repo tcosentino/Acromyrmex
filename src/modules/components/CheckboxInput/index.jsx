@@ -2,7 +2,14 @@
 import _ from 'underscore';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Col, Checkbox, FormGroup, OverlayTrigger, HelpBlock, Popover } from 'react-bootstrap';
+import {
+  Col,
+  Checkbox,
+  FormGroup,
+  OverlayTrigger,
+  HelpBlock,
+  Popover
+} from '../../../utility/UiComponents';
 
 import FormField from '../FormField';
 

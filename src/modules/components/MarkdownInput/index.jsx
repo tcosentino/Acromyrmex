@@ -1,8 +1,8 @@
 // from: https://gist.github.com/insin/bbf116e8ea10ef38447b
 import React from 'react';
 import PropTypes from 'prop-types';
-import { HelpBlock } from 'react-bootstrap';
 import 'draft-js/dist/Draft.css';
+import { HelpBlock } from '../../../utility/UiComponents';
 import Editor from './Editor';
 import FormField from '../FormField';
 

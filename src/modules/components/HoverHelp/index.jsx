@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { OverlayTrigger, Popover } from 'react-bootstrap';
+import { OverlayTrigger, Popover } from '../../../utility/UiComponents';
 import Icon from '../Icon';
 
 const HoverHelp = ({ help, position, name }) => {

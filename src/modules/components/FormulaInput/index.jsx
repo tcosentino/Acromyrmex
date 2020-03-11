@@ -1,7 +1,7 @@
 // from: https://gist.github.com/insin/bbf116e8ea10ef38447b
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Col, HelpBlock } from 'react-bootstrap';
+import { Col, HelpBlock } from '../../../utility/UiComponents';
 
 import FormField from '../FormField';
 import Editor from './FormulaEditor';

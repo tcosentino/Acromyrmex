@@ -10,7 +10,7 @@ import {
   FormControl,
   Col,
   FormGroup
-} from 'react-bootstrap';
+} from '../../../utility/UiComponents';
 
 const ToolbarButton = props => {
   const { onClick, children, ...otherProps } = props;

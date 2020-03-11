@@ -1,9 +1,9 @@
 // from: https://gist.github.com/insin/bbf116e8ea10ef38447b
-import { FormGroup, ControlLabel, HelpBlock, Col, InputGroup } from 'react-bootstrap';
 import React from 'react';
 import PropTypes from 'prop-types';
 import Loading from '../Loading';
 import HoverHelp from '../HoverHelp';
+import { FormGroup, ControlLabel, HelpBlock, Col, InputGroup } from '../../../utility/UiComponents';
 
 const FIELD_EVENT_HANDLER = /^(?:on|handle)[A-Z]/;
 
