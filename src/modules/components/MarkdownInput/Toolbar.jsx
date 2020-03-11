@@ -10,7 +10,7 @@ import {
   FormControl,
   Col,
   FormGroup
-} from '../../../utility/UiComponents';
+} from '../../utility/UiComponents';
 
 const ToolbarButton = props => {
   const { onClick, children, ...otherProps } = props;

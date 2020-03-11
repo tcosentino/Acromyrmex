@@ -9,7 +9,7 @@ import {
   OverlayTrigger,
   HelpBlock,
   Popover
-} from '../../../utility/UiComponents';
+} from '../../utility/UiComponents';
 
 import FormField from '../FormField';
 
