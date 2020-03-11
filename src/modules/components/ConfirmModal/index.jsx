@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button, Modal } from '../../../utility/UiComponents';
+import { Button, Modal } from '../../utility/UiComponents';
 
 // class ConfirmModal extends React.Component {
 // render() {

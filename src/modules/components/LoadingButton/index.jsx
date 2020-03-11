@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button } from '../../../utility/UiComponents';
+import { Button } from '../../utility/UiComponents';
 import Loading from '../Loading';
 
 const LoadingButton = props => {

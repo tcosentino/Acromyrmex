@@ -2,7 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import 'draft-js/dist/Draft.css';
-import { HelpBlock } from '../../../utility/UiComponents';
+import { HelpBlock } from '../../utility/UiComponents';
 import Editor from './Editor';
 import FormField from '../FormField';
 
