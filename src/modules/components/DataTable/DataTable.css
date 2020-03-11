@@ -1,0 +1,218 @@
+.data-grid:focus {
+  outline: none;
+}
+.grid-container > div > div:first-child > .data-grid:first-child {
+  border-right: 1px solid #fff;
+}
+.grid-header-cell {
+  background-color: #2ecc71;
+  border-right: 1px solid #fff;
+  color: #fff;
+  cursor: pointer;
+  padding: 13px 0;
+  transition: padding 0.3s ease;
+}
+@media screen and (max-width: 768px) {
+  .grid-header-cell {
+    padding: 8px 0;
+  }
+}
+.grid-header-cell .filter-input {
+  background-color: transparent;
+  border-color: #fff;
+  border-width: 0 0 2px;
+  left: 10px;
+  opacity: 0;
+  outline: 0;
+  position: absolute;
+  top: 15px;
+  transition: visibility 0.3s, opacity 0.3s linear;
+  visibility: hidden;
+  width: calc(100% - 40px);
+}
+.grid-cell {
+  padding: 5px 0;
+}
+.grid-cell.grid-row-even {
+  background-color: rgba(46, 204, 113, 0.1);
+}
+.grid-cell.grid-row-hovered {
+  background-color: rgba(46, 204, 113, 0.3);
+}
+.grid-cell-data {
+  max-height: 250px;
+  max-width: 500px;
+  min-width: 100px;
+  overflow: auto;
+  padding: 0 10px;
+  transition: font 0.3s ease;
+}
+.grid-cell-data .btn {
+  margin-right: 3px;
+}
+.grid-cell-data ul {
+  padding-left: 20px;
+}
+.grid-cell-data .progress {
+  margin: 3px 0;
+}
+.grid-cell-data .user-thumbnail-wrapper {
+  padding-bottom: 0;
+}
+.first-col .grid-cell-data {
+  padding-left: 15px;
+}
+.last-col .grid-cell-data {
+  padding-right: 15px;
+}
+.grid-cell-filter.grid-header-filterable {
+  padding: 0;
+  transition: padding 0.3s ease;
+}
+.grid-cell-filter.grid-header-filterable .grid-cell-data {
+  font-size: 10px;
+  transition: font 0.3s ease;
+}
+.grid-cell-filter .filter-input {
+  opacity: 1;
+  transition: visibility 0.3s, opacity 0.3s ease;
+  visibility: visible;
+}
+.grid-cell-filter .grid-sort-indicator {
+  margin-top: 13px;
+  transition: margin-top 0.3s ease;
+}
+.grid-cell-sort .filter-input {
+  left: 20px;
+  transition: left 0.3s, width 0.15s ease;
+  width: calc(100% - 50px);
+}
+.grid-sort-indicator {
+  float: left;
+  margin-right: 3px;
+  padding-left: 5px;
+  padding-right: 5px;
+  transition: margin-top 0.3s ease;
+}
+.grid-filter-indicator {
+  color: #fff;
+  position: absolute;
+  right: 5px;
+  text-decoration: underline;
+  top: 13px;
+}
+.grid-filter-indicator:hover,
+.grid-filter-indicator:focus {
+  color: #fff;
+}
+.grid-filter-indicator.active {
+  border: 1px solid #0a6ebd;
+  border-radius: 3px;
+  color: #0a6ebd;
+}
+.no-rows {
+  align-items: center;
+  bottom: 0;
+  color: #8c8c8c;
+  display: flex;
+  font-size: 1em;
+  justify-content: center;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+.scroll-x-indicator {
+  background-color: #fcfcfc;
+  box-shadow: -1px 3px 3px #8c8c8c;
+  font-size: 18px;
+  height: calc(100% - 45px);
+  opacity: 1;
+  position: absolute;
+  right: 0;
+  text-align: center;
+  top: 0;
+  transition: visibility 0.3s, opacity 0.3s linear;
+  visibility: visible;
+  width: 25px;
+}
+.scroll-x-indicator.faded {
+  opacity: 0;
+  transition: visibility 0.3s, opacity 0.3s linear;
+  visibility: hidden;
+}
+.scroll-x-indicator i {
+  left: calc(50% - (1.28571em / 2));
+  position: absolute;
+  top: calc(50% - 9px);
+}
+.grid-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  position: relative;
+  transition: width 0.3s ease;
+  width: 100%;
+}
+.grid-container .grid-content {
+  flex: 1;
+}
+.grid-container .grid-footer {
+  background-color: #2ecc71;
+  color: #fff;
+  padding: 5px;
+}
+.grid-container .grid-footer .paginator {
+  float: right;
+}
+.grid-container .grid-footer .paginator .paginator-label {
+  float: left;
+  margin-right: 10px;
+  margin-top: 5px;
+}
+.grid-container .grid-footer .pagination {
+  margin: 0;
+}
+.pull-over {
+  background-color: #fcfcfc;
+  border-left: 1px #8c8c8c solid;
+  height: 100%;
+  left: 100%;
+  position: absolute;
+  top: 0;
+  transition: width 0.3s ease;
+  width: 30%;
+}
+.pull-over .pull-over-title {
+  border-bottom: 1px #f2f2f2 solid;
+  font-size: 1.2em;
+  font-weight: bold;
+  padding: 5px;
+}
+.pull-over .pull-over-close {
+  cursor: pointer;
+  font-size: 1.2em;
+  position: absolute;
+  right: 5px;
+  top: 3px;
+}
+.pull-over .pull-over-body {
+  padding: 5px;
+}
+.pull-over .pull-over-attr {
+  margin-bottom: 3px;
+}
+.pull-over .accent-row {
+  font-size: 1.3em;
+  margin-bottom: 0;
+  padding-bottom: 3px;
+  padding-top: 3px;
+}
+.pull-over-open .grid-wrapper {
+  transition: width 0.3s ease;
+  width: 70%;
+}
+.pull-over-open .pull-over {
+  left: 70%;
+  transition: left 0.3s ease;
+}
