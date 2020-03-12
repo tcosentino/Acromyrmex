@@ -1,4 +1,4 @@
 {
   "presets": ["@babel/env", "@babel/react"],
-  "plugins": ["@babel/proposal-function-bind"]
+  "plugins": ["@babel/plugin-proposal-function-bind"]
 }
