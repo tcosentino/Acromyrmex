@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Field, reduxForm } from 'redux-form';
-import FormulaInput from '../../modules/components/FormulaInput';
+// import FormulaInput from '../../modules/components/FormulaInput';
+import MarkdownInput from '../../modules/components/MarkdownInput';
 import startingOptions from './options';
 
 class SimpleForm extends React.Component {
@@ -16,7 +17,11 @@ class SimpleForm extends React.Component {
     // simulate the options coming in delayed
     setTimeout(() => {
       // this.setState({ options });
-      // this.props.change('markdown', 'new markdown value!');
+      // eslint-disable-next-line react/destructuring-assignment, react/prop-types
+      this.props.change(
+        'plainMarkdown',
+        '{dfasdfsdg3q34t.ip-address} {dfasdfsdg3q34t.mac-address} '
+      );
     }, 2000);
   }
 
@@ -26,7 +31,7 @@ class SimpleForm extends React.Component {
 
     return (
       <form onSubmit={handleSubmit}>
-        {/* <div>
+        <div>
           <Field
             name="plainMarkdown"
             label="Plain Markdown"
@@ -34,8 +39,8 @@ class SimpleForm extends React.Component {
             options={options}
             plainText
           />
-        </div> */}
-        <div>
+        </div>
+        {/* <div>
           <Field
             name="formula"
             label="Formula"
@@ -51,7 +56,7 @@ class SimpleForm extends React.Component {
             ]}
             options={options}
           />
-        </div>
+        </div> */}
         <div>
           <button type="submit" disabled={pristine || submitting}>
             Submit
@@ -76,7 +81,7 @@ SimpleForm.propTypes = {
 export default reduxForm({
   form: 'simple', // a unique identifier for this form
   initialValues: {
-    formula: '$COUNT$ {dfasdferwegsf.replacement-workstation}',
-    plainMarkdown: '{dfasdfsdg3q34t.ip-address} {dfasdfsdg3q34t.mac-address} '
+    // formula: '$COUNT$ {dfasdferwegsf.replacement-workstation}',
+    plainMarkdown: ''
   }
 })(SimpleForm);

@@ -49,40 +49,12 @@ class OurEditor extends React.Component {
     this._onUnlinkClicked = this._onUnlinkClicked.bind(this);
     this.handleKeyCommand = this.handleKeyCommand.bind(this);
     this.getEntityAtCursor = this.getEntityAtCursor.bind(this);
+
+    this.startMentions();
   }
 
-  componentWillMount() {
-    const { input, options } = this.props;
-    const { editorState } = this.state;
-    const hasValue = input && input.value && input.value.length;
-
-    const mentions = [];
-    mentions[OPTION_MENTION_INDEX] = this.addMentionPlugin({
-      regex: TEMPLATE_REGEX,
-      index: OPTION_MENTION_INDEX,
-      trigger: '{',
-      suggestionProp: 'options'
-    });
-
-    if (this.extraMentions) {
-      this.extraMentions().forEach(extraMention => {
-        mentions[extraMention.index] = this.addMentionPlugin(extraMention);
-      });
-    }
-
-    this.setState({ suggestions: mentions }, () => {
-      if (hasValue) {
-        this.onChange(
-          EditorState.push(
-            editorState,
-            this.getStateFromMarkdown(input.value, options).getCurrentContent()
-          )
-        );
-      }
-    });
-  }
-
-  componentWillReceiveProps(nextProps) {
+  // eslint-disable-next-line camelcase
+  UNSAFE_componentWillReceiveProps(nextProps) {
     const { input } = nextProps;
     const { options } = this.props;
     const { suggestions, editorState } = this.state;
@@ -179,6 +151,41 @@ class OurEditor extends React.Component {
     const contentState = editorState.getCurrentContent();
     const entity = getEntityAtCursor(editorState);
     return entity == null ? null : contentState.getEntity(entity.entityKey);
+  }
+
+  startMentions() {
+    const { input, options } = this.props;
+    const { editorState } = this.state;
+    const hasValue = input && input.value && input.value.length;
+
+    const mentions = [];
+    mentions[OPTION_MENTION_INDEX] = this.addMentionPlugin({
+      regex: TEMPLATE_REGEX,
+      index: OPTION_MENTION_INDEX,
+      trigger: '{',
+      suggestionProp: 'options'
+    });
+
+    if (this.extraMentions) {
+      this.extraMentions().forEach(extraMention => {
+        mentions[extraMention.index] = this.addMentionPlugin(extraMention);
+      });
+    }
+
+    // since this is called from the constructor we just set state directly
+    this.state.suggestions = mentions;
+
+    if (hasValue) {
+      const newState = EditorState.push(
+        editorState,
+        this.getStateFromMarkdown(input.value, options).getCurrentContent()
+      );
+
+      const md = this.getStateToMarkdown(newState);
+      input.onChange(md);
+
+      this.state.editorState = newState;
+    }
   }
 
   addMentionPlugin(functionInfo) {
