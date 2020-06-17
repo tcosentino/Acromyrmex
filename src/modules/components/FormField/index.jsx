@@ -197,4 +197,4 @@ FormField.defaultProps = {
   addonCustomBefore: null
 };
 
-module.exports = FormField;
+export default FormField;

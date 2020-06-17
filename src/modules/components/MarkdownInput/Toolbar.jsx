@@ -81,83 +81,74 @@ class Toolbar extends React.Component {
           >
             <i className="fa fa-italic" />
           </ToolbarButton>
-          <ToolbarButton
-            onClick={() => {
-              onInlineClicked('CODE');
-            }}
-          >
-            <i className="fa fa-code" />
-          </ToolbarButton>
         </ButtonGroup>{' '}
-        <ButtonGroup>
-          <ToolbarButton
+        <SplitButton
+          title="Normal"
+          bsSize="xsmall"
+          bsStyle="primary"
+          id="formatting-split"
+          active={blockType === 'unstyled'}
+          onClick={() => {
+            onBlockClicked('normal');
+          }}
+        >
+          <MenuItem
             active={blockType === 'unordered-list-item'}
             onClick={() => {
               onBlockClicked('unordered-list-item');
             }}
           >
-            <i className="fa fa-list-ul" />
-          </ToolbarButton>
-          <ToolbarButton
+            Bullet List
+          </MenuItem>
+          <MenuItem
             active={blockType === 'ordered-list-item'}
             onClick={() => {
               onBlockClicked('ordered-list-item');
             }}
           >
-            <i className="fa fa-list-ol" />
-          </ToolbarButton>
-          <ToolbarButton
+            Ordered List
+          </MenuItem>
+          <MenuItem
             active={blockType === 'blockquote'}
             onClick={() => {
               onBlockClicked('blockquote');
             }}
           >
-            <i className="fa fa-quote-right" />
-          </ToolbarButton>
-          <SplitButton
-            title="Normal"
-            bsSize="xsmall"
-            bsStyle="primary"
-            id="formatting-split"
-            active={blockType === 'unstyled'}
+            Block Quote
+          </MenuItem>
+          <MenuItem
+            active={blockType === 'header-one'}
             onClick={() => {
-              onBlockClicked('normal');
+              onBlockClicked('header-one');
             }}
           >
-            <MenuItem
-              active={blockType === 'header-one'}
-              onClick={() => {
-                onBlockClicked('header-one');
-              }}
-            >
-              Heading Large
-            </MenuItem>
-            <MenuItem
-              active={blockType === 'header-two'}
-              onClick={() => {
-                onBlockClicked('header-two');
-              }}
-            >
-              Heading Medium
-            </MenuItem>
-            <MenuItem
-              active={blockType === 'header-three'}
-              onClick={() => {
-                onBlockClicked('header-three');
-              }}
-            >
-              Heading Small
-            </MenuItem>
-            <MenuItem
-              active={blockType === 'code-block'}
-              onClick={() => {
-                onBlockClicked('code-block');
-              }}
-            >
-              Code Block
-            </MenuItem>
-          </SplitButton>
-        </ButtonGroup>{' '}
+            Heading Large
+          </MenuItem>
+          <MenuItem
+            active={blockType === 'header-two'}
+            onClick={() => {
+              onBlockClicked('header-two');
+            }}
+          >
+            Heading Medium
+          </MenuItem>
+          <MenuItem
+            active={blockType === 'header-three'}
+            onClick={() => {
+              onBlockClicked('header-three');
+            }}
+          >
+            Heading Small
+          </MenuItem>
+          <MenuItem
+            active={blockType === 'code-block'}
+            onClick={() => {
+              onBlockClicked('code-block');
+            }}
+          >
+            Code Block
+          </MenuItem>
+        </SplitButton>{' '}
         <ButtonGroup>
           <ToolbarButton
             onClick={e => {
