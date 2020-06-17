@@ -116,7 +116,8 @@ class MarkupGenerator {
     if (blockText === '') {
       // Prevent element collapse if completely empty.
       // TODO: Replace with constant.
-      return '\u200B';
+      // return '\u200B';
+      return '';
     }
     const charMetaList = block.getCharacterList();
     const entityPieces = getEntityRanges(blockText, charMetaList);
@@ -156,7 +157,7 @@ class MarkupGenerator {
           // mentions
           let returnVal = false;
 
-          this.mentionStateToMarkdownFunctions.forEach(func => {
+          this.mentionStateToMarkdownFunctions.forEach((func) => {
             const result = func(entity);
             if (result) {
               returnVal = result;
